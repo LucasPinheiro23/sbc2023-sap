@@ -81,7 +81,7 @@ model.M = pyo.Objective(rule=obj_Monetary)
 #Expressoes
 #---
 
-Nor = min(1,pyo.summation(model.s))
+#Nor = min(1,pyo.summation(model.s))
 
 #Restricoes
 #---
@@ -92,3 +92,23 @@ Nor = min(1,pyo.summation(model.s))
 
 model.s = pyo.Var()
 
+#Imprime modelo
+# model.pprint()
+
+#Resolve o modelo com solver escolhido
+# #SolverFactory('glpk', executable='glpsol').solve(model).write()
+# SolverFactory('cplex', executable='cplex').solve(model).write()
+
+#Apresenta solucao
+#print('\nProfit = ', model.profit())
+
+#print('\nDecision Variables')
+#print('x = ', model.x())
+#print('y = ', model.y())
+
+#print('\nConstraints')
+#print('Demand  = ', model.demand())
+#print('Labor A = ', model.laborA())
+#print('Labor B = ', model.laborB())
+
+#ADICIONAR AO FINAL UM POS PROCESSAMENTO PARA VISUALIZAR A SOLUCAO EM 2D. Usar inicialmente texto, mas depois fazer com matplot.
