@@ -1,114 +1,128 @@
-import pyomo.environ as pyo
+from pyomo.environ import *
 import math
 
-#Define modelo abstrato do pyomo
-model = pyo.AbstractModel()
+### MODELAGEM ABSTRATA
+#--------------------#
 
-#Numero de nos
-model.n = pyo.Param(within=pyo.NonNegativeIntegers)
+## Cria modelo abstrato do pyomo
+model = AbstractModel()
 
-#Conjunto de nos
-model.V = pyo.RangeSet(1,model.n)
-#Conjunto de modelos/tipos de transceptor
-model.S = pyo.Set(initialize=["S2C","S2CPro","S3"],doc="Modelos")
+## Parametros (Params)
+## ---
 
-#Parametros de iteracao (i,j,t)
-#---
-model.i = pyo.Param(model.V,default=1)
-model.j = pyo.Param(model.V,default=1)
-model.t = pyo.Param(model.S,default="S2C",doc="Modelo")
-model.u = pyo.Param(model.S,default="S2C",doc="Modelo")
+# Numero de nos
+model.n = Param(within=NonNegativeIntegers) #INICIALIZAR
+# Escala
+model.scale = Param(within=NonNegativeIntegers) #INICIALIZAR
 
-#Conjunto de arestas
-model.A = pyo.Set(model.i,model.j,dimen=2) #DECLARACAO TALVEZ ESTEJA ERRADA
+## Conjuntos (Sets)
+## ---
 
-#Constantes do problema
-#---
-#Coordenadas x dos nos
-model.x = pyo.Set(model.i) #INICIALIZAR
-#Coordenadas y dos nos
-model.y = pyo.Set(model.i) #INICIALIZAR
-#Conjunto de corrente consumida media (I)
-model.I = pyo.Set(model.S) #INICIALIZAR
-#Conjunto de custo medio em dolar (M)
-model.Mc = pyo.Set(model.S) #INICIALIZAR
-#Conjunto de raio maximo de alcance (Rmax)
-model.Rmax = pyo.Set(model.S) #INICIALIZAR
-#Distancia entre pares de posicoes fixas (D)
-def init_D():
-    for i in model.V:
-        for j in model.V:
-            if(i != j):
-                yield math.sqrt(pow(model.x[i]-model.x[j],2)+pow(model.y[i]-model.y[j],2))
+# Conjunto de nos
+model.V = RangeSet(1,model.n)
+# Conjunto de arestas
+model.A = Set(model.V,model.V,dimen=2,doc="Arestas")
+# Conjunto de modelos/tipos de transceptor
+model.S = Set(initialize=["S2C","S2CPro","S3"],doc="Modelos")
 
-model.D = pyo.Set(initialize=init_D) ##DECLARACAO TALVEZ ESTEJA ERRADA
-#Vizinhanca dos nos
-def init_N():
-    for t in model.S:
-        for i in model.V:
-            for j in model.V:
-                if(i != j):
-                    if(model.D[i][j] > Rmax[t])
-                        yield j
+## Constantes do problema (demais parametros)
 
-model.N = pyo.Set(initialize=init_N) ##DECLARACAO TALVEZ ESTEJA ERRADA
-#Parametro de iteracao na vizinhanca (k)
-model.k = pyo.Param(model.i,model.t,model.N) ##DECLARACAO TALVEZ ESTEJA ERRADA
+# Coordenadas x dos nos
+model.X = Param(model.V) #INICIALIZAR
+# Coordenadas y dos nos
+model.Y = Param(model.V) #INICIALIZAR
+# Conjunto de corrente consumida media (I)
+model.I = Param(model.S) #INICIALIZAR
+# Conjunto de custo medio em dolar (M)
+model.MC = Param(model.S) #INICIALIZAR
+# Conjunto de raio maximo de alcance (Rmax)
+model.RMAX = Param(model.S) #INICIALIZAR
+# Distancia entre pares de posicoes fixas (D)
+def init_D(model, i, j):
+    return math.sqrt(pow((model.X[i]-model.X[j])*model.scale,2)+pow((model.Y[i]-model.Y[j])*model.scale,2))
 
+model.D = Param(model.V,model.V,initialize=init_D,domain=NonNegativeReals) ##DECLARACAO TALVEZ ESTEJA ERRADA
 
-#Variaveis de decisao
-#---
-model.s = pyo.Var(model.i, model.t, domain=pyo.Binary)
+# # Vizinhanca dos nos
+def init_N(model, t, i):
+    for j in model.V:
+        if(i != j):
+            if(model.D[i,j] > model.RMAX[t]):
+                yield j
 
-#Funcoes objetivo
-#---
-#Consumo de Energia
-def obj_Energy():
-    return pyo.summation(model.I,model.s)
+model.N = Set(model.S,model.V,initialize=init_N) ##DECLARACAO TALVEZ ESTEJA ERRADA
 
-model.E = pyo.Objective(rule=obj_Energy)
-#Area de Cobertura
-def obj_Coverage():
-    return pyo.summation(math.pi,model.Rmax,model.s)
+# Parametros de iteracao (i,j,t)
+# ---
+# model.i = Param(model.V,default=1)
+# model.j = Param(model.V,default=1)
+# model.t = Param(model.S,default="S2C",doc="Modelo")
+# model.u = Param(model.S,default="S2C",doc="Modelo")
 
-model.C = pyo.Objective(rule=obj_Coverage)
-#Custo financeiro
-def obj_Monetary():
-    return pyo.summation(model.M,model.s)
-
-model.M = pyo.Objective(rule=obj_Monetary)
-
-#Expressoes
-#---
-
-#Nor = min(1,pyo.summation(model.s))
-
-#Restricoes
-#---
+# # Parametro de iteracao na vizinhanca (k)
+# model.k = Param(model.i,model.t,model.N) ##DECLARACAO TALVEZ ESTEJA ERRADA
 
 
+# Variaveis de decisao
+# ---
+# model.s = Var(model.t, model.i, within=Binary)
+
+# # Funcoes objetivo
+# # ---
+# # Consumo de Energia
+# def obj_Energy_rule(model):
+#     return sum( sum(model.I*model.s[t][i] for t in model.S) for i in model.V)
+
+# model.E = Objective(rule=obj_Energy_rule,sense=minimize)
+
+# # Area de Cobertura
+# def obj_Coverage_rule(model):
+#     return sum( sum(math.pi*pow(RMAX[t],2)*model.s[t][i] for t in model.S) for i in model.V)
+
+# model.C = Objective(rule=obj_Coverage_rule,,sense=maximize)
+
+# # Custo financeiro
+# def obj_Monetary_rule(model):
+#     return sum( sum(model.MC*model.s[t][i] for t in model.S) for i in model.V)
+
+# model.M = Objective(rule=obj_Monetary_rule,sense=minimize)
+
+# Expressoes
+# ---
+
+#Nor = min(1,summation(model.s))
+
+# Restricoes
+# ---
 
 
 
-model.s = pyo.Var()
 
-#Imprime modelo
+
+#-----------------------------------------------------------#
+
+## OUTPUT
+## ------
+
+## IMPRIME MODELO
 # model.pprint()
 
-#Resolve o modelo com solver escolhido
-# #SolverFactory('glpk', executable='glpsol').solve(model).write()
+## CARREGA DADOS DE INSTANCIA NO MODELO ABSTRATO
+data = DataPortal()
+data.load(filename='sap.dat', model=model)
+instance = model.create_instance(data)
+
+print(instance.D[1,2])
+instance.pprint()
+
+# ## IMPRIME INSTANCIA (FUNCIONA? TESTAR)
+# instance.pprint()
+
+# ## RESOLVE INSTANCIA
+# optimizer = SolverFactory('glpk', executable='glpsol')
+# optimizer.solve(instance)
+# instance.display
+
 # SolverFactory('cplex', executable='cplex').solve(model).write()
-
-#Apresenta solucao
-#print('\nProfit = ', model.profit())
-
-#print('\nDecision Variables')
-#print('x = ', model.x())
-#print('y = ', model.y())
-
-#print('\nConstraints')
-#print('Demand  = ', model.demand())
-#print('Labor A = ', model.laborA())
-#print('Labor B = ', model.laborB())
 
 #ADICIONAR AO FINAL UM POS PROCESSAMENTO PARA VISUALIZAR A SOLUCAO EM 2D. Usar inicialmente texto, mas depois fazer com matplot.
