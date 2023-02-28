@@ -85,7 +85,7 @@ execute VIZINHANCA {
 	    for(var j in V){
 	      	if(i != j){
 		      	  
-		      	  if(D[i][j] > Rmax[t]){
+		      	  if(D[i][j] < Rmax[t]){
 		      	    N[t][i].add(j);
 		      	  }
 		      	  
@@ -105,7 +105,7 @@ dvar boolean s[Tipos][V];
 //----------
 
 //Nor (verifica se nó i alocado está isolado. Se igual a 0, o nó tem pelo menos 1 vizinho ou não está alocado na posição i (inativo). Se igual a 1, não possui nenhum vizinho.)
-dexpr int Nor = sum(i in V, t in Tipos) minl(s[t][i],(1 - minl(1,(sum(u in Tipos, j in N[t][u][i]) s[u][j]))));
+dexpr int Nor = sum(i in V, t in Tipos) minl(s[t][i],(1 - minl(1,(sum(u in Tipos, j in N[t][i]) s[u][j]))));
 
 ////Funções Objetivo
 
@@ -113,16 +113,16 @@ dexpr int Nor = sum(i in V, t in Tipos) minl(s[t][i],(1 - minl(1,(sum(u in Tipos
 dexpr float E = sum(i in V) sum(t in Tipos) It[t] * s[t][i];
 //Maximizar cobertura da rede
 dexpr float C = (sum(i in V) sum(t in Tipos) s[t][i])/n;
-dexpr float C_alt = sum(i in V, t in Tipos, u in Tipos, j in N[t][u][i]) s[u][j];
+dexpr float C_alt = sum(i in V, t in Tipos, u in Tipos, j in N[t][i]) s[u][j];
 //Minimizar custo monetario da rede
 dexpr float M = sum(i in V) sum(t in Tipos) Mt[t] * s[t][i];
 
 ////FO
 
 ////Minimizar energia e custo monetário, ao passo que maximiza cobertura da rede
-minimize E;
+//minimize E;
 //minimize M;
-//maximize C;
+maximize C;
 //maximize C_alt;
 
 subject to{

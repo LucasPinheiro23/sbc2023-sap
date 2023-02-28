@@ -1,0 +1,38 @@
+!SESSION 2023-02-26 21:10:27.051 -----------------------------------------------
+eclipse.buildId=Build R2
+java.fullversion=11.0.13+8
+JRE 11 Windows 8 amd64-64-Bit Compressed References 20211022_218 (JIT enabled, AOT enabled)
+OpenJ9   - e1e72c497
+OMR      - 299b6a2d2
+JCL      - 2d83aa3b76 based on jdk-11.0.13+8
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -clean -data D:\Users\Lucas\OneDrive - cefet-rj.br\Documentos\MESTRADO - PPCIC\PESQUISA - PRINCIPAL\sbc2023-sap\cplex-studio -clean
+
+!ENTRY org.eclipse.ui.ide 4 4 2023-02-26 21:11:16.706
+!MESSAGE -data /valid/path, workspace already set:file:/D:/Users/Lucas/OneDrive - cefet-rj.br/Documentos/MESTRADO - PPCIC/PESQUISA - PRINCIPAL/sbc2023-sap/cplex-studio/
+
+!ENTRY org.eclipse.ui 2 2 2023-02-26 21:11:45.057
+!MESSAGE Invalid preference category path: org.eclipse.wst.html.ui.preferences.web (bundle: org.eclipse.wst.jsdt.ui, page: org.eclipse.wst.jsdt.ui.preferences.JavaBasePreferencePage)
+
+!ENTRY ilog.odms.ide.core 1 0 2023-02-26 21:23:23.414
+!MESSAGE ODM Bundle is OFF
+
+!ENTRY ilog.odms.ide.core 1 0 2023-02-27 16:00:29.747
+!MESSAGE 
+!STACK 0
+java.lang.InterruptedException
+	at java.base/java.util.concurrent.FutureTask.awaitDone(FutureTask.java:418)
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:190)
+	at ilog.odms.ide.internal.core.run.IloAbstractRunController.syncRequestScript(IloAbstractRunController.java:414)
+	at ilog.odms.ide.internal.core.run.IloAbstractRunController.syncRequestScript(IloAbstractRunController.java:337)
+	at ilog.odms.ide.internal.core.run.remote.IloRemoteRunController.syncRequestScript(IloRemoteRunController.java:190)
+	at ilog.odms.ide.core.bridge.IloScriptRequestHelper.executeRequest(IloScriptRequestHelper.java:34)
+	at ilog.odms.ide.core.bridge.remote.IloScriptRequestBase.genericRequest(IloScriptRequestBase.java:55)
+	at ilog.odms.ide.core.bridge.remote.IloRemoteModelBridge.getElements(IloRemoteModelBridge.java:83)
+	at ilog.odms.ide.ui.editors.model.IloModelTextHoverAST.findElement(IloModelTextHoverAST.java:56)
+	at ilog.odms.ide.ui.editors.model.IloModelTextHoverAST.getElementHover(IloModelTextHoverAST.java:101)
+	at ilog.odms.ide.ui.editors.model.IloModelTextHoverAST.getHoverInfo(IloModelTextHoverAST.java:116)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:157)
+
+!ENTRY ilog.odms.ide.opllang 1 0 2023-02-28 15:43:48.840
+!MESSAGE concert_wrap.IloEndMT

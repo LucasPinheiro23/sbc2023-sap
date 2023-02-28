@@ -1,0 +1,36 @@
+!SESSION 2023-02-26 21:23:42.296 -----------------------------------------------
+eclipse.buildId=unknown
+java.fullversion=11.0.13+8
+JRE 11 Windows 10 amd64-64-Bit Compressed References 20211022_218 (JIT enabled, AOT enabled)
+OpenJ9   - e1e72c497
+OMR      - 299b6a2d2
+JCL      - 2d83aa3b76 based on jdk-11.0.13+8
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Command-line arguments:  -clean -nl pt_BR -configuration D:\Users\Lucas\OneDrive - cefet-rj.br\Documentos\MESTRADO - PPCIC\PESQUISA - PRINCIPAL\sbc2023-sap\cplex-studio\.metadata\workspace_oplrun
+
+!ENTRY ilog.odms.ide.opllang.remote 1 0 2023-02-26 21:23:42.296
+!MESSAGE Run Alc_Teorico in D:/Users/Lucas/OneDrive - cefet-rj.br/Documentos/MESTRADO - PPCIC/PESQUISA - PRINCIPAL/sbc2023-sap/cplex-studio/SBC2023
+!SESSION 2023-02-26 21:30:38.010 -----------------------------------------------
+eclipse.buildId=unknown
+java.fullversion=11.0.13+8
+JRE 11 Windows 10 amd64-64-Bit Compressed References 20211022_218 (JIT enabled, AOT enabled)
+OpenJ9   - e1e72c497
+OMR      - 299b6a2d2
+JCL      - 2d83aa3b76 based on jdk-11.0.13+8
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Command-line arguments:  -clean -nl pt_BR -configuration D:\Users\Lucas\OneDrive - cefet-rj.br\Documentos\MESTRADO - PPCIC\PESQUISA - PRINCIPAL\sbc2023-sap\cplex-studio\.metadata\workspace_oplrun
+
+!ENTRY ilog.odms.ide.opllang.remote 1 0 2023-02-26 21:30:38.011
+!MESSAGE Run Alc_Teorico in D:/Users/Lucas/OneDrive - cefet-rj.br/Documentos/MESTRADO - PPCIC/PESQUISA - PRINCIPAL/sbc2023-sap/cplex-studio/SBC2023
+!SESSION 2023-02-27 16:03:42.857 -----------------------------------------------
+eclipse.buildId=unknown
+java.fullversion=11.0.13+8
+JRE 11 Windows 10 amd64-64-Bit Compressed References 20211022_218 (JIT enabled, AOT enabled)
+OpenJ9   - e1e72c497
+OMR      - 299b6a2d2
+JCL      - 2d83aa3b76 based on jdk-11.0.13+8
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Command-line arguments:  -clean -nl pt_BR -configuration D:\Users\Lucas\OneDrive - cefet-rj.br\Documentos\MESTRADO - PPCIC\PESQUISA - PRINCIPAL\sbc2023-sap\cplex-studio\.metadata\workspace_oplrun
+
+!ENTRY ilog.odms.ide.opllang.remote 1 0 2023-02-27 16:03:42.857
+!MESSAGE Run Alc_Teorico in D:/Users/Lucas/OneDrive - cefet-rj.br/Documentos/MESTRADO - PPCIC/PESQUISA - PRINCIPAL/sbc2023-sap/cplex-studio/SBC2023

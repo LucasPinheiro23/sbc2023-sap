@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="opl.launchType">
+    <stringAttribute key="opl.debugModel.ATTR_ELEMENT_ID" value="=SBC2023RCon\figu\rações de ExecuçãorAlc_Teo\rico"/>
+    <stringAttribute key="opl.debugModel.ATTR_PROJECT" value="SBC2023"/>
+    <stringAttribute key="opl.debugModel.ATTR_RUN_CONFIG" value="Alc_Teorico"/>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/SBC2023"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="4"/>
+    </listAttribute>
+</launchConfiguration>

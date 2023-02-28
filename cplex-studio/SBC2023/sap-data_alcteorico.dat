@@ -11,12 +11,12 @@
 Tipos = {"S2C","S2CPro","S3"};
 
 //Número total de sensores (n)
-//n = 6;
-n = 2;
+n = 6;
+//n = 2;
 
 ////Tamanho total da área do problema (lx * ly)
-lx = 15;
-ly = 15;
+lx = 5;
+ly = 5;
 escala = 1000; //Escala das posições geográficas
 
 //Dados do problema
