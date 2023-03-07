@@ -1,14 +1,14 @@
 {
     "Problem": [
         {
-            "Lower bound": 56.9,
-            "Name": "tmp5tugc6m7",
-            "Number of constraints": 16,
-            "Number of nonzeros": 85,
+            "Lower bound": 3.469446951953614e-18,
+            "Name": "sap-100.dat",
+            "Number of constraints": 204,
+            "Number of nonzeros": 1202,
             "Number of objectives": 1,
-            "Number of variables": 19,
+            "Number of variables": 301,
             "Sense": "minimize",
-            "Upper bound": 56.9
+            "Upper bound": 3.469446951953614e-18
         }
     ],
     "Solution": [
@@ -20,18 +20,23 @@
             "Constraint": "No values",
             "Gap": 0.0,
             "Message": null,
-            "Objective": {
-                "M": {
-                    "Value": 56.9
-                }
-            },
+            "Objective": {},
             "Problem": {},
             "Status": "optimal",
             "Variable": {
+                "s[S2C,100]": {
+                    "Value": 1.0
+                },
+                "s[S2C,10]": {
+                    "Value": 1.0
+                },
+                "s[S2C,11]": {
+                    "Value": 1.0
+                },
                 "s[S2C,1]": {
                     "Value": 1.0
                 },
-                "s[S2C,2]": {
+                "s[S2C,6]": {
                     "Value": 1.0
                 }
             }
@@ -48,9 +53,9 @@
             },
             "Status": "ok",
             "Termination condition": "optimal",
-            "Termination message": "MIP - Integer optimal solution\\x3a Objective = 5.6900000000e+01",
-            "Time": 0.13500428199768066,
-            "User time": 0.03
+            "Termination message": "MIP - Integer optimal solution\\x3a Objective = 3.4694469520e-18",
+            "Time": 0.7200007438659668,
+            "User time": 0.39
         }
     ]
 }

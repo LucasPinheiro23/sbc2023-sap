@@ -1,0 +1,16 @@
+set S := "S2C" "S2CPro" "S3";
+
+param I :=
+"S2C" 0.305891
+"S2CPro" 0.755891
+"S3" 0.76198;
+
+param MC := 
+"S2C" 28.45
+"S2CPro" 34.31
+"S3" 40.32;
+
+param RMAX :=
+"S2C" 1200
+"S2CPro" 3200
+"S3" 3200;

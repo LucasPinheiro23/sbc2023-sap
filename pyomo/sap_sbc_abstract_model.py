@@ -5,6 +5,14 @@ import math
 BIG = -100000
 SMALL = 100000
 
+#Funcao de minimo linear entre dois valores
+def minl(x,y):
+    return (x+y-abs(x-y))/2
+
+#Funcao de maximo linear entre dois valores
+def maxl(x,y):
+    return (x+y+abs(x-y))/2
+
 ### MODELAGEM ABSTRATA
 #--------------------#
 
@@ -18,7 +26,7 @@ def init_D(model, i, j):
 def init_N(model, t, i):
     for j in model.V:
         if(i != j):
-            if(model.D[i,j] < model.RMAX[t] and model.D[i,j] > 0.8*model.RMAX[t]):
+            if(model.D[i,j] <= model.RMAX[t]):# and model.D[i,j] > 0.8*model.RMAX[t]):
                 yield j
 
 # FO - Consumo de Energia
@@ -33,20 +41,34 @@ def obj_Coverage_rule(model):
 def obj_Monetary_rule(model):
     return sum(sum(model.MC[t]*model.s[t,i] for t in model.S) for i in model.V)
 
+# FO E normalizada por min-max
+def obj_norm_E(model):
+    return model.exp_norm_E
+
+# FO C normalizada por min-max
+def obj_norm_C(model):
+    return model.exp_norm_C
+
+# FO M normalizada por min-max
+def obj_norm_M(model):
+    return model.exp_norm_M
+
 # FO - Metodo das ponderacoes
 def obj_WEIGHTED(model):
     return model.weig
 
 # Computa a quantidade de vizinhos para cada no i de tipo t
-def init_Neig(model, t, i):
-    for u in model.S:
-        neig = 0
-        for j in model.N[t,i]:
-            if j not in model.V:
-                return 0
-            else:
-                neig = neig + 1
-    return neig
+# def init_Neig(model, t, i):
+#     neig = 0
+#     for j in model.N[t,i]:
+#         if j not in model.V:
+#             return 0
+#         else:
+#             neig = neig + 1
+#     return neig
+
+# def init_Neig(model, t, i):
+#     return (sum( sum( minl(1,model.s[u,j]) for u in model.S) for j in model.N[t,i]))
 
 # Restricao de tipo (apenas um t por posicao)
 def const_typenum(model, i):
@@ -58,7 +80,9 @@ def const_numalloc(model):
 
 # Restricao de vizinhanca (nao deve haver nenhum no sem vizinhos)
 def const_OR(model):
-    return sum( sum( model.s[t,i] * (1 - min(1,model.Neig[t,i])) for t in model.S) for i in model.V) == 0
+    # return (0,sum( sum( (1 - model.s[t,i]) * (1 - min(1,model.Neig[t,i])) for t in model.S) for i in model.V),0)
+    return (0, sum( sum( (1 - sum( sum( minl(1,model.s[u,j]) for u in model.S) for j in model.N[t,i])) for t in model.S) for i in model.V),0)
+    # return (0, sum( sum( minl(model.s[t,i], (1 - model.Neig[t,i])) for t in model.S) for i in model.V),0)
 
 # Funcao principal para gerar instancia do modelo
 def generate_model(fo, alpha):
@@ -71,17 +95,15 @@ def generate_model(fo, alpha):
     # Numero de nos
     model.n = Param(within=NonNegativeIntegers) #INICIALIZAR
     # Largura do terreno
-    model.W = Param(within=NonNegativeIntegers) #INICIALIZAR
+    #model.W = Param(within=NonNegativeIntegers) #INICIALIZAR
     # Altura do terreno
-    model.H = Param(within=NonNegativeIntegers) #INICIALIZAR
+    #model.H = Param(within=NonNegativeIntegers) #INICIALIZAR
     # Menores coordenadas (X,Y)
-    model.smallest_X = Param(within=NonNegativeIntegers, initialize = 0) #INICIALIZAR
-    model.smallest_Y = Param(within=NonNegativeIntegers, initialize = 0) #INICIALIZAR
+    model.smallest_X = Param(within=Integers, initialize = 0) #INICIALIZAR
+    model.smallest_Y = Param(within=Integers, initialize = 0) #INICIALIZAR
     # Maiores coordenadas (X,Y)
-    model.biggest_X = Param(within=NonNegativeIntegers, initialize = model.n) #INICIALIZAR
-    model.biggest_Y = Param(within=NonNegativeIntegers, initialize = model.n) #INICIALIZAR
-    # Altura do terreno
-    model.H = Param(within=NonNegativeIntegers) #INICIALIZAR
+    model.biggest_X = Param(within=Integers, initialize = model.n) #INICIALIZAR
+    model.biggest_Y = Param(within=Integers, initialize = model.n) #INICIALIZAR
     # Escala
     model.scale = Param(within=NonNegativeIntegers) #INICIALIZAR
 
@@ -124,31 +146,17 @@ def generate_model(fo, alpha):
     # FO - Area de Cobertura
     model.C = Objective(rule=obj_Coverage_rule,sense=maximize)
     # FO - Custo Monetario
-    model.M = Objective(rule=obj_Monetary_rule,sense=minimize)
+    model.M = Objective(rule=obj_Monetary_rule,sense=maximize)
 
     model.E.deactivate()
     model.C.deactivate()
     model.M.deactivate()
 
-    #Significa que temos apenas 1 FO
-    if sum(list(alpha.values())) == 1:
-        if fo['E'] == 1:
-            model.E.activate()
-        elif fo['C'] == 1:
-            model.C.activate()
-        elif fo['M'] == 1:
-            model.M.activate()
-    #Significa que o problema eh multiobjetivo (ponderado por alphas)
-    else:
-        model.weig = alpha['E'] * fo['E'] * model.E - alpha['C'] * fo['C'] * model.C + alpha['M'] * fo['M'] * model.M
-        model.WEIGHTED = Objective(rule=obj_WEIGHTED,sense=minimize)
-        model.WEIGHTED.activate()
-
     ## Expressoes
     ## ---
 
     # Computa a quantidade de vizinhos para cada no i de tipo t
-    model.Neig = Param(model.S, model.V, initialize=init_Neig)
+    # model.Neig = Param(model.S, model.V, initialize=init_Neig)
 
     # Restricoes
     # ---
@@ -163,3 +171,186 @@ def generate_model(fo, alpha):
     model.OR = Constraint(rule=const_OR)
 
     return model
+
+#Funcao para coletar valor maximo da FO de uma instancia
+def get_fo_max(model,instance_filename,solver,solver_exec):
+
+    #Inicializa resultados maximos
+    max_fo = {'E':0,'C':0,'M':0}
+    #Inicializa DataPortal
+    data = DataPortal()
+    #Inicializa solver
+    opt = SolverFactory(solver, executable=solver_exec)
+
+
+    #Maximiza todas as FOs
+    model.E = Objective(rule=obj_Energy_rule,sense=maximize)
+    model.C = Objective(rule=obj_Coverage_rule,sense=maximize)
+    model.M = Objective(rule=obj_Monetary_rule,sense=maximize)
+
+    #Desativa todas as FOs
+    model.E.deactivate()
+    model.C.deactivate()
+    model.M.deactivate()
+
+    ##Ativa apenas FO E
+    model.E.activate()
+
+    ## Carrega dados de instancia no modelo
+    data = DataPortal()
+    data.load(filename=instance_filename, model=model)
+    instance = model.create_instance(data)
+
+    ## Resolve para encontrar max
+
+    #Resolve a instancia e pega resultado da FO
+    results = opt.solve(instance)
+    instance.solutions.store_to(results)
+
+    if(results.solver.termination_condition == TerminationCondition.infeasible):
+        print("ERRO: Nenhuma solucao encontrada para Max E.")
+        exit(-1)
+
+    max_fo['E'] = value(instance.E)
+
+    #Desativa FO E
+    model.E.deactivate()
+
+    ##Ativa apenas FO C
+    model.C.activate()
+
+    ## Carrega dados de instancia no modelo
+    
+    data.load(filename=instance_filename, model=model)
+    instance = model.create_instance(data)
+
+    ## Resolve para encontrar max
+
+    #Resolve a instancia e pega resultado da FO
+    results = opt.solve(instance)
+    instance.solutions.store_to(results)
+
+    if(results.solver.termination_condition == TerminationCondition.infeasible):
+        print("ERRO: Nenhuma solucao encontrada para Max C.")
+        exit(-1)
+
+    max_fo['C'] = value(instance.C)
+
+    #Desativa FO C
+    model.C.deactivate()
+
+    ##Ativa apenas FO M
+    model.M.activate()
+
+    ## Carrega dados de instancia no modelo
+    data = DataPortal()
+    data.load(filename=instance_filename, model=model)
+    instance = model.create_instance(data)
+
+    ## Resolve para encontrar max
+
+    #Resolve a instancia e pega resultado da FO
+    results = opt.solve(instance)
+    instance.solutions.store_to(results)
+
+    if(results.solver.termination_condition == TerminationCondition.infeasible):
+        print("ERRO: Nenhuma solucao encontrada para Max M.")
+        exit(-1)
+
+    max_fo['M'] = value(instance.M)
+
+    #Desativa FO M
+    model.M.deactivate()
+
+    return max_fo
+
+#Funcao para coletar valor minimo da FO de uma instancia
+def get_fo_min(model,instance_filename,solver,solver_exec):
+
+    #Inicializa resultados maximos
+    min_fo = {'E':0,'C':0,'M':0}
+    #Inicializa DataPortal
+    data = DataPortal()
+    #Inicializa solver
+    opt = SolverFactory(solver, executable=solver_exec)
+
+    #Maximiza todas as FOs
+    model.E = Objective(rule=obj_Energy_rule,sense=minimize)
+    model.C = Objective(rule=obj_Coverage_rule,sense=minimize)
+    model.M = Objective(rule=obj_Monetary_rule,sense=minimize)
+
+    #Desativa todas as FOs
+    model.E.deactivate()
+    model.C.deactivate()
+    model.M.deactivate()
+
+    ##Ativa apenas FO E
+    model.E.activate()
+
+    ## Carrega dados de instancia no modelo
+    data = DataPortal()
+    data.load(filename=instance_filename, model=model)
+    instance = model.create_instance(data)
+
+    ## Resolve para encontrar max
+
+    #Resolve a instancia e pega resultado da FO
+    results = opt.solve(instance)
+    instance.solutions.store_to(results)
+
+    if(results.solver.termination_condition == TerminationCondition.infeasible):
+        print("ERRO: Nenhuma solucao encontrada para Min E.")
+        exit(-1)
+
+    min_fo['E'] = value(instance.E)
+
+    #Desativa FO E
+    model.E.deactivate()
+
+    ##Ativa apenas FO C
+    model.C.activate()
+
+    ## Carrega dados de instancia no modelo
+    
+    data.load(filename=instance_filename, model=model)
+    instance = model.create_instance(data)
+
+    ## Resolve para encontrar max
+
+    #Resolve a instancia e pega resultado da FO
+    results = opt.solve(instance)
+    instance.solutions.store_to(results)
+
+    if(results.solver.termination_condition == TerminationCondition.infeasible):
+        print("ERRO: Nenhuma solucao encontrada para Min C.")
+        exit(-1)
+
+    min_fo['C'] = value(instance.C)
+
+    #Desativa FO C
+    model.C.deactivate()
+
+    ##Ativa apenas FO M
+    model.M.activate()
+
+    ## Carrega dados de instancia no modelo
+    data = DataPortal()
+    data.load(filename=instance_filename, model=model)
+    instance = model.create_instance(data)
+
+    ## Resolve para encontrar max
+
+    #Resolve a instancia e pega resultado da FO
+    results = opt.solve(instance)
+    instance.solutions.store_to(results)
+
+    if(results.solver.termination_condition == TerminationCondition.infeasible):
+        print("ERRO: Nenhuma solucao encontrada para Min M.")
+        exit(-1)
+
+    min_fo['M'] = value(instance.M)
+
+    #Desativa FO M
+    model.M.deactivate()
+
+    return min_fo
