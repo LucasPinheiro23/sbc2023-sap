@@ -70,6 +70,7 @@ def obj_WEIGHTED(model):
 # def init_Neig(model, t, i):
 #     return (sum( sum( minl(1,model.s[u,j]) for u in model.S) for j in model.N[t,i]))
 
+
 # Restricao de tipo (apenas um t por posicao)
 def const_typenum(model, i):
     return (0,sum( model.s[t,i] for t in model.S),1)
@@ -78,10 +79,48 @@ def const_typenum(model, i):
 def const_numalloc(model):
     return (max(2,ceil(0.05*model.n)),sum( sum( model.s[t,i] for t in model.S) for i in model.V),model.n)
 
+##REESCREVENDO AS RESTRICOES MIN() DE FORMA LINEAR
+def const_Neig1(model, t, i):
+    return sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) - 1 <= model.n * model.d1[t,i]
+
+def const_Neig2(model, t, i):
+    return 1 - sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) <= model.n * (1 - model.d1[t,i])
+
+def const_Neig3(model, t, i):
+    return model.Neig[t,i] <= 1
+
+def const_Neig4(model, t, i):
+    return model.Neig[t,i] <= sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i])
+
+def const_Neig5(model, t, i):
+    return model.Neig[t,i] >= 1 - model.n * (1 - model.d1[t,i])
+
+def const_Neig6(model, t, i):
+    return model.Neig[t,i] >= sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) - model.n * model.d1[t,i]
+
+def const_OR1(model):
+    return sum( sum(((1 - model.Neig[t,i]) - model.s[t,i]) for t in model.S) for i in model.V) <= model.d2
+
+def const_OR2(model):
+    return sum( sum((model.s[t,i] - (1 - model.Neig[t,i])) for t in model.S) for i in model.V) <= (1 - model.d2)
+
+def const_OR3(model):
+    return model.OR <= sum( sum(model.s[t,i] for t in model.S) for i in model.V)
+
+def const_OR4(model):
+    return model.OR <= sum( sum( (1 - model.Neig[t,i]) for t in model.S) for i in model.V)
+
+def const_OR5(model):
+    return model.OR >= sum( sum( model.s[t,i] for t in model.S) for i in model.V) - (1 - model.d2)
+
+def const_OR6(model):
+    return model.OR >= sum( sum( (1 - model.Neig[t,i]) for t in model.S) for i in model.V) - model.d2
+
+
 # Restricao de vizinhanca (nao deve haver nenhum no sem vizinhos)
-def const_OR(model):
+# def const_OR(model):
     # return (0,sum( sum( (1 - model.s[t,i]) * (1 - min(1,model.Neig[t,i])) for t in model.S) for i in model.V),0)
-    return (0, sum( sum( (1 - sum( sum( minl(1,model.s[u,j]) for u in model.S) for j in model.N[t,i])) for t in model.S) for i in model.V),0)
+    # return (0, sum( sum( (1 - sum( sum( minl(1,model.s[u,j]) for u in model.S) for j in model.N[t,i])) for t in model.S) for i in model.V),0)
     # return (0, sum( sum( minl(model.s[t,i], (1 - model.Neig[t,i])) for t in model.S) for i in model.V),0)
 
 # Funcao principal para gerar instancia do modelo
@@ -136,7 +175,14 @@ def generate_model(fo, alpha):
 
     # Variaveis de decisao
     # ---
+    #Estado das posicoes de alocacao (1 = alocado, 0 = nao alocado)
     model.s = Var(model.S, model.V, within=Binary)
+    #Variaveis de controle das restricoes com min(x,y). (1 => x < y, 0 => x > y)
+    model.d1 = Var(model.S, model.V, within=Binary)
+    model.d2 = Var(within=Binary)
+    #Variaveis componentes de restricao
+    model.Neig = Var(model.S, model.V, within=Binary)
+    model.OR = Var(within=Binary)
 
     ## Funcoes objetivo
     ## ---
@@ -167,8 +213,20 @@ def generate_model(fo, alpha):
     # #Restricao de quantidade minima (LB) e maxima (UB) de alocacao
     model.numalloc = Constraint(rule=const_numalloc)
 
-    # Restricao de vizinhanca (nao deve haver nenhum no sem vizinhos)
-    model.OR = Constraint(rule=const_OR)
+    # Restricoes de vizinhanca (nao deve haver nenhum no sem vizinhos)
+    model.Neig1 = Constraint(rule=const_Neig1)
+    model.Neig2 = Constraint(rule=const_Neig2)
+    model.Neig3 = Constraint(rule=const_Neig3)
+    model.Neig4 = Constraint(rule=const_Neig4)
+    model.Neig5 = Constraint(rule=const_Neig5)
+    model.Neig6 = Constraint(rule=const_Neig6)
+    
+    model.OR1 = Constraint(rule=const_OR1)
+    model.OR2 = Constraint(rule=const_OR2)
+    model.OR3 = Constraint(rule=const_OR3)
+    model.OR4 = Constraint(rule=const_OR4)
+    model.OR5 = Constraint(rule=const_OR5)
+    model.OR6 = Constraint(rule=const_OR6)
 
     return model
 
