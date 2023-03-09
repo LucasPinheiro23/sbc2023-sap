@@ -31,15 +31,15 @@ def init_N(model, t, i):
 
 # FO - Consumo de Energia
 def obj_Energy_rule(model):
-    return sum(sum(model.I[t]*model.s[t,i] for t in model.S) for i in model.V)
+    return sum(sum(model.I[t]*model.s[t,i] - model.Neig[t,i] for t in model.S) for i in model.V) - model.OR
 
 # FO - Area de Cobertura
 def obj_Coverage_rule(model):
-    return sum(sum(math.pi*pow(model.RMAX[t],2)*model.s[t,i] for t in model.S) for i in model.V)
+    return sum(sum(math.pi*pow(model.RMAX[t],2)*model.s[t,i] + model.Neig[t,i] for t in model.S) for i in model.V) + model.OR
 
 # FO - Custo Monetario
 def obj_Monetary_rule(model):
-    return sum(sum(model.MC[t]*model.s[t,i] for t in model.S) for i in model.V)
+    return sum(sum(model.MC[t]*model.s[t,i] - model.Neig[t,i] for t in model.S) for i in model.V) - model.OR
 
 # FO E normalizada por min-max
 def obj_norm_E(model):
@@ -80,11 +80,11 @@ def const_numalloc(model):
     return (max(2,ceil(0.05*model.n)),sum( sum( model.s[t,i] for t in model.S) for i in model.V),model.n)
 
 ##REESCREVENDO AS RESTRICOES MIN() DE FORMA LINEAR
-def const_Neig1(model, t, i):
-    return sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) - 1 <= model.n * model.d1[t,i]
+# def const_Neig1(model, t, i):
+#     return sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) - 1 <= model.n * model.d1[t,i]
 
-def const_Neig2(model, t, i):
-    return 1 - sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) <= model.n * (1 - model.d1[t,i])
+# def const_Neig2(model, t, i):
+#     return 1 - sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) <= model.n * (1 - model.d1[t,i])
 
 def const_Neig3(model, t, i):
     return model.Neig[t,i] <= 1
@@ -92,17 +92,17 @@ def const_Neig3(model, t, i):
 def const_Neig4(model, t, i):
     return model.Neig[t,i] <= sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i])
 
-def const_Neig5(model, t, i):
-    return model.Neig[t,i] >= 1 - model.n * (1 - model.d1[t,i])
+# def const_Neig5(model, t, i):
+#     return model.Neig[t,i] >= 1 - (model.n * (1 - model.d1[t,i]))
 
-def const_Neig6(model, t, i):
-    return model.Neig[t,i] >= sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) - model.n * model.d1[t,i]
+# def const_Neig6(model, t, i):
+#     return model.Neig[t,i] >= sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) - model.n * model.d1[t,i]
 
-def const_OR1(model):
-    return sum( sum(((1 - model.Neig[t,i]) - model.s[t,i]) for t in model.S) for i in model.V) <= model.d2
+# def const_OR1(model):
+#     return sum( sum(((1 - model.Neig[t,i]) - model.s[t,i]) for t in model.S) for i in model.V) <= model.d2
 
-def const_OR2(model):
-    return sum( sum((model.s[t,i] - (1 - model.Neig[t,i])) for t in model.S) for i in model.V) <= (1 - model.d2)
+# def const_OR2(model):
+#     return sum( sum((model.s[t,i] - (1 - model.Neig[t,i])) for t in model.S) for i in model.V) <= (1 - model.d2)
 
 def const_OR3(model):
     return model.OR <= sum( sum(model.s[t,i] for t in model.S) for i in model.V)
@@ -110,11 +110,11 @@ def const_OR3(model):
 def const_OR4(model):
     return model.OR <= sum( sum( (1 - model.Neig[t,i]) for t in model.S) for i in model.V)
 
-def const_OR5(model):
-    return model.OR >= sum( sum( model.s[t,i] for t in model.S) for i in model.V) - (1 - model.d2)
+# def const_OR5(model):
+#     return model.OR >= sum( sum( model.s[t,i] for t in model.S) for i in model.V) - (1 - model.d2)
 
-def const_OR6(model):
-    return model.OR >= sum( sum( (1 - model.Neig[t,i]) for t in model.S) for i in model.V) - model.d2
+# def const_OR6(model):
+#     return model.OR >= sum( sum( (1 - model.Neig[t,i]) for t in model.S) for i in model.V) - model.d2
 
 
 # Restricao de vizinhanca (nao deve haver nenhum no sem vizinhos)
@@ -178,21 +178,26 @@ def generate_model(fo, alpha):
     #Estado das posicoes de alocacao (1 = alocado, 0 = nao alocado)
     model.s = Var(model.S, model.V, within=Binary)
     #Variaveis de controle das restricoes com min(x,y). (1 => x < y, 0 => x > y)
-    model.d1 = Var(model.S, model.V, within=Binary)
-    model.d2 = Var(within=Binary)
+    # model.d1 = Var(model.S, model.V, within=Binary)
+    # model.d2 = Var(within=Binary)
     #Variaveis componentes de restricao
-    model.Neig = Var(model.S, model.V, within=Binary)
+    model.Neig = Var(model.S, model.V, within=NonNegativeIntegers)
     model.OR = Var(within=Binary)
 
     ## Funcoes objetivo
     ## ---
+
+    # # FO - Maximizar Neig
+    # model.max_Neig = Objective(rule=obj_max_Neig,sense=maximize)
+    # # FO - Maximizar OR
+    # model.max_OR = Objective(rule=obj_max_OR,sense=maximize)
 
     # FO - Consumo de Energia
     model.E = Objective(rule=obj_Energy_rule,sense=minimize)
     # FO - Area de Cobertura
     model.C = Objective(rule=obj_Coverage_rule,sense=maximize)
     # FO - Custo Monetario
-    model.M = Objective(rule=obj_Monetary_rule,sense=maximize)
+    model.M = Objective(rule=obj_Monetary_rule,sense=minimize)
 
     model.E.deactivate()
     model.C.deactivate()
@@ -214,19 +219,19 @@ def generate_model(fo, alpha):
     model.numalloc = Constraint(rule=const_numalloc)
 
     # Restricoes de vizinhanca (nao deve haver nenhum no sem vizinhos)
-    model.Neig1 = Constraint(rule=const_Neig1)
-    model.Neig2 = Constraint(rule=const_Neig2)
-    model.Neig3 = Constraint(rule=const_Neig3)
-    model.Neig4 = Constraint(rule=const_Neig4)
-    model.Neig5 = Constraint(rule=const_Neig5)
-    model.Neig6 = Constraint(rule=const_Neig6)
+    # model.Neig1 = Constraint(model.S, model.V, rule=const_Neig1)
+    # model.Neig2 = Constraint(model.S, model.V, rule=const_Neig2)
+    model.Neig3 = Constraint(model.S, model.V, rule=const_Neig3)
+    model.Neig4 = Constraint(model.S, model.V, rule=const_Neig4)
+    # model.Neig5 = Constraint(model.S, model.V, rule=const_Neig5)
+    # model.Neig6 = Constraint(model.S, model.V, rule=const_Neig6)
     
-    model.OR1 = Constraint(rule=const_OR1)
-    model.OR2 = Constraint(rule=const_OR2)
+    # model.OR1 = Constraint(rule=const_OR1)
+    # model.OR2 = Constraint(rule=const_OR2)
     model.OR3 = Constraint(rule=const_OR3)
     model.OR4 = Constraint(rule=const_OR4)
-    model.OR5 = Constraint(rule=const_OR5)
-    model.OR6 = Constraint(rule=const_OR6)
+    # model.OR5 = Constraint(rule=const_OR5)
+    # model.OR6 = Constraint(rule=const_OR6)
 
     return model
 

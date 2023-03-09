@@ -17,8 +17,8 @@ logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 
 #Nome do arquivo da instancia a ser resolvida
 # instance_filename = '../instances_DAT/512/T1.dat'
-instance_filename = 'sap-6.dat'
-# instance_filename = 'sap-100.dat'
+# instance_filename = 'sap-6.dat'
+instance_filename = 'sap-100.dat'
 #Solver a ser utilizado
 solver = 'cplex'
 #Executavel do solver
@@ -27,7 +27,7 @@ solver_exec = 'cplex'
 ## CONSTRUCAO DO MODELO E INSTANCIA
 
 ## Seleciona FOs que serao ponderadas (dicionario binario)
-fo = {'E': 1, 'C': 0, 'M': 0}
+fo = {'E': 0, 'C': 1, 'M': 0}
 
 ## Seleciona valores de alpha para cada FO (ponderacao)
 alpha = {'E': 0.5, 'C': 0.5, 'M': 0}
@@ -57,7 +57,7 @@ min_fo = get_fo_min(model, instance_filename, solver, solver_exec)
 print("Maximos: "+str(max_fo))
 print("Minimos: "+str(min_fo))
 
-#Cria novos objetivos normalizados
+# #Cria novos objetivos normalizados
 model.exp_norm_E = (model.E - min_fo['E'])/(max_fo['E']-min_fo['E'])
 model.exp_norm_C = (model.C - min_fo['C'])/(max_fo['C']-min_fo['C'])
 model.exp_norm_M = (model.M - min_fo['M'])/(max_fo['M']-min_fo['M'])
@@ -87,7 +87,7 @@ data.load(filename=instance_filename, model=model)
 instance = model.create_instance(data)
 
 ## Imprime instancia
-#instance.pprint()
+instance.pprint()
 
 #-----------------------------------------------------------#
 
@@ -106,10 +106,10 @@ results.problem.name = instance_filename
 results.write(filename='results.json',format='json')
 
 #Normalizacao min-max - Etapa 2 (normaliza os resultados de acordo com os valores calculados previamente)
-# norm_E = (value(instance.E) - min_fo['E'])/(max_fo['E']-min_fo['E'])
-# norm_C = (value(instance.C) - min_fo['C'])/(max_fo['C']-min_fo['C'])
-# norm_M = (value(instance.M) - min_fo['M'])/(max_fo['M']-min_fo['M'])
-# norm_WEIGHTED = alpha['E'] * fo['E'] * norm_E - alpha['C'] * fo['C'] * norm_C + alpha['M'] * fo['M'] * norm_M
+norm_E = (value(instance.E) - min_fo['E'])/(max_fo['E']-min_fo['E'])
+norm_C = (value(instance.C) - min_fo['C'])/(max_fo['C']-min_fo['C'])
+norm_M = (value(instance.M) - min_fo['M'])/(max_fo['M']-min_fo['M'])
+norm_WEIGHTED = alpha['E'] * fo['E'] * norm_E - alpha['C'] * fo['C'] * norm_C + alpha['M'] * fo['M'] * norm_M
 
 #Pega resultados diretamente
 print("\nResultados:\n")
@@ -163,9 +163,9 @@ for i in instance.V:
     elif value(instance.s['S2CPro',i]) == 1:
         ax.plot(instance.X[i],instance.Y[i],'bo')
         ax.add_patch(plt.Circle((instance.X[i],instance.Y[i]), (instance.RMAX['S2CPro']/instance.scale), color='b', alpha=0.1))
-    elif value(instance.s['S3',i]) == 1:
-        ax.plot(instance.X[i],instance.Y[i],'ro')
-        ax.add_patch(plt.Circle((instance.X[i],instance.Y[i]), (instance.RMAX['S3']/instance.scale), color='r', alpha=0.1))
+    # elif value(instance.s['S3',i]) == 1:
+    #     ax.plot(instance.X[i],instance.Y[i],'ro')
+    #     ax.add_patch(plt.Circle((instance.X[i],instance.Y[i]), (instance.RMAX['S3']/instance.scale), color='r', alpha=0.1))
     else:
         ax.plot(instance.X[i],instance.Y[i],'ko',fillstyle='none')
     
