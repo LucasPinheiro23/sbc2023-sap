@@ -99,6 +99,9 @@ execute VIZINHANCA {
 //Variváveis de decisão
 //---------------------
 dvar boolean s[Tipos][V];
+dvar boolean d1[Tipos][V];
+//dvar boolean d2;
+dvar int Neig[Tipos][V];
 
 //RESTRICOES DE LINEARIZACAO DO MIN()
 
@@ -110,8 +113,8 @@ dvar boolean s[Tipos][V];
 //Nor (verifica se nó i alocado está isolado. Se igual a 0, o nó tem pelo menos 1 vizinho ou não está alocado na posição i (inativo). Se igual a 1, não possui nenhum vizinho.)
 //dexpr int Nor = sum(i in V, t in Tipos) minl(s[t][i],(1 - minl(1,(sum(u in Tipos, j in N[t][i]) s[u][j]))));
 
-dexpr int Neig[t in Tipos][i in V] = minl(1,sum(u in Tipos, j in N[t][i]) s[u][j]);
-dexpr int OR = sum(i in V, t in Tipos) minl(s[t][i], (1 - Neig[t][i]));
+//dexpr int Neig[t in Tipos][i in V] = minl(1,sum(u in Tipos, j in N[t][i]) s[u][j]);
+//dexpr int OR = sum(i in V, t in Tipos) minl(s[t][i], (1 - Neig[t][i]));
 
 ////Funções Objetivo
 
@@ -127,9 +130,10 @@ dexpr float M = sum(i in V) sum(t in Tipos) Mt[t] * s[t][i];
 ////FO
 
 ////Minimizar energia e custo monetário, ao passo que maximiza cobertura da rede
-maximize E;
+//minimize E;
+//maximize E;
 //minimize M;
-//maximize C;
+maximize C;
 //maximize C_alt;
 
 subject to{
@@ -140,14 +144,47 @@ subject to{
   };
   
   //Exije a alocação de ao menos 1 ou 5% das n posições, o que for maior.
-  maxl(1,ftoi(round(0.05*n))) <= sum(i in V, t in Tipos) s[t][i] <= n;
+  maxl(2,ftoi(round(0.05*n))) <= sum(i in V, t in Tipos) s[t][i] <= n;
   
   //Exije que não haja nós isolados, i.e., que não consigam se comunicar com nenhum outro.
   //Nor == 0;
-  OR == 0;
+  //OR == 0;
+  
+//  forall(t in Tipos){
+//    forall(i in V){
+//  		Neig[t][i] == minl(1,sum(u in Tipos, j in N[t][i]) s[u][j]);
+//  	}		
+//  }
   
   //RESTRICOES DE LINEARIZACAO DO MIN()
+  forall(i in V){
+    forall(t in Tipos){
+      (sum(u in Tipos, j in N[t][i]) s[u][j]) - 1 <= n*d1[t][i];
+      1 - (sum(u in Tipos, j in N[t][i]) s[u][j]) <= n*(1 - d1[t][i]);
+      Neig[t][i] <= 1;
+      Neig[t][i] <= (sum(u in Tipos, j in N[t][i]) s[u][j]);
+      Neig[t][i] >= 1 - (n * (1 - d1[t][i]));
+      Neig[t][i] >= (sum(u in Tipos, j in N[t][i]) s[u][j]) - (n * d1[t][i]);
+    }
+  }
+
+//  0 == sum(i in V, t in Tipos) minl(s[t][i], (1-Neig[t][i]));
+//  0 == sum(i in V, t in Tipos) s[t][i] * (1-Neig[t][i]);
   
+  forall(i in V){
+    forall(t in Tipos){
+      (2*s[t][i] + (1 -Neig[t][i])) <= 2;      
+    }
+  }
+  
+  
+  
+//  (sum(i in V, t in Tipos) ((1 - Neig[t][i]) - s[t][i])) <= d2;
+//  (sum(i in V, t in Tipos) (s[t][i] - (1 - Neig[t][i]))) <= (1 - d2);
+//  0 <= sum(i in V, t in Tipos) (s[t][i]);
+//  0 <= sum(i in V, t in Tipos) (1 - Neig[t][i]);
+//  0 >= sum(i in V, t in Tipos) (s[t][i]) - (1 - d2);
+//  0 >= sum(i in V, t in Tipos) (1 - Neig[t][i]) - d2;
 
 }
 

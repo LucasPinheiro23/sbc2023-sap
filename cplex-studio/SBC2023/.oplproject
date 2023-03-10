@@ -25,6 +25,16 @@
 			</ref>
             		
         </config>
+        		
+        <config default="false" name="Teste-alternativo" category="opl">
+            			
+            <ref name="sap-sbc-30012022-alcteorico-adaptado_min.mod" type="model">
+			</ref>
+            			
+            <ref name="sap-data_alcteorico.dat" type="data">
+			</ref>
+            		
+        </config>
         	
     </configs>
     	
