@@ -130,8 +130,8 @@ dexpr float M = sum(i in V) sum(t in Tipos) Mt[t] * s[t][i];
 ////FO
 
 ////Minimizar energia e custo monetário, ao passo que maximiza cobertura da rede
-//minimize E;
-maximize E;
+minimize E;
+//maximize E;
 //minimize M;
 //maximize C;
 //maximize C_alt;

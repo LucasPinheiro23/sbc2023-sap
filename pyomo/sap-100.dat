@@ -4,7 +4,7 @@ param smallest_Y := 1;
 param biggest_X := 8;
 param biggest_Y := 12;
 
-param scale := 1000;
+param scale := 400;
 
 set S := "S2C" "S2CPro" "S3";
 

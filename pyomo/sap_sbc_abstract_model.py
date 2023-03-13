@@ -5,14 +5,6 @@ import math
 BIG = -100000
 SMALL = 100000
 
-#Funcao de minimo linear entre dois valores
-def minl(x,y):
-    return (x+y-abs(x-y))/2
-
-#Funcao de maximo linear entre dois valores
-def maxl(x,y):
-    return (x+y+abs(x-y))/2
-
 ### MODELAGEM ABSTRATA
 #--------------------#
 
@@ -26,20 +18,20 @@ def init_D(model, i, j):
 def init_N(model, t, i):
     for j in model.V:
         if(i != j):
-            if(model.D[i,j] <= model.RMAX[t]):# and model.D[i,j] > 0.8*model.RMAX[t]):
+            if(model.D[i,j] <= model.RMAX[t] and model.D[i,j] >= 0.8*model.RMAX[t]):
                 yield j
 
 # FO - Consumo de Energia
 def obj_Energy_rule(model):
-    return sum(sum(model.I[t]*model.s[t,i] - model.Neig[t,i] for t in model.S) for i in model.V) - model.OR
+    return sum(sum(model.I[t]*model.s[t,i] for t in model.S) for i in model.V)
 
 # FO - Area de Cobertura
 def obj_Coverage_rule(model):
-    return sum(sum(math.pi*pow(model.RMAX[t],2)*model.s[t,i] + model.Neig[t,i] for t in model.S) for i in model.V) + model.OR
+    return sum(sum(math.pi*pow(model.RMAX[t],2)*model.s[t,i] for t in model.S) for i in model.V)
 
 # FO - Custo Monetario
 def obj_Monetary_rule(model):
-    return sum(sum(model.MC[t]*model.s[t,i] - model.Neig[t,i] for t in model.S) for i in model.V) - model.OR
+    return sum(sum(model.MC[t]*model.s[t,i] for t in model.S) for i in model.V)
 
 # FO E normalizada por min-max
 def obj_norm_E(model):
@@ -57,20 +49,6 @@ def obj_norm_M(model):
 def obj_WEIGHTED(model):
     return model.weig
 
-# Computa a quantidade de vizinhos para cada no i de tipo t
-# def init_Neig(model, t, i):
-#     neig = 0
-#     for j in model.N[t,i]:
-#         if j not in model.V:
-#             return 0
-#         else:
-#             neig = neig + 1
-#     return neig
-
-# def init_Neig(model, t, i):
-#     return (sum( sum( minl(1,model.s[u,j]) for u in model.S) for j in model.N[t,i]))
-
-
 # Restricao de tipo (apenas um t por posicao)
 def const_typenum(model, i):
     return (0,sum( model.s[t,i] for t in model.S),1)
@@ -79,12 +57,12 @@ def const_typenum(model, i):
 def const_numalloc(model):
     return (max(2,ceil(0.05*model.n)),sum( sum( model.s[t,i] for t in model.S) for i in model.V),model.n)
 
-##REESCREVENDO AS RESTRICOES MIN() DE FORMA LINEAR
-# def const_Neig1(model, t, i):
-#     return sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) - 1 <= model.n * model.d1[t,i]
+##Componente de restricao de vizinhanca. Neig == 1 se existe pelo menos um vizinho para dado no. Neig == 0 caso nenhum vizinho.
+def const_Neig1(model, t, i):
+    return sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) - 1 <= model.n * model.d1[t,i]
 
-# def const_Neig2(model, t, i):
-#     return 1 - sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) <= model.n * (1 - model.d1[t,i])
+def const_Neig2(model, t, i):
+    return 1 - sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) <= model.n * (1 - model.d1[t,i])
 
 def const_Neig3(model, t, i):
     return model.Neig[t,i] <= 1
@@ -92,39 +70,24 @@ def const_Neig3(model, t, i):
 def const_Neig4(model, t, i):
     return model.Neig[t,i] <= sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i])
 
-# def const_Neig5(model, t, i):
-#     return model.Neig[t,i] >= 1 - (model.n * (1 - model.d1[t,i]))
+def const_Neig5(model, t, i):
+    return model.Neig[t,i] >= 1 - (model.n * (1 - model.d1[t,i]))
 
-# def const_Neig6(model, t, i):
-#     return model.Neig[t,i] >= sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) - model.n * model.d1[t,i]
-
-# def const_OR1(model):
-#     return sum( sum(((1 - model.Neig[t,i]) - model.s[t,i]) for t in model.S) for i in model.V) <= model.d2
-
-# def const_OR2(model):
-#     return sum( sum((model.s[t,i] - (1 - model.Neig[t,i])) for t in model.S) for i in model.V) <= (1 - model.d2)
-
-def const_OR3(model):
-    return model.OR <= sum( sum(model.s[t,i] for t in model.S) for i in model.V)
-
-def const_OR4(model):
-    return model.OR <= sum( sum( (1 - model.Neig[t,i]) for t in model.S) for i in model.V)
-
-# def const_OR5(model):
-#     return model.OR >= sum( sum( model.s[t,i] for t in model.S) for i in model.V) - (1 - model.d2)
-
-# def const_OR6(model):
-#     return model.OR >= sum( sum( (1 - model.Neig[t,i]) for t in model.S) for i in model.V) - model.d2
-
+def const_Neig6(model, t, i):
+    return model.Neig[t,i] >= sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) - model.n * model.d1[t,i]
 
 # Restricao de vizinhanca (nao deve haver nenhum no sem vizinhos)
+def const_OR(model, t, i):
+    return (2*model.s[t,i] + (1 - model.Neig[t,i])) <= 2
+
+
 # def const_OR(model):
     # return (0,sum( sum( (1 - model.s[t,i]) * (1 - min(1,model.Neig[t,i])) for t in model.S) for i in model.V),0)
     # return (0, sum( sum( (1 - sum( sum( minl(1,model.s[u,j]) for u in model.S) for j in model.N[t,i])) for t in model.S) for i in model.V),0)
     # return (0, sum( sum( minl(model.s[t,i], (1 - model.Neig[t,i])) for t in model.S) for i in model.V),0)
 
 # Funcao principal para gerar instancia do modelo
-def generate_model(fo, alpha):
+def generate_model():
 
     ## Cria modelo abstrato do pyomo
     model = AbstractModel()
@@ -151,7 +114,7 @@ def generate_model(fo, alpha):
     # Conjunto de nos
     model.V = RangeSet(1,model.n)
     # Conjunto de arestas
-    model.A = Set(model.V,model.V,doc="Arestas",within=Binary)
+    #model.A = Set(model.V,model.V,doc="Arestas",within=Binary)
     # Conjunto de modelos/tipos de transceptor
     model.S = Set(initialize=["S2C","S2CPro","S3"],doc="Modelos")
 
@@ -178,11 +141,11 @@ def generate_model(fo, alpha):
     #Estado das posicoes de alocacao (1 = alocado, 0 = nao alocado)
     model.s = Var(model.S, model.V, within=Binary)
     #Variaveis de controle das restricoes com min(x,y). (1 => x < y, 0 => x > y)
-    # model.d1 = Var(model.S, model.V, within=Binary)
+    model.d1 = Var(model.S, model.V, within=Binary)
     # model.d2 = Var(within=Binary)
     #Variaveis componentes de restricao
     model.Neig = Var(model.S, model.V, within=NonNegativeIntegers)
-    model.OR = Var(within=Binary)
+    #model.OR = Var(within=Binary)
 
     ## Funcoes objetivo
     ## ---
@@ -219,24 +182,19 @@ def generate_model(fo, alpha):
     model.numalloc = Constraint(rule=const_numalloc)
 
     # Restricoes de vizinhanca (nao deve haver nenhum no sem vizinhos)
-    # model.Neig1 = Constraint(model.S, model.V, rule=const_Neig1)
-    # model.Neig2 = Constraint(model.S, model.V, rule=const_Neig2)
+    model.Neig1 = Constraint(model.S, model.V, rule=const_Neig1)
+    model.Neig2 = Constraint(model.S, model.V, rule=const_Neig2)
     model.Neig3 = Constraint(model.S, model.V, rule=const_Neig3)
     model.Neig4 = Constraint(model.S, model.V, rule=const_Neig4)
-    # model.Neig5 = Constraint(model.S, model.V, rule=const_Neig5)
-    # model.Neig6 = Constraint(model.S, model.V, rule=const_Neig6)
+    model.Neig5 = Constraint(model.S, model.V, rule=const_Neig5)
+    model.Neig6 = Constraint(model.S, model.V, rule=const_Neig6)
     
-    # model.OR1 = Constraint(rule=const_OR1)
-    # model.OR2 = Constraint(rule=const_OR2)
-    model.OR3 = Constraint(rule=const_OR3)
-    model.OR4 = Constraint(rule=const_OR4)
-    # model.OR5 = Constraint(rule=const_OR5)
-    # model.OR6 = Constraint(rule=const_OR6)
+    model.OR = Constraint(model.S, model.V, rule=const_OR)
 
     return model
 
 #Funcao para coletar valor maximo da FO de uma instancia
-def get_fo_max(model,instance_filename,solver,solver_exec):
+def get_fo_max(model, fo, instance_filename,solver,solver_exec):
 
     #Inicializa resultados maximos
     max_fo = {'E':0,'C':0,'M':0}
@@ -256,79 +214,93 @@ def get_fo_max(model,instance_filename,solver,solver_exec):
     model.C.deactivate()
     model.M.deactivate()
 
-    ##Ativa apenas FO E
-    model.E.activate()
+    if(fo['E'] == 1):
+        ##Ativa apenas FO E
+        model.E.activate()
 
-    ## Carrega dados de instancia no modelo
-    data = DataPortal()
-    data.load(filename=instance_filename, model=model)
-    instance = model.create_instance(data)
+        print("Criando instancia max-E...")
+        ## Carrega dados de instancia no modelo
+        data = DataPortal()
+        data.load(filename=instance_filename, model=model)
+        instance = model.create_instance(data)
+        print("Instancia criada.")
+        print("Resolvendo instancia...")
+        ## Resolve para encontrar max
 
-    ## Resolve para encontrar max
+        #Resolve a instancia e pega resultado da FO
+        results = opt.solve(instance)
+        instance.solutions.store_to(results)
 
-    #Resolve a instancia e pega resultado da FO
-    results = opt.solve(instance)
-    instance.solutions.store_to(results)
+        if(results.solver.termination_condition == TerminationCondition.infeasible):
+            print("ERRO: Nenhuma solucao encontrada para Max E.")
+            exit(-1)
 
-    if(results.solver.termination_condition == TerminationCondition.infeasible):
-        print("ERRO: Nenhuma solucao encontrada para Max E.")
-        exit(-1)
+        max_fo['E'] = value(instance.E)
 
-    max_fo['E'] = value(instance.E)
+        #Desativa FO E
+        model.E.deactivate()
 
-    #Desativa FO E
-    model.E.deactivate()
+    if(fo['C'] == 1):
 
-    ##Ativa apenas FO C
-    model.C.activate()
+        ##Ativa apenas FO C
+        model.C.activate()
 
-    ## Carrega dados de instancia no modelo
-    
-    data.load(filename=instance_filename, model=model)
-    instance = model.create_instance(data)
+        print("Criando instancia max-C...")
+        ## Carrega dados de instancia no modelo
+        
+        data.load(filename=instance_filename, model=model)
+        instance = model.create_instance(data)
 
-    ## Resolve para encontrar max
+        print("Instancia criada.")
+        print("Resolvendo instancia...")
 
-    #Resolve a instancia e pega resultado da FO
-    results = opt.solve(instance)
-    instance.solutions.store_to(results)
+        ## Resolve para encontrar max
 
-    if(results.solver.termination_condition == TerminationCondition.infeasible):
-        print("ERRO: Nenhuma solucao encontrada para Max C.")
-        exit(-1)
+        #Resolve a instancia e pega resultado da FO
+        results = opt.solve(instance)
+        instance.solutions.store_to(results)
 
-    max_fo['C'] = value(instance.C)
+        if(results.solver.termination_condition == TerminationCondition.infeasible):
+            print("ERRO: Nenhuma solucao encontrada para Max C.")
+            exit(-1)
 
-    #Desativa FO C
-    model.C.deactivate()
+        max_fo['C'] = value(instance.C)
 
-    ##Ativa apenas FO M
-    model.M.activate()
+        #Desativa FO C
+        model.C.deactivate()
 
-    ## Carrega dados de instancia no modelo
-    data = DataPortal()
-    data.load(filename=instance_filename, model=model)
-    instance = model.create_instance(data)
+    if(fo['M'] == 1):
+        ##Ativa apenas FO M
+        model.M.activate()
 
-    ## Resolve para encontrar max
+        print("Criando instancia max-M...")
+        ## Carrega dados de instancia no modelo
+        data = DataPortal()
+        data.load(filename=instance_filename, model=model)
+        instance = model.create_instance(data)
 
-    #Resolve a instancia e pega resultado da FO
-    results = opt.solve(instance)
-    instance.solutions.store_to(results)
+        print("Instancia criada.")
+        print("Resolvendo instancia...")
 
-    if(results.solver.termination_condition == TerminationCondition.infeasible):
-        print("ERRO: Nenhuma solucao encontrada para Max M.")
-        exit(-1)
+        ## Resolve para encontrar max
 
-    max_fo['M'] = value(instance.M)
+        #Resolve a instancia e pega resultado da FO
+        results = opt.solve(instance)
+        instance.solutions.store_to(results)
 
-    #Desativa FO M
-    model.M.deactivate()
+        if(results.solver.termination_condition == TerminationCondition.infeasible):
+            print("ERRO: Nenhuma solucao encontrada para Max M.")
+            exit(-1)
+
+        max_fo['M'] = value(instance.M)
+
+        #Desativa FO M
+        model.M.deactivate()
 
     return max_fo
 
 #Funcao para coletar valor minimo da FO de uma instancia
-def get_fo_min(model,instance_filename,solver,solver_exec):
+def get_fo_min(model, fo, instance_filename,solver,solver_exec):
 
     #Inicializa resultados maximos
     min_fo = {'E':0,'C':0,'M':0}
@@ -347,73 +319,88 @@ def get_fo_min(model,instance_filename,solver,solver_exec):
     model.C.deactivate()
     model.M.deactivate()
 
-    ##Ativa apenas FO E
-    model.E.activate()
+    if(fo['E'] == 1):
+        ##Ativa apenas FO E
+        model.E.activate()
 
-    ## Carrega dados de instancia no modelo
-    data = DataPortal()
-    data.load(filename=instance_filename, model=model)
-    instance = model.create_instance(data)
+        print("Criando instancia min-E...")
+        ## Carrega dados de instancia no modelo
+        data = DataPortal()
+        data.load(filename=instance_filename, model=model)
+        instance = model.create_instance(data)
 
-    ## Resolve para encontrar max
+        print("Instancia criada.")
+        print("Resolvendo instancia...")
 
-    #Resolve a instancia e pega resultado da FO
-    results = opt.solve(instance)
-    instance.solutions.store_to(results)
+        ## Resolve para encontrar max
 
-    if(results.solver.termination_condition == TerminationCondition.infeasible):
-        print("ERRO: Nenhuma solucao encontrada para Min E.")
-        exit(-1)
+        #Resolve a instancia e pega resultado da FO
+        results = opt.solve(instance)
+        instance.solutions.store_to(results)
 
-    min_fo['E'] = value(instance.E)
+        if(results.solver.termination_condition == TerminationCondition.infeasible):
+            print("ERRO: Nenhuma solucao encontrada para Min E.")
+            exit(-1)
 
-    #Desativa FO E
-    model.E.deactivate()
+        min_fo['E'] = value(instance.E)
 
-    ##Ativa apenas FO C
-    model.C.activate()
+        #Desativa FO E
+        model.E.deactivate()
 
-    ## Carrega dados de instancia no modelo
-    
-    data.load(filename=instance_filename, model=model)
-    instance = model.create_instance(data)
+    if(fo['C'] == 1):
+        ##Ativa apenas FO C
+        model.C.activate()
 
-    ## Resolve para encontrar max
+        print("Criando instancia min-C...")
+        ## Carrega dados de instancia no modelo
+        
+        data.load(filename=instance_filename, model=model)
+        instance = model.create_instance(data)
 
-    #Resolve a instancia e pega resultado da FO
-    results = opt.solve(instance)
-    instance.solutions.store_to(results)
+        print("Instancia criada.")
+        print("Resolvendo instancia...")
 
-    if(results.solver.termination_condition == TerminationCondition.infeasible):
-        print("ERRO: Nenhuma solucao encontrada para Min C.")
-        exit(-1)
+        ## Resolve para encontrar max
 
-    min_fo['C'] = value(instance.C)
+        #Resolve a instancia e pega resultado da FO
+        results = opt.solve(instance)
+        instance.solutions.store_to(results)
 
-    #Desativa FO C
-    model.C.deactivate()
+        if(results.solver.termination_condition == TerminationCondition.infeasible):
+            print("ERRO: Nenhuma solucao encontrada para Min C.")
+            exit(-1)
 
-    ##Ativa apenas FO M
-    model.M.activate()
+        min_fo['C'] = value(instance.C)
 
-    ## Carrega dados de instancia no modelo
-    data = DataPortal()
-    data.load(filename=instance_filename, model=model)
-    instance = model.create_instance(data)
+        #Desativa FO C
+        model.C.deactivate()
 
-    ## Resolve para encontrar max
+    if(fo['M'] == 1):
+        ##Ativa apenas FO M
+        model.M.activate()
 
-    #Resolve a instancia e pega resultado da FO
-    results = opt.solve(instance)
-    instance.solutions.store_to(results)
+        print("Criando instancia min-M...")
+        ## Carrega dados de instancia no modelo
+        data = DataPortal()
+        data.load(filename=instance_filename, model=model)
+        instance = model.create_instance(data)
 
-    if(results.solver.termination_condition == TerminationCondition.infeasible):
-        print("ERRO: Nenhuma solucao encontrada para Min M.")
-        exit(-1)
+        print("Instancia criada.")
+        print("Resolvendo instancia...")
 
-    min_fo['M'] = value(instance.M)
+        ## Resolve para encontrar max
 
-    #Desativa FO M
-    model.M.deactivate()
+        #Resolve a instancia e pega resultado da FO
+        results = opt.solve(instance)
+        instance.solutions.store_to(results)
+
+        if(results.solver.termination_condition == TerminationCondition.infeasible):
+            print("ERRO: Nenhuma solucao encontrada para Min M.")
+            exit(-1)
+
+        min_fo['M'] = value(instance.M)
+
+        #Desativa FO M
+        model.M.deactivate()
 
     return min_fo

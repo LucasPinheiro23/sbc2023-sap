@@ -34,3 +34,63 @@ Command-line arguments:  -clean -nl pt_BR -configuration D:\Users\Lucas\OneDrive
 
 !ENTRY ilog.odms.ide.opllang.remote 1 0 2023-02-27 16:03:42.857
 !MESSAGE Run Alc_Teorico in D:/Users/Lucas/OneDrive - cefet-rj.br/Documentos/MESTRADO - PPCIC/PESQUISA - PRINCIPAL/sbc2023-sap/cplex-studio/SBC2023
+!SESSION 2023-03-12 17:38:37.775 -----------------------------------------------
+eclipse.buildId=unknown
+java.fullversion=11.0.13+8
+JRE 11 Windows 10 amd64-64-Bit Compressed References 20211022_218 (JIT enabled, AOT enabled)
+OpenJ9   - e1e72c497
+OMR      - 299b6a2d2
+JCL      - 2d83aa3b76 based on jdk-11.0.13+8
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Command-line arguments:  -clean -nl pt_BR -configuration D:\Users\Lucas\OneDrive - cefet-rj.br\Documentos\MESTRADO - PPCIC\PESQUISA - PRINCIPAL\sbc2023-sap\cplex-studio\.metadata\workspace_oplrun
+
+!ENTRY ilog.odms.ide.opllang.remote 1 0 2023-03-12 17:38:37.776
+!MESSAGE Run Teste-alternativo in D:/Users/Lucas/OneDrive - cefet-rj.br/Documentos/MESTRADO - PPCIC/PESQUISA - PRINCIPAL/sbc2023-sap/cplex-studio/SBC2023
+!SESSION 2023-03-12 17:41:16.646 -----------------------------------------------
+eclipse.buildId=unknown
+java.fullversion=11.0.13+8
+JRE 11 Windows 10 amd64-64-Bit Compressed References 20211022_218 (JIT enabled, AOT enabled)
+OpenJ9   - e1e72c497
+OMR      - 299b6a2d2
+JCL      - 2d83aa3b76 based on jdk-11.0.13+8
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Command-line arguments:  -clean -nl pt_BR -configuration D:\Users\Lucas\OneDrive - cefet-rj.br\Documentos\MESTRADO - PPCIC\PESQUISA - PRINCIPAL\sbc2023-sap\cplex-studio\.metadata\workspace_oplrun
+
+!ENTRY ilog.odms.ide.opllang.remote 1 0 2023-03-12 17:41:16.648
+!MESSAGE Run Teste-alternativo in D:/Users/Lucas/OneDrive - cefet-rj.br/Documentos/MESTRADO - PPCIC/PESQUISA - PRINCIPAL/sbc2023-sap/cplex-studio/SBC2023
+!SESSION 2023-03-12 17:43:58.039 -----------------------------------------------
+eclipse.buildId=unknown
+java.fullversion=11.0.13+8
+JRE 11 Windows 10 amd64-64-Bit Compressed References 20211022_218 (JIT enabled, AOT enabled)
+OpenJ9   - e1e72c497
+OMR      - 299b6a2d2
+JCL      - 2d83aa3b76 based on jdk-11.0.13+8
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Command-line arguments:  -clean -nl pt_BR -configuration D:\Users\Lucas\OneDrive - cefet-rj.br\Documentos\MESTRADO - PPCIC\PESQUISA - PRINCIPAL\sbc2023-sap\cplex-studio\.metadata\workspace_oplrun
+
+!ENTRY ilog.odms.ide.opllang.remote 1 0 2023-03-12 17:43:58.041
+!MESSAGE Run Teste-alternativo in D:/Users/Lucas/OneDrive - cefet-rj.br/Documentos/MESTRADO - PPCIC/PESQUISA - PRINCIPAL/sbc2023-sap/cplex-studio/SBC2023
+!SESSION 2023-03-12 17:44:56.991 -----------------------------------------------
+eclipse.buildId=unknown
+java.fullversion=11.0.13+8
+JRE 11 Windows 10 amd64-64-Bit Compressed References 20211022_218 (JIT enabled, AOT enabled)
+OpenJ9   - e1e72c497
+OMR      - 299b6a2d2
+JCL      - 2d83aa3b76 based on jdk-11.0.13+8
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Command-line arguments:  -clean -nl pt_BR -configuration D:\Users\Lucas\OneDrive - cefet-rj.br\Documentos\MESTRADO - PPCIC\PESQUISA - PRINCIPAL\sbc2023-sap\cplex-studio\.metadata\workspace_oplrun
+
+!ENTRY ilog.odms.ide.opllang.remote 1 0 2023-03-12 17:44:56.995
+!MESSAGE Run Teste-alternativo in D:/Users/Lucas/OneDrive - cefet-rj.br/Documentos/MESTRADO - PPCIC/PESQUISA - PRINCIPAL/sbc2023-sap/cplex-studio/SBC2023
+
+!ENTRY ilog.odms.ide.opllang.remote 4 0 2023-03-13 17:20:41.604
+!MESSAGE No OPL IDE for this oplrun
+
+!ENTRY ilog.odms.ide.opllang 1 0 2023-03-13 17:20:49.355
+!MESSAGE concert_wrap.IloEndMT
+
+!ENTRY org.eclipse.core.jobs 2 2 2023-03-13 17:20:58.269
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: ilog.odms.ide.opllang.remote.IloOplRunConfigRunner
+
+!ENTRY org.eclipse.core.jobs 2 2 2023-03-13 17:20:58.281
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: ilog.odms.ide.opllang.remote.mbean.IloOplrunRemote$HeartBeatListenerJob

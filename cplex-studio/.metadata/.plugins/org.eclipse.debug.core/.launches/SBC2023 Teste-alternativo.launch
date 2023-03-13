@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="opl.launchType">
+    <stringAttribute key="opl.debugModel.ATTR_ELEMENT_ID" value="=SBC2023RCon\figu\rações de ExecuçãorTeste-alte\rnativo"/>
+    <stringAttribute key="opl.debugModel.ATTR_PROJECT" value="SBC2023"/>
+    <stringAttribute key="opl.debugModel.ATTR_RUN_CONFIG" value="Teste-alternativo"/>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/SBC2023"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="4"/>
+    </listAttribute>
+</launchConfiguration>
