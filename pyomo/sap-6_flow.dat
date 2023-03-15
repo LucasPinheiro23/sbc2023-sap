@@ -1,8 +1,4 @@
 param n := 6;
-param smallest_X := 1;
-param smallest_Y := 1;
-param biggest_X := 5;
-param biggest_Y := 5;
 
 param scale := 1000;
 
@@ -39,3 +35,4 @@ param Y :=
 5 4
 6 2;
 
+param V0 := 1;

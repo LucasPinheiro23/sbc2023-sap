@@ -1,68 +1,24 @@
 {
     "Problem": [
         {
-            "Lower bound": -0.1344041592299011,
-            "Name": "sap-6.dat",
-            "Number of constraints": 141,
-            "Number of nonzeros": 325,
+            "Lower bound": -Infinity,
+            "Name": "sap-6_flow.dat",
+            "Number of constraints": 78,
+            "Number of nonzeros": 240,
             "Number of objectives": 1,
-            "Number of variables": 55,
-            "Sense": "minimize",
-            "Upper bound": -0.1344041592299011
-        }
-    ],
-    "Solution": [
-        {
-            "number of solutions": 1,
-            "number of solutions displayed": 1
-        },
-        {
-            "Constraint": "No values",
-            "Gap": 0.0,
-            "Message": null,
-            "Objective": {
-                "WEIGHTED": {
-                    "Value": -0.13440415922990107
-                }
-            },
-            "Problem": {},
-            "Status": "optimal",
-            "Variable": {
-                "Neig[S2CPro,2]": {
-                    "Value": 1.0
-                },
-                "Neig[S2CPro,5]": {
-                    "Value": 1.0
-                },
-                "Neig[S3,2]": {
-                    "Value": 1.0
-                },
-                "Neig[S3,5]": {
-                    "Value": 1.0
-                },
-                "s[S2CPro,2]": {
-                    "Value": 1.0
-                },
-                "s[S2CPro,5]": {
-                    "Value": 1.0
-                }
-            }
+            "Number of variables": 59,
+            "Sense": "unknown",
+            "Upper bound": Infinity
         }
     ],
     "Solver": [
         {
             "Error rc": 0,
-            "Statistics": {
-                "Branch and bound": {
-                    "Number of bounded subproblems": 0,
-                    "Number of created subproblems": 0
-                }
-            },
             "Status": "ok",
-            "Termination condition": "optimal",
-            "Termination message": "MIP - Integer optimal solution\\x3a Objective = -1.3440415923e-01",
-            "Time": 0.7730000019073486,
-            "User time": 0.09
+            "Termination condition": "infeasible",
+            "Termination message": "MIP - Integer infeasible.",
+            "Time": 1.2009913921356201,
+            "User time": 0.23
         }
     ]
 }

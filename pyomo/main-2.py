@@ -15,7 +15,7 @@ logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 
 #Nome do arquivo da instancia a ser resolvida
 #instance_filename = '../instances_DAT/512/T1.dat'
-instance_filename = 'sap-6.dat'
+instance_filename = 'sap-6_flow.dat'
 #instance_filename = 'sap-100.dat'
 #Solver a ser utilizado
 solver = 'cplex'
@@ -54,7 +54,7 @@ else:
     exit(0)
 
 ## Imprime modelo abstrato
-#model.pprint()
+# model.pprint()
 
 # ##Normalizacao min-max - Etapa 1
 
@@ -107,7 +107,7 @@ data.load(filename=instance_filename, model=model)
 instance = model.create_instance(data)
 
 ## Imprime instancia
-#instance.N.pprint()
+#instance.pprint()
 
 #TESTE DE REMOCAO DE ITEM DO SET, FUNCIONA!
 # instance.N['S2C',1] = instance.N['S2C',1] - {3}
@@ -197,9 +197,9 @@ for i in instance.V:
     elif value(instance.s['S2CPro',i]) == 1:
         ax.plot(instance.X[i],instance.Y[i],'bo')
         ax.add_patch(plt.Circle((instance.X[i],instance.Y[i]), (instance.RMAX['S2CPro']/instance.scale), color='b', alpha=0.1))
-    # elif value(instance.s['S3',i]) == 1:
-    #     ax.plot(instance.X[i],instance.Y[i],'ro')
-    #     ax.add_patch(plt.Circle((instance.X[i],instance.Y[i]), (instance.RMAX['S3']/instance.scale), color='r', alpha=0.1))
+    elif value(instance.s['S3',i]) == 1:
+        ax.plot(instance.X[i],instance.Y[i],'ro')
+        ax.add_patch(plt.Circle((instance.X[i],instance.Y[i]), (instance.RMAX['S3']/instance.scale), color='r', alpha=0.1))
     else:
         ax.plot(instance.X[i],instance.Y[i],'ko',fillstyle='none')
     

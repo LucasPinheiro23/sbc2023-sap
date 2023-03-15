@@ -55,7 +55,7 @@ def const_typenum(model, i):
 
 # Restricao de quantidade minima (LB) e maxima (UB) de alocacao
 def const_numalloc(model):
-    return (max(2,ceil(0.05*model.n)),sum( sum( model.s[t,i] for t in model.S) for i in model.V),model.n)
+    return (max(2,ceil(0.50*model.n)),sum( sum( model.s[t,i] for t in model.S) for i in model.V),model.n)
 
 ##Componente de restricao de vizinhanca. Neig == 1 se existe pelo menos um vizinho para dado no. Neig == 0 caso nenhum vizinho.
 def const_Neig1(model, t, i):
@@ -76,6 +76,79 @@ def const_Neig5(model, t, i):
 def const_Neig6(model, t, i):
     return model.Neig[t,i] >= sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) - model.n * model.d1[t,i]
 
+# def const_Pair1(model, t, u, i ,j):
+#     return model.Pair[t,u,i,j] == (3*model.s[t,i] + 2*model.s[u,j])/5
+
+def const_Pair1(model, t, u, i, j):
+    if j in model.N[t,i]:
+            return model.Pair[t,i,j] == ((3*model.s[t,i] + 2*model.s[u,j])/5)
+    else:
+        return Constraint.Skip
+
+def const_Pair2(model, t, i, j):
+    if j in model.N[t,i]:
+            return model.Pair_floor[t,i,j] <= model.Pair[t,i,j]
+    else:
+        return Constraint.Skip
+    
+def const_Pair3(model, t, i, j):
+    if j in model.N[t,i]:
+        return model.Pair[t,i,j] + 0.5 <= model.Pair_floor[t,i,j] + 1
+    else:
+        return Constraint.Skip
+
+def const_Pair4(model):
+    return sum( sum( sum( model.Pair_floor[t,i,j] for j in model.N[t,i]) for t in model.S) for i in model.V) >= 1
+
+
+#Define que o no fonte deve estar ativo
+def const_source_act(model):
+    return sum( model.s[t,value(model.V0)] for t in model.S) == 1
+
+#--------
+
+#Define fluxo de saida do no fonte v0, individualmente para cada vizinho j
+def const_source_fout1(model, j, t):
+    if j in model.N[t,value(model.V0)]:
+        return model.f[value(model.V0),j] <= model.n * model.Pair_floor[t,value(model.V0),j]
+    else:
+        return Constraint.Skip
+
+def const_source_fout2(model, j, t):
+    if j in model.N[t,value(model.V0)]:
+        return model.f[value(model.V0),j] >= sum( model.Pair_floor[t,u,value(model.V0),j] for u in model.S)
+
+def const_source_fout3(model):
+    return sum( sum( model.f[value(model.V0),j] for j in model.N[t,value(model.V0)]) for t in model.S) >= sum( model.Pair_floor[t,u,value(model.V0),j] for u in model.S)
+
+#Define fluxo de saida do no fonte, especificando que J deve ser vizinho ativo
+def const_source_fout2(model):
+    return sum( sum( sum(model.f[value(model.V0),j] for j in model.N[t,value(model.V0)]) for t in model.S) for u in model.S) >= model.n * sum(sum(sum( model.Pair_floor[t,u,value(model.V0),j] for j in model.N[t,value(model.V0)]) for t in model.S) for u in model.S)
+
+
+#Define fluxo de entrada do no fonte (ESPECIFICAR QUE K DEVE SER VIZINHO ATIVO!!!!)
+def const_source_fin(model):
+    return sum( sum( model.f[k,value(model.V0)] for k in model.N[t,value(model.V0)]) for t in model.S) == 1
+
+#Fluxo que passa por um no diferente da fonte eh sempre consumido em uma unidade
+#DEFINIR QUE AMBOS OS PARES DEVEM ESTAR ATIVOS!!!
+def const_flow_consume(model):
+    return sum( sum( sum( sum( (model.f[i,j] - model.f[k,i]) for k in model.N[t,i]) for j in model.N[t,i]) for i in (model.V-{value(model.V0)})) for t in model.S) + 1 == 0
+
+#DEFINIR QUE AMBOS OS PARES DEVEM ESTAR ATIVOS!!!
+#Fluxo de saida deve ser maior que 1 e menor que (n-1) para todo no intermediario
+def const_fout_bounds(model):
+    return (1, sum( sum( sum( model.f[i,j] for j in model.N[t,i]) for i in model.V-{value(model.V0)}) for t in model.S), (model.n-1))
+
+#DEFINIR QUE AMBOS OS PARES DEVEM ESTAR ATIVOS!!!
+#Fluxo de entrada deve ser maior que 2 para todo no intermediario
+def const_fin_bounds(model):
+    return sum( sum( sum( model.f[k,i] for k in model.N[t,i]) for i in model.V-{value(model.V0)}) for t in model.S) >= 2
+
+
+# def const_Dist(model):
+#     return sum( sum( sum( sum( (model.D[i,j] * model.Pair_floor[t,u,i,j]) for t in model.S) for u in model.S) for i in model.V) for j in model.V)/((model.n-1) * model.n) <= model.DMED
+    
 # Restricao de vizinhanca (nao deve haver nenhum no sem vizinhos)
 def const_OR(model, t, i):
     return (2*model.s[t,i] + (1 - model.Neig[t,i])) <= 2
@@ -101,11 +174,11 @@ def generate_model():
     # Altura do terreno
     #model.H = Param(within=NonNegativeIntegers) #INICIALIZAR
     # Menores coordenadas (X,Y)
-    model.smallest_X = Param(within=Integers, initialize = 0) #INICIALIZAR
-    model.smallest_Y = Param(within=Integers, initialize = 0) #INICIALIZAR
+    # model.smallest_X = Param(within=Integers, initialize = 0) #INICIALIZAR
+    # model.smallest_Y = Param(within=Integers, initialize = 0) #INICIALIZAR
     # Maiores coordenadas (X,Y)
-    model.biggest_X = Param(within=Integers, initialize = model.n) #INICIALIZAR
-    model.biggest_Y = Param(within=Integers, initialize = model.n) #INICIALIZAR
+    # model.biggest_X = Param(within=Integers, initialize = model.n) #INICIALIZAR
+    # model.biggest_Y = Param(within=Integers, initialize = model.n) #INICIALIZAR
     # Escala
     model.scale = Param(within=NonNegativeIntegers) #INICIALIZAR
 
@@ -124,6 +197,8 @@ def generate_model():
     model.X = Param(model.V) #INICIALIZAR
     # Coordenadas y dos nos
     model.Y = Param(model.V) #INICIALIZAR
+    # Indice do no v0 (fonte da rede)
+    model.V0 = Param() #INICIALIZAR
     # Conjunto de corrente consumida media (I)
     model.I = Param(model.S) #INICIALIZAR
     # Conjunto de custo medio em dolar (M)
@@ -132,6 +207,7 @@ def generate_model():
     model.RMAX = Param(model.S) #INICIALIZAR
     # Distancia entre pares de posicoes fixas (D)
     model.D = Param(model.V,model.V,initialize=init_D,domain=NonNegativeReals)
+    # model.DMED = Param()
 
     # Vizinhanca dos nos
     model.N = Set(model.S,model.V,initialize=init_N)
@@ -146,6 +222,17 @@ def generate_model():
     #Variaveis componentes de restricao
     model.Neig = Var(model.S, model.V, within=NonNegativeIntegers)
     #model.OR = Var(within=Binary)
+    
+    #Variavel que indica se em um par de nos vizinhos, ambos sao ativos
+    model.Pair = Var(model.S, model.V, model.V, within=NonNegativeReals)
+    model.Pair_floor = Var(model.S, model.V, model.V, within=NonNegativeIntegers)
+
+    #Variavel que representa o indice do no fonte da rede
+    # model.v0 = Var(bounds = (0,model.n), within=model.V)
+    #Fluxo de cada no (origem,destino)
+    model.f = Var(model.V, model.V, within=NonNegativeIntegers)
+
+
 
     ## Funcoes objetivo
     ## ---
@@ -182,14 +269,29 @@ def generate_model():
     model.numalloc = Constraint(rule=const_numalloc)
 
     # Restricoes de vizinhanca (nao deve haver nenhum no sem vizinhos)
-    model.Neig1 = Constraint(model.S, model.V, rule=const_Neig1)
-    model.Neig2 = Constraint(model.S, model.V, rule=const_Neig2)
-    model.Neig3 = Constraint(model.S, model.V, rule=const_Neig3)
-    model.Neig4 = Constraint(model.S, model.V, rule=const_Neig4)
-    model.Neig5 = Constraint(model.S, model.V, rule=const_Neig5)
-    model.Neig6 = Constraint(model.S, model.V, rule=const_Neig6)
+    # model.Neig1 = Constraint(model.S, model.V, rule=const_Neig1)
+    # model.Neig2 = Constraint(model.S, model.V, rule=const_Neig2)
+    # model.Neig3 = Constraint(model.S, model.V, rule=const_Neig3)
+    # model.Neig4 = Constraint(model.S, model.V, rule=const_Neig4)
+    # model.Neig5 = Constraint(model.S, model.V, rule=const_Neig5)
+    # model.Neig6 = Constraint(model.S, model.V, rule=const_Neig6)
     
-    model.OR = Constraint(model.S, model.V, rule=const_OR)
+    # model.OR = Constraint(model.S, model.V, rule=const_OR)
+
+    model.Pair1 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair1)
+    model.Pair2 = Constraint(model.S, model.V, model.V, rule=const_Pair2)
+    model.Pair3 = Constraint(model.S, model.V, model.V, rule=const_Pair3)
+    model.Pair4 = Constraint(rule=const_Pair4)
+
+    model.Flow1 = Constraint(rule=const_source_act)
+    model.Flow2_1 = Constraint(rule=const_source_fout1)
+    model.Flow2_2 = Constraint(rule=const_source_fout2)
+    model.Flow3 = Constraint(rule=const_source_fin)
+    model.Flow4 = Constraint(rule=const_flow_consume)
+    model.Flow5 = Constraint(rule=const_fout_bounds)
+    model.Flow6 = Constraint(rule=const_fin_bounds)
+
+    # model.Dist = Constraint(rule=const_Dist)
 
     return model
 

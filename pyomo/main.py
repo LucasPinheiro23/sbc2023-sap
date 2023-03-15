@@ -15,8 +15,8 @@ logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 
 #Nome do arquivo da instancia a ser resolvida
 #instance_filename = '../instances_DAT/512/T1.dat'
-instance_filename = 'sap-6.dat'
-#instance_filename = 'sap-100.dat'
+# instance_filename = 'sap-6.dat'
+instance_filename = 'sap-100.dat'
 #Solver a ser utilizado
 solver = 'cplex'
 #Executavel do solver
@@ -164,10 +164,11 @@ print("Solving time: "+str(results.solver.user_time)+" s")
 #Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
 print("Total time: "+str(results.solver.time)+" s")
 
-#instance.N.pprint()
+# instance.Pair_floor.pprint()
+# instance.Dist.pprint()
 
 #Imprime resultados
-#print(results)
+# print(results)
 
 #-----------------------------------------------------------#
 
