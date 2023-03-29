@@ -1,24 +1,536 @@
 {
     "Problem": [
         {
-            "Lower bound": -Infinity,
-            "Name": "sap-6_flow.dat",
-            "Number of constraints": 78,
-            "Number of nonzeros": 240,
+            "Lower bound": 707737993.0007086,
+            "Name": "sap-100.dat",
+            "Number of constraints": 409538,
+            "Number of nonzeros": 1069935,
             "Number of objectives": 1,
-            "Number of variables": 59,
-            "Sense": "unknown",
-            "Upper bound": Infinity
+            "Number of variables": 192511,
+            "Sense": "maximize",
+            "Upper bound": 707737993.0007086
+        }
+    ],
+    "Solution": [
+        {
+            "number of solutions": 1,
+            "number of solutions displayed": 1
+        },
+        {
+            "Constraint": "No values",
+            "Gap": 0.0,
+            "Message": null,
+            "Objective": {
+                "C": {
+                    "Value": 707737993.0007086
+                }
+            },
+            "Problem": {},
+            "Status": "optimal",
+            "Variable": {
+                "A0[8]": {
+                    "Value": 1.0
+                },
+                "AP[S2CPro,S2CPro,11,61]": {
+                    "Value": 1.0
+                },
+                "AP[S2CPro,S2CPro,61,45]": {
+                    "Value": 1.0
+                },
+                "AP[S2CPro,S2CPro,94,20]": {
+                    "Value": 1.0
+                },
+                "AP[S2CPro,S3,0,8]": {
+                    "Value": 1.0
+                },
+                "AP[S2CPro,S3,20,66]": {
+                    "Value": 1.0
+                },
+                "AP[S2CPro,S3,37,12]": {
+                    "Value": 1.0
+                },
+                "AP[S2CPro,S3,45,77]": {
+                    "Value": 1.0
+                },
+                "AP[S2CPro,S3,57,90]": {
+                    "Value": 1.0
+                },
+                "AP[S2CPro,S3,63,67]": {
+                    "Value": 1.0
+                },
+                "AP[S2CPro,S3,88,36]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S2C,95,101]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S2CPro,34,37]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S2CPro,5,88]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S2CPro,66,94]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S2CPro,72,57]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S2CPro,77,11]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S2CPro,81,63]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S3,12,34]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S3,36,8]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S3,67,81]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S3,8,5]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S3,8,82]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S3,82,95]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S3,90,72]": {
+                    "Value": 1.0
+                },
+                "An1[95]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,11,45]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,11,61]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,20,57]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,20,61]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,20,94]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,45,11]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,45,61]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,45,94]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,57,20]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,57,94]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,61,11]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,61,20]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,61,45]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,61,94]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,94,20]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,94,45]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,94,57]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,94,61]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,11,77]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,20,66]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,20,72]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,20,90]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,37,12]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,37,34]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,45,66]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,45,77]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,57,66]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,57,72]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,57,90]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,61,66]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,61,77]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,63,67]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,63,81]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,88,36]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,88,5]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,88,82]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,88,8]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,94,66]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,12,37]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,34,37]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,36,88]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,5,88]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,66,20]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,66,45]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,66,57]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,66,61]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,66,94]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,67,63]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,72,20]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,72,57]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,77,11]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,77,45]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,77,61]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,8,88]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,81,63]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,82,88]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,90,20]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,90,57]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,12,34]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,34,12]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,36,5]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,36,82]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,36,8]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,36,95]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,5,36]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,5,82]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,5,8]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,5,95]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,67,81]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,72,90]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,8,36]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,8,5]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,8,82]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,8,95]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,81,67]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,82,36]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,82,5]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,82,8]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,82,95]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,90,72]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,95,36]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,95,5]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,95,82]": {
+                    "Value": 1.0
+                },
+                "P[S3,S3,95,8]": {
+                    "Value": 1.0
+                },
+                "a[0,8]": {
+                    "Value": 1.0
+                },
+                "a[10,32]": {
+                    "Value": 1.0
+                },
+                "a[11,61]": {
+                    "Value": 1.0
+                },
+                "a[12,34]": {
+                    "Value": 1.0
+                },
+                "a[20,66]": {
+                    "Value": 1.0
+                },
+                "a[32,10]": {
+                    "Value": 1.0
+                },
+                "a[32,80]": {
+                    "Value": 1.0
+                },
+                "a[34,37]": {
+                    "Value": 1.0
+                },
+                "a[36,8]": {
+                    "Value": 1.0
+                },
+                "a[37,12]": {
+                    "Value": 1.0
+                },
+                "a[45,77]": {
+                    "Value": 1.0
+                },
+                "a[5,88]": {
+                    "Value": 1.0
+                },
+                "a[57,90]": {
+                    "Value": 1.0
+                },
+                "a[61,45]": {
+                    "Value": 1.0
+                },
+                "a[63,67]": {
+                    "Value": 1.0
+                },
+                "a[65,80]": {
+                    "Value": 1.0
+                },
+                "a[66,94]": {
+                    "Value": 1.0
+                },
+                "a[67,81]": {
+                    "Value": 1.0
+                },
+                "a[72,57]": {
+                    "Value": 1.0
+                },
+                "a[77,11]": {
+                    "Value": 1.0
+                },
+                "a[8,5]": {
+                    "Value": 1.0
+                },
+                "a[8,82]": {
+                    "Value": 1.0
+                },
+                "a[80,32]": {
+                    "Value": 1.0
+                },
+                "a[80,65]": {
+                    "Value": 1.0
+                },
+                "a[81,63]": {
+                    "Value": 1.0
+                },
+                "a[82,95]": {
+                    "Value": 1.0
+                },
+                "a[88,36]": {
+                    "Value": 1.0
+                },
+                "a[90,72]": {
+                    "Value": 1.0
+                },
+                "a[94,20]": {
+                    "Value": 1.0
+                },
+                "a[95,101]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,11]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,20]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,37]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,45]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,57]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,61]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,63]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,88]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,94]": {
+                    "Value": 1.0
+                },
+                "s[S3,12]": {
+                    "Value": 1.0
+                },
+                "s[S3,34]": {
+                    "Value": 1.0
+                },
+                "s[S3,36]": {
+                    "Value": 1.0
+                },
+                "s[S3,5]": {
+                    "Value": 1.0
+                },
+                "s[S3,66]": {
+                    "Value": 1.0
+                },
+                "s[S3,67]": {
+                    "Value": 1.0
+                },
+                "s[S3,72]": {
+                    "Value": 1.0
+                },
+                "s[S3,77]": {
+                    "Value": 1.0
+                },
+                "s[S3,81]": {
+                    "Value": 1.0
+                },
+                "s[S3,82]": {
+                    "Value": 1.0
+                },
+                "s[S3,8]": {
+                    "Value": 1.0
+                },
+                "s[S3,90]": {
+                    "Value": 1.0
+                },
+                "s[S3,95]": {
+                    "Value": 1.0
+                }
+            }
         }
     ],
     "Solver": [
         {
             "Error rc": 0,
+            "Statistics": {
+                "Branch and bound": {
+                    "Number of bounded subproblems": 2898,
+                    "Number of created subproblems": 2898
+                }
+            },
             "Status": "ok",
-            "Termination condition": "infeasible",
-            "Termination message": "MIP - Integer infeasible.",
-            "Time": 1.2009913921356201,
-            "User time": 0.23
+            "Termination condition": "optimal",
+            "Termination message": "MIP - Integer optimal solution\\x3a Objective = 7.0773799300e+08",
+            "Time": 204.9996256828308,
+            "User time": 197.5
         }
     ]
 }

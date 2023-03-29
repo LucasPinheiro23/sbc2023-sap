@@ -17,9 +17,20 @@ def init_D(model, i, j):
 # Vizinhanca dos nos (somente considerado vizinho se entre 80% e 100% do alcance maximo, de forma a garantir afastamento minimo)
 def init_N(model, t, i):
     for j in model.V:
-        if(i != j):
-            if(model.D[i,j] <= model.RMAX[t] and model.D[i,j] >= 0.8*model.RMAX[t]):
+        if i != j:
+            if(model.D[i,j] <= model.RMAX[t]):# and model.D[i,j] >= 0.8*model.RMAX[t]):
                 yield j
+    yield model.n + 1
+
+# Anti-vizinhanca dos nos (nos cujo vizinho eh i)
+def init_N2(model, j):
+    for t in model.S:
+        for i in model.V:
+            if i != j:
+                for k in model.N[t,i]:
+                    if j == k:
+                        yield i
+    yield 0
 
 # FO - Consumo de Energia
 def obj_Energy_rule(model):
@@ -55,109 +66,153 @@ def const_typenum(model, i):
 
 # Restricao de quantidade minima (LB) e maxima (UB) de alocacao
 def const_numalloc(model):
-    return (max(2,ceil(0.50*model.n)),sum( sum( model.s[t,i] for t in model.S) for i in model.V),model.n)
+    return (max(2,ceil(0.05*model.n)),sum( sum( model.s[t,i] for t in model.S) for i in model.V),model.n)
 
-##Componente de restricao de vizinhanca. Neig == 1 se existe pelo menos um vizinho para dado no. Neig == 0 caso nenhum vizinho.
-def const_Neig1(model, t, i):
-    return sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) - 1 <= model.n * model.d1[t,i]
-
-def const_Neig2(model, t, i):
-    return 1 - sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) <= model.n * (1 - model.d1[t,i])
-
-def const_Neig3(model, t, i):
-    return model.Neig[t,i] <= 1
-
-def const_Neig4(model, t, i):
-    return model.Neig[t,i] <= sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i])
-
-def const_Neig5(model, t, i):
-    return model.Neig[t,i] >= 1 - (model.n * (1 - model.d1[t,i]))
-
-def const_Neig6(model, t, i):
-    return model.Neig[t,i] >= sum( sum( model.s[u,j] for u in model.S) for j in model.N[t,i]) - model.n * model.d1[t,i]
-
-# def const_Pair1(model, t, u, i ,j):
-#     return model.Pair[t,u,i,j] == (3*model.s[t,i] + 2*model.s[u,j])/5
+####
 
 def const_Pair1(model, t, u, i, j):
-    if j in model.N[t,i]:
-            return model.Pair[t,i,j] == ((3*model.s[t,i] + 2*model.s[u,j])/5)
+    return model.P[t,u,i,j] <= model.s[t,i]
+
+def const_Pair2(model, t, u, i, j):
+    if j in (model.N[t,i]-{(model.n+1)}):
+        return model.P[t,u,i,j] <= model.s[u,j]
     else:
         return Constraint.Skip
 
-def const_Pair2(model, t, i, j):
-    if j in model.N[t,i]:
-            return model.Pair_floor[t,i,j] <= model.Pair[t,i,j]
-    else:
-        return Constraint.Skip
-    
-def const_Pair3(model, t, i, j):
-    if j in model.N[t,i]:
-        return model.Pair[t,i,j] + 0.5 <= model.Pair_floor[t,i,j] + 1
+def const_Pair3(model, t, u, i, j):
+    if j in (model.N[t,i]-{(model.n+1)}):
+        return model.P[t,u,i,j] >= model.s[t,i] + model.s[u,j] - 1
     else:
         return Constraint.Skip
 
+#Se nenhum tiver vizinho, da erro aqui. Restricao força que exista ao menos 1 par na rede
 def const_Pair4(model):
-    return sum( sum( sum( model.Pair_floor[t,i,j] for j in model.N[t,i]) for t in model.S) for i in model.V) >= 1
+    return sum( sum( sum( sum( model.P[t,u,i,j] for j in model.N[t,i]-{(model.n+1)}) for t in model.S) for u in model.S) for i in model.V) >= 1
 
+#Restrição exige que todo no so seja ativo se tiver vizinho ativo
+def const_Pair5(model, t, i):
+    return sum( sum( model.P[t,u,i,j] for j in model.N[t,i]-{(model.n+1)}) for u in model.S) >= model.s[t,i]
 
-#Define que o no fonte deve estar ativo
-def const_source_act(model):
-    return sum( model.s[t,value(model.V0)] for t in model.S) == 1
+###
 
-#--------
+#Restricoes A0
 
-#Define fluxo de saida do no fonte v0, individualmente para cada vizinho j
-def const_source_fout1(model, j, t):
-    if j in model.N[t,value(model.V0)]:
-        return model.f[value(model.V0),j] <= model.n * model.Pair_floor[t,value(model.V0),j]
+def const_A0_1(model, j):
+    return model.A0[j] <= model.a[0,j]
+
+def const_A0_2(model, j):
+    return model.A0[j] <= sum( model.s[t,j] for t in model.S)
+
+def const_A0_3(model, j):
+    return model.A0[j] >= model.a[0,j] + sum( model.s[t,j] for t in model.S) - 1
+
+def const_A0_4(model):
+    return sum( model.A0[j] for j in model.V) == 1
+
+#Restricoes A_(n+1)
+
+def const_An1_1(model, k):
+    return model.An1[k] <= model.a[k,(model.n+1)]
+
+def const_An1_2(model, k):
+    return model.An1[k] <= sum( model.s[t,k] for t in model.S)
+
+def const_An1_3(model, k):
+    return model.An1[k] >= model.a[k,(model.n+1)] + sum( model.s[t,k] for t in model.S) - 1
+
+def const_An1_4(model):
+    return sum( model.An1[k] for k in model.V) == 1
+
+# def const_A1(model, k, i, j):
+#     if k == i or k == j:
+#         return model.A[k,i,j] <= model.a[i,j]
+#     else:
+#         return Constraint.Skip
+
+# def const_A2(model, k, i, j):
+#     if k == i or k == j:
+#         return model.A[k,i,j] <= sum( model.s[t,k] for t in model.S)
+#     else:
+#         return Constraint.Skip
+
+# def const_A3(model, k, i, j):
+#     if k == i or k == j:
+#         return model.A[k,i,j] >= model.a[i,j] + sum( model.s[t,k] for t in model.S) - 1
+#     else:
+#         return Constraint.Skip
+
+# def const_A4(model):
+#     return sum( model.A[j,0,j] for j in model.V) == 1
+
+# def const_A5(model):
+#     return sum( model.A[k,k,(model.n+1)] for k in model.V) == 1
+
+# def const_A6(model):
+#     return sum( sum( model.A[i,0,j] for j in model.V) for i in model.V) == 0
+
+# def const_A7(model):
+#     return sum( model.A[k,k,(model.n+1)] for k in model.V) == 1
+
+###
+
+def const_a0n1(model):
+    return model.a[0,(model.n+1)] == 0
+
+def const_aij(model, t, i, j):
+    if j not in model.N[t,i]:
+        return model.a[i,j] == 0
     else:
         return Constraint.Skip
 
-def const_source_fout2(model, j, t):
-    if j in model.N[t,value(model.V0)]:
-        return model.f[value(model.V0),j] >= sum( model.Pair_floor[t,u,value(model.V0),j] for u in model.S)
+# def const_a0_rev(model, j):
+#     return 2*model.A0[j] + sum( model.a[k,j] for k in model.V) <= 2
 
-def const_source_fout3(model):
-    return sum( sum( model.f[value(model.V0),j] for j in model.N[t,value(model.V0)]) for t in model.S) >= sum( model.Pair_floor[t,u,value(model.V0),j] for u in model.S)
+# def const_Aij(model, t, i):
+#     return 2*model.A0[i] + sum( sum( model.AP[t,u,i,j] for j in model.N[t,i]) for u in model.S) == 3
 
-#Define fluxo de saida do no fonte, especificando que J deve ser vizinho ativo
-def const_source_fout2(model):
-    return sum( sum( sum(model.f[value(model.V0),j] for j in model.N[t,value(model.V0)]) for t in model.S) for u in model.S) >= model.n * sum(sum(sum( model.Pair_floor[t,u,value(model.V0),j] for j in model.N[t,value(model.V0)]) for t in model.S) for u in model.S)
+def const_no_repeat(model, i):
+    return 2*model.A0[i] + model.An1[i] <= 2
 
+def const_no_back(model, i, j):
+    return sum ( sum ( 2*model.AP[t,u,i,j] + model.AP[u,t,j,i] for u in model.S) for t in model.S) <= 2
 
-#Define fluxo de entrada do no fonte (ESPECIFICAR QUE K DEVE SER VIZINHO ATIVO!!!!)
-def const_source_fin(model):
-    return sum( sum( model.f[k,value(model.V0)] for k in model.N[t,value(model.V0)]) for t in model.S) == 1
+def const_AP0(model, j):
+    return sum( sum( model.AP[t,u,0,j] for t in model.S) for u in model.S) == model.A0[j]
 
-#Fluxo que passa por um no diferente da fonte eh sempre consumido em uma unidade
-#DEFINIR QUE AMBOS OS PARES DEVEM ESTAR ATIVOS!!!
-def const_flow_consume(model):
-    return sum( sum( sum( sum( (model.f[i,j] - model.f[k,i]) for k in model.N[t,i]) for j in model.N[t,i]) for i in (model.V-{value(model.V0)})) for t in model.S) + 1 == 0
+def const_APn1(model, k):
+    return sum( sum( model.AP[t,u,k,(model.n+1)] for t in model.S) for u in model.S) == model.An1[k]
 
-#DEFINIR QUE AMBOS OS PARES DEVEM ESTAR ATIVOS!!!
-#Fluxo de saida deve ser maior que 1 e menor que (n-1) para todo no intermediario
-def const_fout_bounds(model):
-    return (1, sum( sum( sum( model.f[i,j] for j in model.N[t,i]) for i in model.V-{value(model.V0)}) for t in model.S), (model.n-1))
+def const_AP0n1(model):
+    return sum( sum( model.AP[t,u,0,(model.n+1)] for t in model.S) for u in model.S) == 0
 
-#DEFINIR QUE AMBOS OS PARES DEVEM ESTAR ATIVOS!!!
-#Fluxo de entrada deve ser maior que 2 para todo no intermediario
-def const_fin_bounds(model):
-    return sum( sum( sum( model.f[k,i] for k in model.N[t,i]) for i in model.V-{value(model.V0)}) for t in model.S) >= 2
+# def const_AAP2(model, t, i):
+#     return 2*model.An1[i] + (1 - sum( sum( model.AP[u,t,k,i] for u in model.S) for k in model.N2[i]-{0})) <= 2
 
+#CORRIGIR ESSA RESTRIÇÃO
+# def const_Akij(model, k, i, j):
+#     if k == i and j == (model.n+1):
+#         return model.A[k,i,j] == 1
+#     elif k == j and i == 0:
+#         return model.A[k,i,j] == 1
+#     else:
+#         return model.A[k,i,j] == 0
 
-# def const_Dist(model):
-#     return sum( sum( sum( sum( (model.D[i,j] * model.Pair_floor[t,u,i,j]) for t in model.S) for u in model.S) for i in model.V) for j in model.V)/((model.n-1) * model.n) <= model.DMED
-    
-# Restricao de vizinhanca (nao deve haver nenhum no sem vizinhos)
-def const_OR(model, t, i):
-    return (2*model.s[t,i] + (1 - model.Neig[t,i])) <= 2
+def const_AP1(model, t, u, i, j):
+    return model.AP[t,u,i,j] <= model.a[i,j]
 
+def const_AP2(model, t, u, i, j):
+    return model.AP[t,u,i,j] <= model.P[t,u,i,j]
 
-# def const_OR(model):
-    # return (0,sum( sum( (1 - model.s[t,i]) * (1 - min(1,model.Neig[t,i])) for t in model.S) for i in model.V),0)
-    # return (0, sum( sum( (1 - sum( sum( minl(1,model.s[u,j]) for u in model.S) for j in model.N[t,i])) for t in model.S) for i in model.V),0)
-    # return (0, sum( sum( minl(model.s[t,i], (1 - model.Neig[t,i])) for t in model.S) for i in model.V),0)
+def const_AP3(model, t, u, i, j):
+    return model.AP[t,u,i,j] >= model.a[i,j] + model.P[t,u,i,j] - 1
+
+#Se tiver algum no sem vizinho, da erro aqui:
+def const_AP4(model, t, i):
+    return sum( sum( model.AP[t,u,i,j] for j in model.N[t,i]) for u in model.S) - sum( sum( model.AP[v,t,k,i] for k in model.N2[i]) for v in model.S) == 0
+
+def const_AP5(model):
+    return sum( sum( sum( sum( model.AP[t,u,i,j] for j in model.N[t,i]-{(model.n+1)}) for t in model.S) for u in model.S) for i in model.V) == sum( sum( model.s[t,i] for t in model.S) for i in model.V)
+    # return sum( sum( sum( model.a[i,j] for j in model.N[t,i]-{(model.n+1)}) for t in model.S) for i in model.V) == sum( sum( model.s[t,i] for t in model.S) for i in model.V) - 1
 
 # Funcao principal para gerar instancia do modelo
 def generate_model():
@@ -169,10 +224,6 @@ def generate_model():
     ## ---
     # Numero de nos
     model.n = Param(within=NonNegativeIntegers) #INICIALIZAR
-    # Largura do terreno
-    #model.W = Param(within=NonNegativeIntegers) #INICIALIZAR
-    # Altura do terreno
-    #model.H = Param(within=NonNegativeIntegers) #INICIALIZAR
     # Menores coordenadas (X,Y)
     # model.smallest_X = Param(within=Integers, initialize = 0) #INICIALIZAR
     # model.smallest_Y = Param(within=Integers, initialize = 0) #INICIALIZAR
@@ -186,10 +237,13 @@ def generate_model():
     ## ---
     # Conjunto de nos
     model.V = RangeSet(1,model.n)
-    # Conjunto de arestas
-    #model.A = Set(model.V,model.V,doc="Arestas",within=Binary)
+    # Conjunto de nos incluindo nos ficticios 0 e n+1
+    model.Va = RangeSet(0,(model.n+1))
+    model.VaX0 = RangeSet(1,(model.n+1))
+    model.VaXn1 = RangeSet(0,model.n)
     # Conjunto de modelos/tipos de transceptor
     model.S = Set(initialize=["S2C","S2CPro","S3"],doc="Modelos")
+    
 
     ## Constantes do problema (demais parametros)
 
@@ -197,8 +251,6 @@ def generate_model():
     model.X = Param(model.V) #INICIALIZAR
     # Coordenadas y dos nos
     model.Y = Param(model.V) #INICIALIZAR
-    # Indice do no v0 (fonte da rede)
-    model.V0 = Param() #INICIALIZAR
     # Conjunto de corrente consumida media (I)
     model.I = Param(model.S) #INICIALIZAR
     # Conjunto de custo medio em dolar (M)
@@ -207,40 +259,34 @@ def generate_model():
     model.RMAX = Param(model.S) #INICIALIZAR
     # Distancia entre pares de posicoes fixas (D)
     model.D = Param(model.V,model.V,initialize=init_D,domain=NonNegativeReals)
-    # model.DMED = Param()
 
-    # Vizinhanca dos nos
+    # Vizinhanca dos nos (i.e. os nos que sao vizinhos de i)
     model.N = Set(model.S,model.V,initialize=init_N)
+    # "Anti-vizinhanca" dos nos (i.e. os nos que tem i como vizinho)
+    model.N2 = Set(model.V,initialize=init_N2)
 
     # Variaveis de decisao
     # ---
     #Estado das posicoes de alocacao (1 = alocado, 0 = nao alocado)
     model.s = Var(model.S, model.V, within=Binary)
-    #Variaveis de controle das restricoes com min(x,y). (1 => x < y, 0 => x > y)
-    model.d1 = Var(model.S, model.V, within=Binary)
-    # model.d2 = Var(within=Binary)
-    #Variaveis componentes de restricao
-    model.Neig = Var(model.S, model.V, within=NonNegativeIntegers)
-    #model.OR = Var(within=Binary)
     
-    #Variavel que indica se em um par de nos vizinhos, ambos sao ativos
-    model.Pair = Var(model.S, model.V, model.V, within=NonNegativeReals)
-    model.Pair_floor = Var(model.S, model.V, model.V, within=NonNegativeIntegers)
+    #Variavel de linearizacao que indica se em um par de nos vizinhos, ambos sao ativos
+    model.P = Var(model.S, model.S, model.V, model.V, within=Binary)
 
-    #Variavel que representa o indice do no fonte da rede
-    # model.v0 = Var(bounds = (0,model.n), within=model.V)
-    #Fluxo de cada no (origem,destino)
-    model.f = Var(model.V, model.V, within=NonNegativeIntegers)
+    #Indica se aresta esta presente no caminho entre nos ficticios 0 e n+1
+    model.a = Var(model.VaXn1, model.VaX0, within=Binary)
 
+    #Variavel de linearizacao que indica se aresta esta no caminho entre 0 e n+1 e ao mesmo tempo passa por um no ativo/alocado
+    # model.A = Var(model.V, model.VaXn1, model.VaX0, within=Binary)
 
+    model.A0 = Var(model.V, within=Binary)
+    model.An1 = Var(model.V, within=Binary)
+
+    #Variavel de linearizacao que indica se aresta esta no caminho entre 0 e n+1 e ao mesmo tempo passa por um par de nos ativos/alocados
+    model.AP = Var(model.S, model.S, model.VaXn1, model.VaX0, within=Binary)
 
     ## Funcoes objetivo
     ## ---
-
-    # # FO - Maximizar Neig
-    # model.max_Neig = Objective(rule=obj_max_Neig,sense=maximize)
-    # # FO - Maximizar OR
-    # model.max_OR = Objective(rule=obj_max_OR,sense=maximize)
 
     # FO - Consumo de Energia
     model.E = Objective(rule=obj_Energy_rule,sense=minimize)
@@ -256,9 +302,6 @@ def generate_model():
     ## Expressoes
     ## ---
 
-    # Computa a quantidade de vizinhos para cada no i de tipo t
-    # model.Neig = Param(model.S, model.V, initialize=init_Neig)
-
     # Restricoes
     # ---
 
@@ -268,30 +311,39 @@ def generate_model():
     # #Restricao de quantidade minima (LB) e maxima (UB) de alocacao
     model.numalloc = Constraint(rule=const_numalloc)
 
-    # Restricoes de vizinhanca (nao deve haver nenhum no sem vizinhos)
-    # model.Neig1 = Constraint(model.S, model.V, rule=const_Neig1)
-    # model.Neig2 = Constraint(model.S, model.V, rule=const_Neig2)
-    # model.Neig3 = Constraint(model.S, model.V, rule=const_Neig3)
-    # model.Neig4 = Constraint(model.S, model.V, rule=const_Neig4)
-    # model.Neig5 = Constraint(model.S, model.V, rule=const_Neig5)
-    # model.Neig6 = Constraint(model.S, model.V, rule=const_Neig6)
+    model.P1 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair1)
+    model.P2 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair2)
+    model.P3 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair3)
+    # model.P4 = Constraint(rule=const_Pair4)
+    model.P5 = Constraint(model.S, model.V, rule=const_Pair5)
+
+    #Restricoes de excecao
+    model.a0n1 = Constraint(rule=const_a0n1) #Garante que a variavel a[0,(n+1)] seja igual a 0
+    model.aij = Constraint(model.S, model.V, model.V, rule=const_aij) #Garante que a variavel a[i,j] seja igual a 0 para quando j nao for vizinho de i
+    # model.A0_rev = Constraint(model.V, rule=const_a0_rev)
+    # model.Aij = Constraint(model.S, model.V, rule=const_Aij)
+    model.no_rpt = Constraint(model.V, rule=const_no_repeat)
+    model.no_bck = Constraint(model.V, model.V, rule=const_no_back)
     
-    # model.OR = Constraint(model.S, model.V, rule=const_OR)
+    model.AP0 = Constraint(model.V, rule=const_AP0)
+    model.APn1 = Constraint(model.V, rule=const_APn1)
+    model.AP0n1 = Constraint(rule=const_AP0n1)
+    
+    model.A0_1 = Constraint(model.V,rule=const_A0_1)
+    model.A0_2 = Constraint(model.V,rule=const_A0_2)
+    model.A0_3 = Constraint(model.V,rule=const_A0_3)
+    model.A0_4 = Constraint(rule=const_A0_4)
 
-    model.Pair1 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair1)
-    model.Pair2 = Constraint(model.S, model.V, model.V, rule=const_Pair2)
-    model.Pair3 = Constraint(model.S, model.V, model.V, rule=const_Pair3)
-    model.Pair4 = Constraint(rule=const_Pair4)
+    model.An1_1 = Constraint(model.V,rule=const_An1_1)
+    model.An1_2 = Constraint(model.V,rule=const_An1_2)
+    model.An1_3 = Constraint(model.V,rule=const_An1_3)
+    model.An1_4 = Constraint(rule=const_An1_4)
 
-    model.Flow1 = Constraint(rule=const_source_act)
-    model.Flow2_1 = Constraint(rule=const_source_fout1)
-    model.Flow2_2 = Constraint(rule=const_source_fout2)
-    model.Flow3 = Constraint(rule=const_source_fin)
-    model.Flow4 = Constraint(rule=const_flow_consume)
-    model.Flow5 = Constraint(rule=const_fout_bounds)
-    model.Flow6 = Constraint(rule=const_fin_bounds)
-
-    # model.Dist = Constraint(rule=const_Dist)
+    model.AP1 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP1)
+    model.AP2 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP2)
+    model.AP3 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP3)
+    model.AP4 = Constraint(model.S, model.V, rule=const_AP4)
+    model.AP5 = Constraint(rule=const_AP5)
 
     return model
 

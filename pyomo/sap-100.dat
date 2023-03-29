@@ -1,8 +1,4 @@
 param n := 100;
-param smallest_X := 1;
-param smallest_Y := 1;
-param biggest_X := 8;
-param biggest_Y := 12;
 
 param scale := 200;
 
@@ -22,8 +18,6 @@ param RMAX :=
 "S2C" 1200
 "S2CPro" 3200
 "S3" 3200;
-
-param DMED := 6400;
 
 param X :=
 1 97

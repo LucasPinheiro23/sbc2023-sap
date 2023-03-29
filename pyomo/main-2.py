@@ -15,8 +15,8 @@ logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 
 #Nome do arquivo da instancia a ser resolvida
 #instance_filename = '../instances_DAT/512/T1.dat'
-instance_filename = 'sap-6_flow.dat'
-#instance_filename = 'sap-100.dat'
+# instance_filename = 'sap-3.dat'
+instance_filename = 'sap-100.dat'
 #Solver a ser utilizado
 solver = 'cplex'
 #Executavel do solver
@@ -25,7 +25,7 @@ solver_exec = 'cplex'
 ## CONSTRUCAO DO MODELO E INSTANCIA
 
 ## Seleciona FOs que serao ponderadas (dicionario binario)
-fo = {'E': 1, 'C': 0, 'M': 0}
+fo = {'E': 0, 'C': 1, 'M': 0}
 
 ## Seleciona valores de alpha para cada FO (ponderacao)
 alpha = {'E': 0.5, 'C': 0.5, 'M': 0}
@@ -54,7 +54,7 @@ else:
     exit(0)
 
 ## Imprime modelo abstrato
-# model.pprint()
+#model.pprint()
 
 # ##Normalizacao min-max - Etapa 1
 
@@ -111,7 +111,8 @@ instance = model.create_instance(data)
 
 #TESTE DE REMOCAO DE ITEM DO SET, FUNCIONA!
 # instance.N['S2C',1] = instance.N['S2C',1] - {3}
-# instance.N.pprint()
+instance.N.pprint()
+# instance.AP4.pprint()
 
 # exit(0)
 

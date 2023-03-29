@@ -1,8 +1,4 @@
 param n := 10;
-param smallest_X := 1;
-param smallest_Y := 1;
-param biggest_X := 8;
-param biggest_Y := 12;
 
 param scale := 1000;
 
@@ -26,11 +22,11 @@ param RMAX :=
 param X :=
 1 1
 2 3
-3 1
+3 2
 4 3
 5 4
 6 5
-7 8
+7 1
 8 2
 9 8
 10 1;
@@ -42,7 +38,7 @@ param Y :=
 4 5
 5 4
 6 2
-7 12
-8 9
+7 2
+8 3
 9 3
-10 7;
+10 4;
