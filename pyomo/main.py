@@ -96,13 +96,13 @@ data.load(filename=instance_filename, model=model)
 instance = model.create_instance(data)
 
 ## Imprime instancia
-#instance.N.pprint()
+instance.V2.pprint()
 
 #TESTE DE REMOCAO DE ITEM DO SET, FUNCIONA!
 # instance.N['S2C',1] = instance.N['S2C',1] - {3}
 # instance.N.pprint()
 
-# exit(0)
+exit(0)
 
 #-----------------------------------------------------------#
 

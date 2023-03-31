@@ -15,8 +15,8 @@ logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 
 #Nome do arquivo da instancia a ser resolvida
 #instance_filename = '../instances_DAT/512/T1.dat'
-# instance_filename = 'sap-3.dat'
-instance_filename = 'sap-100.dat'
+instance_filename = 'sap-3.dat'
+# instance_filename = 'sap-6.dat'
 #Solver a ser utilizado
 solver = 'cplex'
 #Executavel do solver
@@ -111,10 +111,10 @@ instance = model.create_instance(data)
 
 #TESTE DE REMOCAO DE ITEM DO SET, FUNCIONA!
 # instance.N['S2C',1] = instance.N['S2C',1] - {3}
-instance.N.pprint()
+instance.V2.pprint()
 # instance.AP4.pprint()
 
-# exit(0)
+exit(0)
 
 #-----------------------------------------------------------#
 

@@ -1,14 +1,14 @@
 {
     "Problem": [
         {
-            "Lower bound": 707737993.0007086,
+            "Lower bound": 772077810.5462277,
             "Name": "sap-100.dat",
             "Number of constraints": 409538,
             "Number of nonzeros": 1069935,
             "Number of objectives": 1,
             "Number of variables": 192511,
             "Sense": "maximize",
-            "Upper bound": 707737993.0007086
+            "Upper bound": 772077810.5462277
         }
     ],
     "Solution": [
@@ -22,88 +22,91 @@
             "Message": null,
             "Objective": {
                 "C": {
-                    "Value": 707737993.0007086
+                    "Value": 772077810.5462275
                 }
             },
             "Problem": {},
             "Status": "optimal",
             "Variable": {
-                "A0[8]": {
+                "A0[18]": {
                     "Value": 1.0
                 },
-                "AP[S2CPro,S2CPro,11,61]": {
+                "AP[S2C,S3,0,18]": {
                     "Value": 1.0
                 },
-                "AP[S2CPro,S2CPro,61,45]": {
+                "AP[S2CPro,S2CPro,11,77]": {
                     "Value": 1.0
                 },
-                "AP[S2CPro,S2CPro,94,20]": {
+                "AP[S2CPro,S2CPro,13,29]": {
                     "Value": 1.0
                 },
-                "AP[S2CPro,S3,0,8]": {
+                "AP[S2CPro,S2CPro,45,61]": {
                     "Value": 1.0
                 },
-                "AP[S2CPro,S3,20,66]": {
+                "AP[S2CPro,S2CPro,5,88]": {
                     "Value": 1.0
                 },
-                "AP[S2CPro,S3,37,12]": {
+                "AP[S2CPro,S2CPro,61,11]": {
                     "Value": 1.0
                 },
-                "AP[S2CPro,S3,45,77]": {
+                "AP[S2CPro,S2CPro,63,67]": {
                     "Value": 1.0
                 },
-                "AP[S2CPro,S3,57,90]": {
+                "AP[S2CPro,S2CPro,77,45]": {
                     "Value": 1.0
                 },
-                "AP[S2CPro,S3,63,67]": {
+                "AP[S2CPro,S2CPro,88,36]": {
                     "Value": 1.0
                 },
-                "AP[S2CPro,S3,88,36]": {
+                "AP[S2CPro,S2CPro,90,72]": {
                     "Value": 1.0
                 },
-                "AP[S3,S2C,95,101]": {
+                "AP[S2CPro,S3,29,43]": {
                     "Value": 1.0
                 },
-                "AP[S3,S2CPro,34,37]": {
+                "AP[S2CPro,S3,34,12]": {
                     "Value": 1.0
                 },
-                "AP[S3,S2CPro,5,88]": {
+                "AP[S2CPro,S3,36,8]": {
                     "Value": 1.0
                 },
-                "AP[S3,S2CPro,66,94]": {
+                "AP[S2CPro,S3,66,94]": {
                     "Value": 1.0
                 },
-                "AP[S3,S2CPro,72,57]": {
+                "AP[S2CPro,S3,67,81]": {
                     "Value": 1.0
                 },
-                "AP[S3,S2CPro,77,11]": {
+                "AP[S2CPro,S3,72,57]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S2C,43,101]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S2CPro,18,13]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S2CPro,20,66]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S2CPro,37,34]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S2CPro,57,90]": {
+                    "Value": 1.0
+                },
+                "AP[S3,S2CPro,8,5]": {
                     "Value": 1.0
                 },
                 "AP[S3,S2CPro,81,63]": {
                     "Value": 1.0
                 },
-                "AP[S3,S3,12,34]": {
+                "AP[S3,S3,12,37]": {
                     "Value": 1.0
                 },
-                "AP[S3,S3,36,8]": {
+                "AP[S3,S3,94,20]": {
                     "Value": 1.0
                 },
-                "AP[S3,S3,67,81]": {
-                    "Value": 1.0
-                },
-                "AP[S3,S3,8,5]": {
-                    "Value": 1.0
-                },
-                "AP[S3,S3,8,82]": {
-                    "Value": 1.0
-                },
-                "AP[S3,S3,82,95]": {
-                    "Value": 1.0
-                },
-                "AP[S3,S3,90,72]": {
-                    "Value": 1.0
-                },
-                "An1[95]": {
+                "An1[43]": {
                     "Value": 1.0
                 },
                 "P[S2CPro,S2CPro,11,45]": {
@@ -112,13 +115,25 @@
                 "P[S2CPro,S2CPro,11,61]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S2CPro,20,57]": {
+                "P[S2CPro,S2CPro,11,77]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S2CPro,20,61]": {
+                "P[S2CPro,S2CPro,13,29]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S2CPro,20,94]": {
+                "P[S2CPro,S2CPro,13,77]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,29,13]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,29,77]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,36,5]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,36,88]": {
                     "Value": 1.0
                 },
                 "P[S2CPro,S2CPro,45,11]": {
@@ -127,142 +142,181 @@
                 "P[S2CPro,S2CPro,45,61]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S2CPro,45,94]": {
+                "P[S2CPro,S2CPro,45,66]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S2CPro,57,20]": {
+                "P[S2CPro,S2CPro,45,77]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S2CPro,57,94]": {
+                "P[S2CPro,S2CPro,5,36]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S2CPro,5,88]": {
                     "Value": 1.0
                 },
                 "P[S2CPro,S2CPro,61,11]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S2CPro,61,20]": {
-                    "Value": 1.0
-                },
                 "P[S2CPro,S2CPro,61,45]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S2CPro,61,94]": {
+                "P[S2CPro,S2CPro,61,66]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S2CPro,94,20]": {
+                "P[S2CPro,S2CPro,61,77]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S2CPro,94,45]": {
+                "P[S2CPro,S2CPro,63,67]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S2CPro,94,57]": {
+                "P[S2CPro,S2CPro,66,45]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S2CPro,94,61]": {
+                "P[S2CPro,S2CPro,66,61]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,11,77]": {
+                "P[S2CPro,S2CPro,67,63]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,20,66]": {
+                "P[S2CPro,S2CPro,72,90]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,20,72]": {
+                "P[S2CPro,S2CPro,77,11]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,20,90]": {
+                "P[S2CPro,S2CPro,77,13]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,37,12]": {
+                "P[S2CPro,S2CPro,77,29]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,37,34]": {
+                "P[S2CPro,S2CPro,77,45]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,45,66]": {
+                "P[S2CPro,S2CPro,77,61]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,45,77]": {
+                "P[S2CPro,S2CPro,88,36]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,57,66]": {
+                "P[S2CPro,S2CPro,88,5]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,57,72]": {
+                "P[S2CPro,S2CPro,90,72]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,57,90]": {
+                "P[S2CPro,S3,13,18]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,61,66]": {
+                "P[S2CPro,S3,13,43]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,61,77]": {
+                "P[S2CPro,S3,29,18]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,63,67]": {
+                "P[S2CPro,S3,29,43]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,34,12]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,34,37]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,36,8]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,45,94]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,5,8]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,61,20]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,61,94]": {
                     "Value": 1.0
                 },
                 "P[S2CPro,S3,63,81]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,88,36]": {
+                "P[S2CPro,S3,66,20]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,88,5]": {
+                "P[S2CPro,S3,66,57]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,88,82]": {
+                "P[S2CPro,S3,66,94]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,67,81]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,72,20]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,72,57]": {
+                    "Value": 1.0
+                },
+                "P[S2CPro,S3,77,18]": {
                     "Value": 1.0
                 },
                 "P[S2CPro,S3,88,8]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S3,94,66]": {
+                "P[S2CPro,S3,90,20]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,12,37]": {
+                "P[S2CPro,S3,90,57]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,34,37]": {
+                "P[S3,S2CPro,12,34]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,36,88]": {
+                "P[S3,S2CPro,18,13]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,5,88]": {
+                "P[S3,S2CPro,18,29]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,66,20]": {
+                "P[S3,S2CPro,18,77]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,66,45]": {
+                "P[S3,S2CPro,20,61]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,66,57]": {
+                "P[S3,S2CPro,20,66]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,66,61]": {
+                "P[S3,S2CPro,20,72]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,66,94]": {
+                "P[S3,S2CPro,20,90]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,67,63]": {
+                "P[S3,S2CPro,37,34]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,72,20]": {
+                "P[S3,S2CPro,43,13]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,72,57]": {
+                "P[S3,S2CPro,43,29]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,77,11]": {
+                "P[S3,S2CPro,57,66]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,77,45]": {
+                "P[S3,S2CPro,57,72]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,77,61]": {
+                "P[S3,S2CPro,57,90]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,8,36]": {
+                    "Value": 1.0
+                },
+                "P[S3,S2CPro,8,5]": {
                     "Value": 1.0
                 },
                 "P[S3,S2CPro,8,88]": {
@@ -271,124 +325,82 @@
                 "P[S3,S2CPro,81,63]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,82,88]": {
+                "P[S3,S2CPro,81,67]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,90,20]": {
+                "P[S3,S2CPro,94,45]": {
                     "Value": 1.0
                 },
-                "P[S3,S2CPro,90,57]": {
+                "P[S3,S2CPro,94,61]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,12,34]": {
+                "P[S3,S2CPro,94,66]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,34,12]": {
+                "P[S3,S3,12,37]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,36,5]": {
+                "P[S3,S3,18,43]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,36,82]": {
+                "P[S3,S3,20,57]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,36,8]": {
+                "P[S3,S3,20,94]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,36,95]": {
+                "P[S3,S3,37,12]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,5,36]": {
+                "P[S3,S3,43,18]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,5,82]": {
+                "P[S3,S3,57,20]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,5,8]": {
+                "P[S3,S3,57,94]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,5,95]": {
+                "P[S3,S3,94,20]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,67,81]": {
+                "P[S3,S3,94,57]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,72,90]": {
+                "a[0,18]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,8,36]": {
+                "a[11,77]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,8,5]": {
+                "a[12,37]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,8,82]": {
+                "a[13,29]": {
                     "Value": 1.0
                 },
-                "P[S3,S3,8,95]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,81,67]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,82,36]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,82,5]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,82,8]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,82,95]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,90,72]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,95,36]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,95,5]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,95,82]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,95,8]": {
-                    "Value": 1.0
-                },
-                "a[0,8]": {
-                    "Value": 1.0
-                },
-                "a[10,32]": {
-                    "Value": 1.0
-                },
-                "a[11,61]": {
-                    "Value": 1.0
-                },
-                "a[12,34]": {
+                "a[18,13]": {
                     "Value": 1.0
                 },
                 "a[20,66]": {
                     "Value": 1.0
                 },
-                "a[32,10]": {
+                "a[29,43]": {
                     "Value": 1.0
                 },
-                "a[32,80]": {
-                    "Value": 1.0
-                },
-                "a[34,37]": {
+                "a[34,12]": {
                     "Value": 1.0
                 },
                 "a[36,8]": {
                     "Value": 1.0
                 },
-                "a[37,12]": {
+                "a[37,34]": {
                     "Value": 1.0
                 },
-                "a[45,77]": {
+                "a[43,101]": {
+                    "Value": 1.0
+                },
+                "a[45,61]": {
                     "Value": 1.0
                 },
                 "a[5,88]": {
@@ -397,13 +409,10 @@
                 "a[57,90]": {
                     "Value": 1.0
                 },
-                "a[61,45]": {
+                "a[61,11]": {
                     "Value": 1.0
                 },
                 "a[63,67]": {
-                    "Value": 1.0
-                },
-                "a[65,80]": {
                     "Value": 1.0
                 },
                 "a[66,94]": {
@@ -415,25 +424,13 @@
                 "a[72,57]": {
                     "Value": 1.0
                 },
-                "a[77,11]": {
+                "a[77,45]": {
                     "Value": 1.0
                 },
                 "a[8,5]": {
                     "Value": 1.0
                 },
-                "a[8,82]": {
-                    "Value": 1.0
-                },
-                "a[80,32]": {
-                    "Value": 1.0
-                },
-                "a[80,65]": {
-                    "Value": 1.0
-                },
                 "a[81,63]": {
-                    "Value": 1.0
-                },
-                "a[82,95]": {
                     "Value": 1.0
                 },
                 "a[88,36]": {
@@ -445,22 +442,25 @@
                 "a[94,20]": {
                     "Value": 1.0
                 },
-                "a[95,101]": {
-                    "Value": 1.0
-                },
                 "s[S2CPro,11]": {
                     "Value": 1.0
                 },
-                "s[S2CPro,20]": {
+                "s[S2CPro,13]": {
                     "Value": 1.0
                 },
-                "s[S2CPro,37]": {
+                "s[S2CPro,29]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,34]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,36]": {
                     "Value": 1.0
                 },
                 "s[S2CPro,45]": {
                     "Value": 1.0
                 },
-                "s[S2CPro,57]": {
+                "s[S2CPro,5]": {
                     "Value": 1.0
                 },
                 "s[S2CPro,61]": {
@@ -469,49 +469,49 @@
                 "s[S2CPro,63]": {
                     "Value": 1.0
                 },
+                "s[S2CPro,66]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,67]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,72]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,77]": {
+                    "Value": 1.0
+                },
                 "s[S2CPro,88]": {
                     "Value": 1.0
                 },
-                "s[S2CPro,94]": {
+                "s[S2CPro,90]": {
                     "Value": 1.0
                 },
                 "s[S3,12]": {
                     "Value": 1.0
                 },
-                "s[S3,34]": {
+                "s[S3,18]": {
                     "Value": 1.0
                 },
-                "s[S3,36]": {
+                "s[S3,20]": {
                     "Value": 1.0
                 },
-                "s[S3,5]": {
+                "s[S3,37]": {
                     "Value": 1.0
                 },
-                "s[S3,66]": {
+                "s[S3,43]": {
                     "Value": 1.0
                 },
-                "s[S3,67]": {
-                    "Value": 1.0
-                },
-                "s[S3,72]": {
-                    "Value": 1.0
-                },
-                "s[S3,77]": {
+                "s[S3,57]": {
                     "Value": 1.0
                 },
                 "s[S3,81]": {
                     "Value": 1.0
                 },
-                "s[S3,82]": {
-                    "Value": 1.0
-                },
                 "s[S3,8]": {
                     "Value": 1.0
                 },
-                "s[S3,90]": {
-                    "Value": 1.0
-                },
-                "s[S3,95]": {
+                "s[S3,94]": {
                     "Value": 1.0
                 }
             }
@@ -522,15 +522,15 @@
             "Error rc": 0,
             "Statistics": {
                 "Branch and bound": {
-                    "Number of bounded subproblems": 2898,
-                    "Number of created subproblems": 2898
+                    "Number of bounded subproblems": 15,
+                    "Number of created subproblems": 15
                 }
             },
             "Status": "ok",
             "Termination condition": "optimal",
-            "Termination message": "MIP - Integer optimal solution\\x3a Objective = 7.0773799300e+08",
-            "Time": 204.9996256828308,
-            "User time": 197.5
+            "Termination message": "MIP - Integer optimal solution\\x3a Objective = 7.7207781055e+08",
+            "Time": 45.71161484718323,
+            "User time": 40.34
         }
     ]
 }

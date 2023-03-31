@@ -1,4 +1,5 @@
 from pyomo.environ import *
+from itertools import chain, combinations
 import math
 
 #Constantes
@@ -9,6 +10,19 @@ SMALL = 100000
 #--------------------#
 
 #Funcoes de inicializacao do modelo
+
+def init_V2(model, i):
+    subsets = []
+    for m in model.V2_s:
+        for subset in combinations(model.V, m):
+            subsets.append(subset)
+
+    subsets = list(map(list,subsets))
+
+    for el in subsets[i]:
+        print(el)
+    
+    yield(subsets[i])
 
 # Distancia entre pares de posicoes fixas (D)
 def init_D(model, i, j):
@@ -211,8 +225,13 @@ def const_AP4(model, t, i):
     return sum( sum( model.AP[t,u,i,j] for j in model.N[t,i]) for u in model.S) - sum( sum( model.AP[v,t,k,i] for k in model.N2[i]) for v in model.S) == 0
 
 def const_AP5(model):
-    return sum( sum( sum( sum( model.AP[t,u,i,j] for j in model.N[t,i]-{(model.n+1)}) for t in model.S) for u in model.S) for i in model.V) == sum( sum( model.s[t,i] for t in model.S) for i in model.V)
+    return sum( sum( sum( sum( model.AP[t,u,i,j] for j in model.N[t,i]-{(model.n+1)}) for t in model.S) for u in model.S) for i in model.V) == sum( sum( model.s[t,i] for t in model.S) for i in model.V) - 1
     # return sum( sum( sum( model.a[i,j] for j in model.N[t,i]-{(model.n+1)}) for t in model.S) for i in model.V) == sum( sum( model.s[t,i] for t in model.S) for i in model.V) - 1
+
+def const_AP6(model):
+    for model.V2 in model.V:
+        if len(model.V2) != 0 and len(model.V2) != len(model.V):
+            return sum( sum( sum( sum( model.AP[t,u,i,j] for j in model.N[t,i]-{(model.n+1)}) for t in model.S) for u in model.S) for i in model.V2) == len(model.V2) - 1
 
 # Funcao principal para gerar instancia do modelo
 def generate_model():
@@ -237,6 +256,9 @@ def generate_model():
     ## ---
     # Conjunto de nos
     model.V = RangeSet(1,model.n)
+    # Subconjuntos de nos
+    model.V2_s = RangeSet(1,(pow(2,model.n)))
+    model.V2 = Set(model.V2_s, initialize=init_V2)
     # Conjunto de nos incluindo nos ficticios 0 e n+1
     model.Va = RangeSet(0,(model.n+1))
     model.VaX0 = RangeSet(1,(model.n+1))
@@ -344,6 +366,7 @@ def generate_model():
     model.AP3 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP3)
     model.AP4 = Constraint(model.S, model.V, rule=const_AP4)
     model.AP5 = Constraint(rule=const_AP5)
+    # model.AP6 = Constraint(rule=const_AP6)
 
     return model
 
