@@ -9,20 +9,22 @@ SMALL = 100000
 ### MODELAGEM ABSTRATA
 #--------------------#
 
+#Variavel global: subconjuntos de V
+subsets = []
+
 #Funcoes de inicializacao do modelo
 
+#Subconjuntos do conjunto de nos (V), exceto vazio e conjuntos com um único elemento.
 def init_V2(model, i):
-    subsets = []
-    for m in model.V2_s:
-        for subset in combinations(model.V, m):
-            subsets.append(subset)
+    global subsets
 
-    subsets = list(map(list,subsets))
+    if i == 1:
+        for j in model.V-{1}:
+            for subset in combinations(model.V,j):
+                subsets.append(list(subset))
 
-    for el in subsets[i]:
-        print(el)
-    
-    yield(subsets[i])
+    for j in subsets[i-1]:
+        yield j
 
 # Distancia entre pares de posicoes fixas (D)
 def init_D(model, i, j):
@@ -52,7 +54,9 @@ def obj_Energy_rule(model):
 
 # FO - Area de Cobertura
 def obj_Coverage_rule(model):
-    return sum(sum(math.pi*pow(model.RMAX[t],2)*model.s[t,i] for t in model.S) for i in model.V)
+    # return sum(sum(math.pi*pow(model.RMAX[t],2)*model.s[t,i] for t in model.S) for i in model.V)
+    # return sum(sum(sum(sum( model.P[t,u,i,j] * model.D[i,j] for j in model.N[t,i]-{(model.n+1)}) for t in model.S) for u in model.S) for i in model.V)
+    return sum(sum(sum(sum( model.P[t,u,i,j] * model.D[i,j] for j in model.V) for t in model.S) for u in model.S) for i in model.V)
 
 # FO - Custo Monetario
 def obj_Monetary_rule(model):
@@ -99,7 +103,7 @@ def const_Pair3(model, t, u, i, j):
     else:
         return Constraint.Skip
 
-#Se nenhum tiver vizinho, da erro aqui. Restricao força que exista ao menos 1 par na rede
+#Se nenhum tiver vizinho, da erro aqui. Restricao força que exista ao menos 1 par ativo na rede
 def const_Pair4(model):
     return sum( sum( sum( sum( model.P[t,u,i,j] for j in model.N[t,i]-{(model.n+1)}) for t in model.S) for u in model.S) for i in model.V) >= 1
 
@@ -228,10 +232,44 @@ def const_AP5(model):
     return sum( sum( sum( sum( model.AP[t,u,i,j] for j in model.N[t,i]-{(model.n+1)}) for t in model.S) for u in model.S) for i in model.V) == sum( sum( model.s[t,i] for t in model.S) for i in model.V) - 1
     # return sum( sum( sum( model.a[i,j] for j in model.N[t,i]-{(model.n+1)}) for t in model.S) for i in model.V) == sum( sum( model.s[t,i] for t in model.S) for i in model.V) - 1
 
-def const_AP6(model):
-    for model.V2 in model.V:
-        if len(model.V2) != 0 and len(model.V2) != len(model.V):
-            return sum( sum( sum( sum( model.AP[t,u,i,j] for j in model.N[t,i]-{(model.n+1)}) for t in model.S) for u in model.S) for i in model.V2) == len(model.V2) - 1
+def const_MST(model, k):
+    return sum( sum( sum( sum( model.AP[t,u,i,j] for j in model.V2[k]) for t in model.S) for u in model.S) for i in model.V2[k]) <= model.MAX_0_V2[k]
+
+# def const_MST_max1(model, k):
+#     return (sum( sum( sum( sum( model.P[t,u,i,j] for t in model.S) for u in model.S) for j in model.V2[k]) for i in model.V2[k]) - 1) <= len(model.V) * model.d[k]
+
+# def const_MST_max2(model, k):
+#     return -(sum( sum( sum( sum( model.P[t,u,i,j] for t in model.S) for u in model.S) for j in model.V2[k]) for i in model.V2[k]) - 1) <= len(model.V) * (1-model.d[k])
+
+# def const_MST_max3(model, k):
+#     return model.MAX_0_V2[k] >= 0
+
+# def const_MST_max4(model, k):
+#     return model.MAX_0_V2[k] >= (sum( sum( sum( sum( model.P[t,u,i,j] for t in model.S) for u in model.S) for j in model.V2[k]) for i in model.V2[k]) - 1)
+
+# def const_MST_max5(model, k):
+#     return model.MAX_0_V2[k] <= (sum( sum( sum( sum( model.P[t,u,i,j] for t in model.S) for u in model.S) for j in model.V2[k]) for i in model.V2[k]) - 1) + len(model.V) * (1-model.d[k])
+
+# def const_MST_max6(model, k):
+#     return model.MAX_0_V2[k] <= len(model.V) * model.d[k]
+
+def const_MST_max1(model, k):
+    return (sum( sum( model.s[t,i] for t in model.S) for i in model.V2[k]) - 1) <= len(model.V) * model.d[k]
+
+def const_MST_max2(model, k):
+    return -(sum( sum( model.s[t,i] for t in model.S) for i in model.V2[k]) - 1) <= len(model.V) * (1-model.d[k])
+
+def const_MST_max3(model, k):
+    return model.MAX_0_V2[k] >= 0
+
+def const_MST_max4(model, k):
+    return model.MAX_0_V2[k] >= (sum( sum( model.s[t,i] for t in model.S) for i in model.V2[k]) - 1)
+
+def const_MST_max5(model, k):
+    return model.MAX_0_V2[k] <= (sum( sum( model.s[t,i] for t in model.S) for i in model.V2[k]) - 1) + len(model.V) * (1-model.d[k])
+
+def const_MST_max6(model, k):
+    return model.MAX_0_V2[k] <= len(model.V) * model.d[k]
 
 # Funcao principal para gerar instancia do modelo
 def generate_model():
@@ -256,8 +294,10 @@ def generate_model():
     ## ---
     # Conjunto de nos
     model.V = RangeSet(1,model.n)
+    # all_subset_gen(range(1,model.n.construct()))
     # Subconjuntos de nos
-    model.V2_s = RangeSet(1,(pow(2,model.n)))
+    model.V2_s = RangeSet(1,(pow(2,model.n-1)-1))
+    
     model.V2 = Set(model.V2_s, initialize=init_V2)
     # Conjunto de nos incluindo nos ficticios 0 e n+1
     model.Va = RangeSet(0,(model.n+1))
@@ -298,8 +338,11 @@ def generate_model():
     #Indica se aresta esta presente no caminho entre nos ficticios 0 e n+1
     model.a = Var(model.VaXn1, model.VaX0, within=Binary)
 
-    #Variavel de linearizacao que indica se aresta esta no caminho entre 0 e n+1 e ao mesmo tempo passa por um no ativo/alocado
-    # model.A = Var(model.V, model.VaXn1, model.VaX0, within=Binary)
+    #Variavel de controle (para max na restricao MST)
+    model.d = Var(model.V2_s, within=Binary)
+
+    #Variavel de max (para restricao MST)
+    model.MAX_0_V2 = Var(model.V2_s, within=NonNegativeIntegers)
 
     model.A0 = Var(model.V, within=Binary)
     model.An1 = Var(model.V, within=Binary)
@@ -341,7 +384,7 @@ def generate_model():
 
     #Restricoes de excecao
     model.a0n1 = Constraint(rule=const_a0n1) #Garante que a variavel a[0,(n+1)] seja igual a 0
-    model.aij = Constraint(model.S, model.V, model.V, rule=const_aij) #Garante que a variavel a[i,j] seja igual a 0 para quando j nao for vizinho de i
+    # model.aij = Constraint(model.S, model.V, model.V, rule=const_aij) #Garante que a variavel a[i,j] seja igual a 0 para quando j nao for vizinho de i
     # model.A0_rev = Constraint(model.V, rule=const_a0_rev)
     # model.Aij = Constraint(model.S, model.V, rule=const_Aij)
     model.no_rpt = Constraint(model.V, rule=const_no_repeat)
@@ -367,6 +410,15 @@ def generate_model():
     model.AP4 = Constraint(model.S, model.V, rule=const_AP4)
     model.AP5 = Constraint(rule=const_AP5)
     # model.AP6 = Constraint(rule=const_AP6)
+
+    model.MST = Constraint(model.V2_s,rule=const_MST)
+
+    model.max_MST1 = Constraint(model.V2_s,rule=const_MST_max1)
+    model.max_MST2 = Constraint(model.V2_s,rule=const_MST_max2)
+    model.max_MST3 = Constraint(model.V2_s,rule=const_MST_max3)
+    model.max_MST4 = Constraint(model.V2_s,rule=const_MST_max4)
+    model.max_MST5 = Constraint(model.V2_s,rule=const_MST_max5)
+    model.max_MST6 = Constraint(model.V2_s,rule=const_MST_max6)
 
     return model
 
