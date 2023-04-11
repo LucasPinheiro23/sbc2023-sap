@@ -1,4 +1,5 @@
-from sap_sbc_abstract_model import *
+from efficient_sap_sbc_abstract_model import *
+# from sap_sbc_abstract_model import *
 from pyomo.environ import *
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
@@ -15,7 +16,7 @@ logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 
 #Nome do arquivo da instancia a ser resolvida
 #instance_filename = '../instances_DAT/512/T1.dat'
-instance_filename = 'sap-6.dat'
+instance_filename = 'sap-100.dat'
 # instance_filename = 'sap-20.dat'
 # instance_filename = 'sap-100.dat'
 #Solver a ser utilizado
@@ -112,7 +113,7 @@ instance = model.create_instance(data)
 
 #TESTE DE REMOCAO DE ITEM DO SET, FUNCIONA!
 # instance.N['S2C',1] = instance.N['S2C',1] - {3}
-# instance.N.pprint()
+instance.N.pprint()
 # instance.AP4.pprint()
 
 # exit(0)
