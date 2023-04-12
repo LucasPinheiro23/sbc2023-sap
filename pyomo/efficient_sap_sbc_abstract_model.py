@@ -45,7 +45,7 @@ def obj_Energy_rule(model):
 def obj_Coverage_rule(model):
     # return sum(sum(math.pi*pow(model.RMAX[t],2)*model.s[t,i] for t in model.S) for i in model.V)
     #Melhor resultado ate o momento
-    return sum(sum(sum( model.s[t,i] * model.D[i,j] for j in model.N[t,i]-{0}) for t in model.S) for i in model.V)
+    return sum(sum( model.s[t,i] for t in model.S) for i in model.V) / model.n
     # return sum(sum(sum(sum( model.P[t,u,i,j] * model.D[i,j] for j in model.V) for t in model.S) for u in model.S) for i in model.V)
 
 # FO - Custo Monetario
@@ -145,21 +145,41 @@ def const_AP3(model, t, u, i, j):
 ###
 #NOVAS RESTRICOES
 
-#Determina que o numero total de arestas que saem de cada no i eh 1, exceto se i for igual a 0
+#Determina que o numero total de arestas que saem de cada no i eh 1
 def const_AP4(model, t, i):
     return sum( model.a[i,j] for j in model.N[t,i]) == 1
 
 #Determina que o nivel do no i deve ser sempre maior que o nivel do no j quando i tem aresta ligando a j
-def const_L1(model, i, j):
-    if i != j:
+def const_L1(model, t, i, j):
+    if j in model.N[t,i]-{0}:
         # return model.L[i] >= model.L[j] + sum(sum( model.AP[t,u,i,j] for t in model.S) for u in model.S) - model.n * ( 1 - sum(sum( model.AP[t,u,i,j] for t in model.S) for u in model.S))
-        return model.L[i] >= model.L[j] + sum(sum( model.AP[t,u,i,j] for t in model.S) for u in model.S) - model.n * ( 1 - sum(sum( model.AP[t,u,i,j] for t in model.S) for u in model.S))
+        return model.Ls[t,i,i] >= model.Ls[t,i,j] + sum( model.AP[t,u,i,j] for u in model.S) - model.n * ( 1 - sum( model.AP[t,u,i,j] for u in model.S))
+    elif j == 0 and i != j:
+        return model.Ls[t,i,i] >= model.L[j] + sum( model.AP[t,u,i,j] for u in model.S) - model.n * ( 1 - sum( model.AP[t,u,i,j] for u in model.S))
     else:
         return Constraint.Skip
 
 #Determina que o nivel do no 0 (sorvedouro) eh sempre igual a 0
 def const_L0(model):
     return model.L[0] == 0
+
+def const_Ltest(model, i):
+    return model.L[i] >= sum( model.s[t,i] for t in model.S)
+
+####
+#TESTES
+
+def const_Ln1(model, i):
+    return model.Ln[i] == model.L[i] + model.n
+
+def const_Ls1(model, t, i, k):
+    return model.Ls[t,i,k] <= model.Ln[k]
+
+def const_Ls2(model, t, i, k):
+    return model.Ls[t,i,k] <= (2*model.n) * model.s[t,i]
+
+def const_Ls3(model, t, i, k):
+    return model.Ls[t,i,k] >= model.Ln[k] + (2*model.n) * (model.s[t,i] - 1)
 
 # Funcao principal para gerar instancia do modelo
 def generate_model():
@@ -220,6 +240,10 @@ def generate_model():
 
     #Nivel do no sensor
     model.L = Var(model.V0, within=Integers)
+    #Nivel do no sensor (nao-negativo)
+    model.Ln = Var(model.V, within=NonNegativeIntegers)
+    #Multiplicacao de s[t,i] com Ln[i]
+    model.Ls = Var(model.S, model.V, model.V, within=NonNegativeIntegers)
 
     #Variavel de linearizacao que indica se aresta esta no caminho entre 0 e n+1 e ao mesmo tempo passa por um par de nos ativos/alocados
     model.AP = Var(model.S, model.S, model.V, model.V0, within=Binary)
@@ -272,9 +296,17 @@ def generate_model():
     model.AP2 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP2)
     model.AP3 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP3)
     model.AP4 = Constraint(model.S, model.V, rule=const_AP4)
+    # model.AP5 = Constraint(rule=const_AP5)
 
-    model.L1 = Constraint(model.V, model.V0, rule=const_L1)
+    model.L1 = Constraint(model.S, model.V, model.V0, rule=const_L1)
     model.L0 = Constraint(rule=const_L0)
+    model.Ln1 = Constraint(model.V,rule=const_Ln1)
+
+    model.Ls1 = Constraint(model.S, model.V, model.V, rule=const_Ls1)
+    model.Ls2 = Constraint(model.S, model.V, model.V, rule=const_Ls2)
+    model.Ls3 = Constraint(model.S, model.V, model.V, rule=const_Ls3)
+
+    # model.test = Constraint(model.V, rule=const_Ltest)
 
     return model
 

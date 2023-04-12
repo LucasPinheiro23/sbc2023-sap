@@ -16,7 +16,7 @@ logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 
 #Nome do arquivo da instancia a ser resolvida
 #instance_filename = '../instances_DAT/512/T1.dat'
-instance_filename = 'sap-100.dat'
+instance_filename = 'sap-10.dat'
 # instance_filename = 'sap-20.dat'
 # instance_filename = 'sap-100.dat'
 #Solver a ser utilizado
@@ -127,9 +127,8 @@ instance.N.pprint()
 opt = SolverFactory(solver, executable=solver_exec)
 #opt = SolverFactory('glpk', executable='glpsol')
 
-print("Resolvendo instancia...")
 #Resolve a instancia e armazena os resultados em um arquivo JSON
-results = opt.solve(instance)
+results = opt.solve(instance, tee=True)
 instance.solutions.store_to(results)
 results.problem.name = instance_filename
 results.write(filename='results.json',format='json')
