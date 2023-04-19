@@ -44,10 +44,9 @@ def obj_Energy_rule(model):
 # FO - Area de Cobertura
 def obj_Coverage_rule(model):
     # return sum(sum(math.pi*pow(model.RMAX[t],2)*model.s[t,i] for t in model.S) for i in model.V)
-
     #Melhor resultado ate o momento
-    # return sum(sum(sum( model.s[t,i] * model.D[i,j] for j in model.N[t,i]-{(model.n+1)}) for t in model.S) for i in model.V)
-    return sum(sum(sum(sum( model.P[t,u,i,j] * model.D[i,j] for j in model.V) for t in model.S) for u in model.S) for i in model.V)
+    return sum(sum( model.s[t,i] for t in model.S) for i in model.V) / model.n
+    # return sum(sum(sum(sum( model.P[t,u,i,j] * model.D[i,j] for j in model.V) for t in model.S) for u in model.S) for i in model.V)
 
 # FO - Custo Monetario
 def obj_Monetary_rule(model):
@@ -80,36 +79,33 @@ def const_numalloc(model):
 ####
 
 def const_Pair1(model, t, u, i, j):
-    if i != 0 and j in model.N[t,i]:
-        return model.P[t,u,i,j] <= model.s[t,i]
-    elif i == 0 or i == j or (i != 0 and j not in model.N[t,i]):
-        return model.P[t,u,i,j] == 0
-    # else:
-    #     return Constraint.Skip
+    return model.P[t,u,i,j] <= model.s[t,i]
 
 def const_Pair2(model, t, u, i, j):
-    if i != 0 and j in model.N[t,i]-{0}:
-        return model.P[t,u,i,j] <= model.s[u,j]
-    elif i != 0 and j == 0:
-        return model.P[t,u,i,j] <= 1
-    elif i == 0 or i == j or (i != 0 and j not in model.N[t,i]-{0}):
-        return model.P[t,u,i,j] == 0
-    # else:
-    #     return Constraint.Skip
+    return model.P[t,u,i,j] <= model.s[u,j]
 
 def const_Pair3(model, t, u, i, j):
-    if i != 0 and j in model.N[t,i]-{0}:
-        return model.P[t,u,i,j] >= model.s[t,i] + model.s[u,j] - 1
-    elif i != 0 and j == 0:
-        return model.P[t,u,i,j] >= model.s[t,i]
-    elif i == 0 or i == j or (i != 0 and j not in model.N[t,i]-{0}):
-        return model.P[t,u,i,j] == 0
-    # else:
-    #     return Constraint.Skip
+    return model.P[t,u,i,j] >= model.s[t,i] + model.s[u,j] - 1
 
 #Se nenhum tiver vizinho, da erro aqui. Restricao força que exista ao menos 1 par ativo na rede
 def const_Pair4(model):
     return sum( sum( sum( sum( model.P[t,u,i,j] for j in model.N[t,i]-{0}) for t in model.S) for u in model.S) for i in model.V) >= 1
+
+###
+
+#Restricoes A0
+
+def const_A0_1(model, i):
+    return model.A0[i] <= model.a[i,0]
+
+def const_A0_2(model, i):
+    return model.A0[i] <= sum( model.s[t,i] for t in model.S)
+
+def const_A0_3(model, i):
+    return model.A0[i] >= model.a[i,0] + sum( model.s[t,i] for t in model.S) - 1
+
+def const_A0_4(model):
+    return sum( model.A0[i] for i in model.V) == 1
 
 ###
 
@@ -121,17 +117,20 @@ def const_no_back(model, i, j):
 
 #Determina que nao pode existir aresta de caminho com origem em 0 ou saindo e voltando para mesmo no
 def const_aij(model, i, j):
-    if i == 0 or i == j:
+    if i == j:
         return model.a[i,j] == 0
-    # else:
-    #     for t in model.S:
-    #         vart = 0
-    #         if j not in model.N[t,i]-{0}:
-    #             vart+=1
-    #     if vart == len(model.S):
-    #         return model.a[i,j] == 0
     else:
-        return Constraint.Skip
+        vart = 0
+        for t in model.S:
+            if j not in model.N[t,i]:
+                vart+=1
+        if vart == len(model.S):
+            return model.a[i,j] == 0
+        else:
+            return Constraint.Skip
+
+def const_AP0(model, i):
+    return sum( sum( model.AP[t,u,i,0] for t in model.S) for u in model.S) == model.A0[i]
 
 #Define AP[t,u,i,j] como a[i,j] * P[t,u,i,j]
 def const_AP1(model, t, u, i, j):
@@ -146,37 +145,45 @@ def const_AP3(model, t, u, i, j):
 ###
 #NOVAS RESTRICOES
 
-#Determina que o numero total de arestas que saem de cada no i eh 1, exceto se i for igual a 0
+#Determina que o numero total de arestas que saem de cada no i ativo eh 1
 def const_AP4(model, i):
-    return sum( sum( sum( model.AP[t,u,i,j] for j in model.N[t,i]) for t in model.S) for u in model.S) == 1
+    return sum( sum(model.a[i,j] for j in model.N[t,i]) for t in model.S) == len(model.S)
 
-def const_AP0(model):
-    return sum( sum( sum( model.AP[t,u,i,0] for i in model.V) for t in model.S) for u in model.S) >= 1
-
-#Determina que o numero de arestas que sai do no 0 eh igual a 0
-# def const_AP5(model):
-#     return sum( sum( sum( model.AP[t,u,0,j] for t in model.S) for u in model.S) for j in model.V0) == 0
-
-# def const_AP5(model):
-    # return sum( sum( sum( model.AP[t,u,i,0] for t in model.S) for u in model.S) for i in model.V) == 1
-
-# def const_APnew1(model, t, i):
-#     if len(model.N[t,i]) == 0:
-#         return sum( model.a[i,j] for j in model.N[t,i]) == 0
-#     else:
-#         return sum( model.a[i,j] for j in model.N[t,i]) == 1
+# def const_AP5(model, t, i, j):
+#     if j in model.N[t,i]:
+#         return model.a[i,j] <= sum( model.s[u,j] for u in model.S)
 
 #Determina que o nivel do no i deve ser sempre maior que o nivel do no j quando i tem aresta ligando a j
-def const_L1(model, i, j):
-    if j != i:
-        # return model.L[i] >= model.L[j] + sum(sum( model.AP[t,u,i,j] for t in model.S) for u in model.S) - sum( sum(model.s[t,k] for t in model.S) for k in model.V) * ( 1 - sum(sum( model.AP[t,u,i,j] for t in model.S) for u in model.S))
-        return model.L[i] >= model.L[j] + sum(sum( model.AP[t,u,i,j] for t in model.S) for u in model.S) #- model.n * ( 1 - sum(sum( model.AP[t,u,i,j] for t in model.S) for u in model.S))
+def const_L1(model, t, u, i, j):
+    if j in model.N[t,i]:
+        return model.L[i] >= model.L[j] + model.AP[t,u,i,j] - model.n * ( 1 - model.AP[t,u,i,j])
     else:
         return Constraint.Skip
 
+def const_L2(model, i):
+    return model.L[i] <= sum( model.s[t,i] for t in model.S) * model.n - (1 - sum( model.s[t,i] for t in model.S))
+
 #Determina que o nivel do no 0 (sorvedouro) eh sempre igual a 0
 def const_L0(model):
-    return model.L[0] == 0
+    return model.L[0] == 1
+
+# def const_Ltest(model, i):
+#     return model.L[i] >= sum( model.s[t,i] for t in model.S)
+
+####
+#TESTES
+
+# def const_Ln1(model, i):
+#     return model.Ln[i] == model.L[i] + model.n
+
+# def const_Ls1(model, t, i, k):
+#     return model.Ls[t,i,k] <= model.Ln[k]
+
+# def const_Ls2(model, t, i, k):
+#     return model.Ls[t,i,k] <= (2*model.n) * model.s[t,i]
+
+# def const_Ls3(model, t, i, k):
+#     return model.Ls[t,i,k] >= model.Ln[k] + (2*model.n) * (model.s[t,i] - 1)
 
 # Funcao principal para gerar instancia do modelo
 def generate_model():
@@ -226,17 +233,24 @@ def generate_model():
     #Estado das posicoes de alocacao (1 = alocado, 0 = nao alocado)
     model.s = Var(model.S, model.V, within=Binary)
     
-    #Variavel de linearizacao que indica se em um par de nos (vizinhos?), ambos sao ativos
-    model.P = Var(model.S, model.S, model.V0, model.V0, within=Binary)
+    #Variavel de linearizacao que indica se para um par de nos, ambos sao ativos
+    model.P = Var(model.S, model.S, model.V, model.V, within=Binary)
+
+    #Variavel que indica se existe aresta entre um no ativo e o sorvedouro (no 0)
+    model.A0 = Var(model.V, within=Binary)
 
     #Indica se aresta esta presente no caminho entre nos ficticios 0 e n+1
-    model.a = Var(model.V0, model.V0, within=Binary)
+    model.a = Var(model.V, model.V0, within=Binary)
 
     #Nivel do no sensor
-    # model.L = Var(model.V0, within=Integers)
+    model.L = Var(model.V0, within=Integers)
+    #Nivel do no sensor (nao-negativo)
+    # model.Ln = Var(model.V, within=NonNegativeIntegers)
+    #Multiplicacao de s[t,i] com Ln[i]
+    # model.Ls = Var(model.S, model.V, model.V, within=NonNegativeIntegers)
 
     #Variavel de linearizacao que indica se aresta esta no caminho entre 0 e n+1 e ao mesmo tempo passa por um par de nos ativos/alocados
-    model.AP = Var(model.S, model.S, model.V0, model.V0, within=Binary)
+    model.AP = Var(model.S, model.S, model.V, model.V0, within=Binary)
 
     ## Funcoes objetivo
     ## ---
@@ -265,27 +279,34 @@ def generate_model():
     # #Restricao de quantidade minima (LB) e maxima (UB) de alocacao
     model.numalloc = Constraint(rule=const_numalloc)
 
-    model.P1 = Constraint(model.S, model.S, model.V0, model.V0, rule=const_Pair1)
-    model.P2 = Constraint(model.S, model.S, model.V0, model.V0, rule=const_Pair2)
-    model.P3 = Constraint(model.S, model.S, model.V0, model.V0, rule=const_Pair3)
+    model.P1 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair1)
+    model.P2 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair2)
+    model.P3 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair3)
     model.P4 = Constraint(rule=const_Pair4)
 
+    model.A0_1 = Constraint(model.V, rule=const_A0_1)
+    model.A0_2 = Constraint(model.V, rule=const_A0_2)
+    model.A0_3 = Constraint(model.V, rule=const_A0_3)
+    model.A0_4 = Constraint(rule=const_A0_4)
+
+    model.aij = Constraint(model.V,model.V, rule=const_aij)
+    
+    model.AP0 = Constraint(model.V,rule=const_AP0)
+
     #Restricoes de excecao
-    # model.no_bck = Constraint(model.V, model.V, rule=const_no_back)
+    model.no_bck = Constraint(model.V, model.V, rule=const_no_back)
 
-    model.aij = Constraint(model.V0,model.V0, rule=const_aij)
-
-    model.AP1 = Constraint(model.S, model.S, model.V0, model.V0, rule=const_AP1)
-    model.AP2 = Constraint(model.S, model.S, model.V0, model.V0, rule=const_AP2)
-    model.AP3 = Constraint(model.S, model.S, model.V0, model.V0, rule=const_AP3)
+    model.AP1 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP1)
+    model.AP2 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP2)
+    model.AP3 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP3)
     model.AP4 = Constraint(model.V, rule=const_AP4)
-    model.AP0 = Constraint(rule=const_AP0)
-    # model.AP5 = Constraint(rule=const_AP5)
+    # model.AP5 = Constraint(model.S, model.V, model.V, rule=const_AP5)
 
-    # model.APnew1 = Constraint(model.S, model.V, rule=const_APnew1)
+    model.L1 = Constraint(model.S, model.S, model.V, model.V0, rule=const_L1)
+    model.L2 = Constraint(model.V, rule=const_L2)
+    model.L0 = Constraint(rule=const_L0)
 
-    # model.L1 = Constraint(model.V, model.V0, rule=const_L1)
-    # model.L0 = Constraint(rule=const_L0)
+    # model.test = Constraint(model.V, rule=const_Ltest)
 
     return model
 

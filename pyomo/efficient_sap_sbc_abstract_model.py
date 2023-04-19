@@ -96,16 +96,23 @@ def const_Pair4(model):
 #Restricoes A0
 
 def const_A0_1(model, i):
-    return model.A0[i] <= model.a[i,0]
+    return model.A0[i] <= sum( sum( model.a[t,u,i,0] for t in model.S) for u in model.S)
 
 def const_A0_2(model, i):
     return model.A0[i] <= sum( model.s[t,i] for t in model.S)
 
 def const_A0_3(model, i):
-    return model.A0[i] >= model.a[i,0] + sum( model.s[t,i] for t in model.S) - 1
+    return model.A0[i] >= sum( sum( model.a[t,u,i,0] for t in model.S) for u in model.S) + sum( model.s[t,i] for t in model.S) - 1
 
 def const_A0_4(model):
     return sum( model.A0[i] for i in model.V) == 1
+
+###
+
+#Restricao a[t,u,i,j]
+
+def const_atuij(model, i, j):
+    return (0,sum( sum( model.a[t,u,i,j] for t in model.S) for u in model.S),1)
 
 ###
 
@@ -116,16 +123,12 @@ def const_no_back(model, i, j):
 ###
 
 #Determina que nao pode existir aresta de caminho com origem em 0 ou saindo e voltando para mesmo no
-def const_aij(model, i, j):
+def const_aij(model, t, u, i, j):
     if i == j:
-        return model.a[i,j] == 0
+        return model.a[t,u,i,j] == 0
     else:
-        vart = 0
-        for t in model.S:
-            if j not in model.N[t,i]:
-                vart+=1
-        if vart == len(model.S):
-            return model.a[i,j] == 0
+        if j not in model.N[t,i]:
+            return model.a[t,u,i,j] == 0
         else:
             return Constraint.Skip
 
@@ -134,52 +137,38 @@ def const_AP0(model, i):
 
 #Define AP[t,u,i,j] como a[i,j] * P[t,u,i,j]
 def const_AP1(model, t, u, i, j):
-    return model.AP[t,u,i,j] <= model.a[i,j]
+    return model.AP[t,u,i,j] <= model.a[t,u,i,j]
 
 def const_AP2(model, t, u, i, j):
     return model.AP[t,u,i,j] <= model.P[t,u,i,j]
 
 def const_AP3(model, t, u, i, j):
-    return model.AP[t,u,i,j] >= model.a[i,j] + model.P[t,u,i,j] - 1
+    return model.AP[t,u,i,j] >= model.a[t,u,i,j] + model.P[t,u,i,j] - 1
 
 ###
 #NOVAS RESTRICOES
 
-#Determina que o numero total de arestas que saem de cada no i eh 1
-def const_AP4(model, t, i):
-    return sum( model.a[i,j] for j in model.N[t,i]) == 1
+#Determina que o numero total de arestas que saem de cada no i ativo eh 1
+def const_AP4(model, i):
+    return sum( sum( sum(model.AP[t,u,i,j] for j in model.N[t,i]) for u in model.S) for t in model.S) == 1
+
+# def const_AP5(model, i):
+    # return sum( sum( model.a[t,u,i,0] for u in model.S) for t in model.S) == 1
 
 #Determina que o nivel do no i deve ser sempre maior que o nivel do no j quando i tem aresta ligando a j
-def const_L1(model, t, i, j):
-    if j in model.N[t,i]-{0}:
-        # return model.L[i] >= model.L[j] + sum(sum( model.AP[t,u,i,j] for t in model.S) for u in model.S) - model.n * ( 1 - sum(sum( model.AP[t,u,i,j] for t in model.S) for u in model.S))
-        return model.Ls[t,i,i] >= model.Ls[t,i,j] + sum( model.AP[t,u,i,j] for u in model.S) - model.n * ( 1 - sum( model.AP[t,u,i,j] for u in model.S))
-    elif j == 0 and i != j:
-        return model.Ls[t,i,i] >= model.L[j] + sum( model.AP[t,u,i,j] for u in model.S) - model.n * ( 1 - sum( model.AP[t,u,i,j] for u in model.S))
+def const_L1(model, t, u, i, j):
+    if j in model.N[t,i]:
+        return model.L[i] >= model.L[j] + model.AP[t,u,i,j] - model.n * ( 1 - model.AP[t,u,i,j])
     else:
         return Constraint.Skip
 
+def const_L2(model, i):
+    return model.L[i] <= sum( model.s[t,i] for t in model.S) * model.n - (1 - sum( model.s[t,i] for t in model.S))
+
 #Determina que o nivel do no 0 (sorvedouro) eh sempre igual a 0
 def const_L0(model):
-    return model.L[0] == 0
+    return model.L[0] == 1
 
-def const_Ltest(model, i):
-    return model.L[i] >= sum( model.s[t,i] for t in model.S)
-
-####
-#TESTES
-
-def const_Ln1(model, i):
-    return model.Ln[i] == model.L[i] + model.n
-
-def const_Ls1(model, t, i, k):
-    return model.Ls[t,i,k] <= model.Ln[k]
-
-def const_Ls2(model, t, i, k):
-    return model.Ls[t,i,k] <= (2*model.n) * model.s[t,i]
-
-def const_Ls3(model, t, i, k):
-    return model.Ls[t,i,k] >= model.Ln[k] + (2*model.n) * (model.s[t,i] - 1)
 
 # Funcao principal para gerar instancia do modelo
 def generate_model():
@@ -236,14 +225,14 @@ def generate_model():
     model.A0 = Var(model.V, within=Binary)
 
     #Indica se aresta esta presente no caminho entre nos ficticios 0 e n+1
-    model.a = Var(model.V, model.V0, within=Binary)
+    model.a = Var(model.S, model.S, model.V, model.V0, within=Binary)
 
     #Nivel do no sensor
     model.L = Var(model.V0, within=Integers)
     #Nivel do no sensor (nao-negativo)
-    model.Ln = Var(model.V, within=NonNegativeIntegers)
+    # model.Ln = Var(model.V, within=NonNegativeIntegers)
     #Multiplicacao de s[t,i] com Ln[i]
-    model.Ls = Var(model.S, model.V, model.V, within=NonNegativeIntegers)
+    # model.Ls = Var(model.S, model.V, model.V, within=NonNegativeIntegers)
 
     #Variavel de linearizacao que indica se aresta esta no caminho entre 0 e n+1 e ao mesmo tempo passa por um par de nos ativos/alocados
     model.AP = Var(model.S, model.S, model.V, model.V0, within=Binary)
@@ -285,7 +274,9 @@ def generate_model():
     model.A0_3 = Constraint(model.V, rule=const_A0_3)
     model.A0_4 = Constraint(rule=const_A0_4)
 
-    model.aij = Constraint(model.V,model.V, rule=const_aij)
+    model.aij = Constraint(model.S, model.S, model.V,model.V, rule=const_aij)
+    # model.atuij = Constraint(model.V,model.V, rule=const_atuij)
+    # model.Ptuij = Constraint(model.V,model.V, rule=const_Ptuij)
     
     model.AP0 = Constraint(model.V,rule=const_AP0)
 
@@ -295,16 +286,12 @@ def generate_model():
     model.AP1 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP1)
     model.AP2 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP2)
     model.AP3 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP3)
-    model.AP4 = Constraint(model.S, model.V, rule=const_AP4)
-    # model.AP5 = Constraint(rule=const_AP5)
+    model.AP4 = Constraint(model.V, rule=const_AP4)
+    # model.AP5 = Constraint(model.V, rule=const_AP5)
 
-    model.L1 = Constraint(model.S, model.V, model.V0, rule=const_L1)
+    model.L1 = Constraint(model.S, model.S, model.V, model.V0, rule=const_L1)
+    model.L2 = Constraint(model.V, rule=const_L2)
     model.L0 = Constraint(rule=const_L0)
-    model.Ln1 = Constraint(model.V,rule=const_Ln1)
-
-    model.Ls1 = Constraint(model.S, model.V, model.V, rule=const_Ls1)
-    model.Ls2 = Constraint(model.S, model.V, model.V, rule=const_Ls2)
-    model.Ls3 = Constraint(model.S, model.V, model.V, rule=const_Ls3)
 
     # model.test = Constraint(model.V, rule=const_Ltest)
 

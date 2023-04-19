@@ -1,5 +1,5 @@
-# from sap_sbc_abstract_model import *
-from efficient_sap_sbc_abstract_model import *
+from sap_sbc_abstract_model import *
+# from efficient_sap_sbc_abstract_model import *
 from pyomo.environ import *
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
@@ -16,8 +16,8 @@ logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 
 #Nome do arquivo da instancia a ser resolvida
 #instance_filename = '../instances_DAT/512/T1.dat'
-# instance_filename = 'sap-6.dat'
-instance_filename = 'sap-100.dat'
+instance_filename = 'sap-20.dat'
+# instance_filename = 'sap-10.dat'
 #Solver a ser utilizado
 solver = 'cplex'
 #Executavel do solver
@@ -114,7 +114,7 @@ opt = SolverFactory(solver, executable=solver_exec)
 
 print("Resolvendo instancia...")
 #Resolve a instancia e armazena os resultados em um arquivo JSON
-results = opt.solve(instance)
+results = opt.solve(instance, tee=True)
 instance.solutions.store_to(results)
 results.problem.name = instance_filename
 results.write(filename='results.json',format='json')
