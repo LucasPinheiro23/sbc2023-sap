@@ -122,7 +122,7 @@ def const_no_back(model, i, j):
 
 ###
 
-#Determina que nao pode existir aresta de caminho com origem em 0 ou saindo e voltando para mesmo no
+#Determina que nao pode existir aresta de caminho saindo e voltando para mesmo no, ou quando j nao for vizinho de i
 def const_aij(model, t, u, i, j):
     if i == j:
         return model.a[t,u,i,j] == 0
@@ -155,8 +155,12 @@ def const_aP(model, t, u, i, j):
 def const_a1(model, i):
     return sum( sum( sum( model.a[t,u,i,j] for j in model.N[t,i]) for u in model.S) for t in model.S) == sum( model.s[t,i] for t in model.S)
 
-def const_a0(model):
-    return sum( sum( sum( model.a[t,u,i,0] for i in model.V) for u in model.S) for t in model.S) == 1
+def const_a0(model, t, u, i):
+    return model.a[t,u,i,0] <= model.s[t,i]
+
+#Define que se houver apenas o 0 como vizinho, i deve estar inativo
+def const_sN(model, t, i):
+    return model.s[t,i] <= len(model.N[t,i]) - 1
 
 #Determina que o nivel do no i deve ser sempre maior que o nivel do no j quando i tem aresta ligando a j
 def const_L1(model, t, u, i, j):
@@ -292,7 +296,9 @@ def generate_model():
 
     model.aP = Constraint(model.S, model.S, model.V, model.V, rule=const_aP)
     model.a1 = Constraint(model.V, rule=const_a1)
-    model.a0 = Constraint(rule=const_a0)
+    model.a0 = Constraint(model.S, model.S, model.V, rule=const_a0)
+
+    model.sN = Constraint(model.S, model.V, rule=const_sN)
 
     model.L1 = Constraint(model.S, model.S, model.V, model.V0, rule=const_L1)
     model.L2 = Constraint(model.V, rule=const_L2)
