@@ -43,9 +43,9 @@ def obj_Energy_rule(model):
 
 # FO - Area de Cobertura
 def obj_Coverage_rule(model):
-    # return sum(sum(math.pi*pow(model.RMAX[t],2)*model.s[t,i] for t in model.S) for i in model.V)
+    return sum(sum(math.pi*pow(model.RMAX[t],2)*model.s[t,i] for t in model.S) for i in model.V)
     #Melhor resultado ate o momento
-    return sum(sum( model.s[t,i] for t in model.S) for i in model.V) / model.n
+    # return sum(sum( model.s[t,i] for t in model.S) for i in model.V) / model.n
     # return sum(sum(sum(sum( model.P[t,u,i,j] * model.D[i,j] for j in model.V) for t in model.S) for u in model.S) for i in model.V)
 
 # FO - Custo Monetario
@@ -149,11 +149,14 @@ def const_AP3(model, t, u, i, j):
 #NOVAS RESTRICOES
 
 #Determina que o numero total de arestas que saem de cada no i ativo eh 1
-def const_AP4(model, i):
-    return sum( sum( sum(model.AP[t,u,i,j] for j in model.N[t,i]) for u in model.S) for t in model.S) == 1
+def const_aP(model, t, u, i, j):
+    return model.a[t,u,i,j] <= model.P[t,u,i,j]
 
-# def const_AP5(model, i):
-    # return sum( sum( model.a[t,u,i,0] for u in model.S) for t in model.S) == 1
+def const_a1(model, i):
+    return sum( sum( sum( model.a[t,u,i,j] for j in model.N[t,i]) for u in model.S) for t in model.S) == sum( model.s[t,i] for t in model.S)
+
+def const_a0(model):
+    return sum( sum( sum( model.a[t,u,i,0] for i in model.V) for u in model.S) for t in model.S) == 1
 
 #Determina que o nivel do no i deve ser sempre maior que o nivel do no j quando i tem aresta ligando a j
 def const_L1(model, t, u, i, j):
@@ -286,8 +289,10 @@ def generate_model():
     model.AP1 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP1)
     model.AP2 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP2)
     model.AP3 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP3)
-    model.AP4 = Constraint(model.V, rule=const_AP4)
-    # model.AP5 = Constraint(model.V, rule=const_AP5)
+
+    model.aP = Constraint(model.S, model.S, model.V, model.V, rule=const_aP)
+    model.a1 = Constraint(model.V, rule=const_a1)
+    model.a0 = Constraint(rule=const_a0)
 
     model.L1 = Constraint(model.S, model.S, model.V, model.V0, rule=const_L1)
     model.L2 = Constraint(model.V, rule=const_L2)
@@ -332,7 +337,7 @@ def get_fo_max(model, fo, instance_filename,solver,solver_exec):
         ## Resolve para encontrar max
 
         #Resolve a instancia e pega resultado da FO
-        results = opt.solve(instance)
+        results = opt.solve(instance, tee=True)
         instance.solutions.store_to(results)
 
         if(results.solver.termination_condition == TerminationCondition.infeasible):
@@ -361,7 +366,7 @@ def get_fo_max(model, fo, instance_filename,solver,solver_exec):
         ## Resolve para encontrar max
 
         #Resolve a instancia e pega resultado da FO
-        results = opt.solve(instance)
+        results = opt.solve(instance, tee=True)
         instance.solutions.store_to(results)
 
         if(results.solver.termination_condition == TerminationCondition.infeasible):
@@ -389,7 +394,7 @@ def get_fo_max(model, fo, instance_filename,solver,solver_exec):
         ## Resolve para encontrar max
 
         #Resolve a instancia e pega resultado da FO
-        results = opt.solve(instance)
+        results = opt.solve(instance, tee=True)
         instance.solutions.store_to(results)
 
         if(results.solver.termination_condition == TerminationCondition.infeasible):

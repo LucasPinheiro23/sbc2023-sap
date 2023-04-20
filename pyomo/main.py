@@ -1,5 +1,5 @@
-from sap_sbc_abstract_model import *
-# from efficient_sap_sbc_abstract_model import *
+# from sap_sbc_abstract_model import *
+from efficient_sap_sbc_abstract_model import *
 from pyomo.environ import *
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
@@ -16,7 +16,7 @@ logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 
 #Nome do arquivo da instancia a ser resolvida
 #instance_filename = '../instances_DAT/512/T1.dat'
-instance_filename = 'sap-20.dat'
+instance_filename = 'sap-10.dat'
 # instance_filename = 'sap-10.dat'
 #Solver a ser utilizado
 solver = 'cplex'
