@@ -3,10 +3,6 @@ from itertools import chain, combinations
 from collections import defaultdict
 import math
 
-#Constantes
-# BIG = -100000
-# SMALL = 100000
-
 ### MODELAGEM ABSTRATA
 #--------------------#
 
@@ -23,15 +19,6 @@ def init_N(model, t, i):
             if(model.D[i,j] <= model.RMAX[t]):# and model.D[i,j] >= 0.8*model.RMAX[t]):
                 yield j
     yield 0
-
-# Anti-vizinhanca dos nos (nos cujo vizinho eh i)
-# def init_N2(model, j):
-#     for t in model.S:
-#         for i in model.V:
-#             if i != j:
-#                 for k in model.N[t,i]:
-#                     if j == k:
-#                         yield i
 
 # FO - TESTE
 def obj_Teste(model):
@@ -70,7 +57,7 @@ def obj_WEIGHTED(model):
 
 # Restricao de tipo (apenas um t por posicao)
 def const_typenum(model, i):
-    return (0,sum( model.s[t,i] for t in model.S),1)
+    return sum( model.s[t,i] for t in model.S) <= 1
 
 # Restricao de quantidade minima (LB) e maxima (UB) de alocacao
 def const_numalloc(model):
@@ -87,39 +74,6 @@ def const_Pair2(model, t, u, i, j):
 def const_Pair3(model, t, u, i, j):
     return model.P[t,u,i,j] >= model.s[t,i] + model.s[u,j] - 1
 
-#Se nenhum tiver vizinho, da erro aqui. Restricao força que exista ao menos 1 par ativo na rede
-def const_Pair4(model):
-    return sum( sum( sum( sum( model.P[t,u,i,j] for j in model.N[t,i]-{0}) for t in model.S) for u in model.S) for i in model.V) >= 1
-
-###
-
-#Restricoes A0
-
-def const_A0_1(model, i):
-    return model.A0[i] <= sum( sum( model.a[t,u,i,0] for t in model.S) for u in model.S)
-
-def const_A0_2(model, i):
-    return model.A0[i] <= sum( model.s[t,i] for t in model.S)
-
-def const_A0_3(model, i):
-    return model.A0[i] >= sum( sum( model.a[t,u,i,0] for t in model.S) for u in model.S) + sum( model.s[t,i] for t in model.S) - 1
-
-def const_A0_4(model):
-    return sum( model.A0[i] for i in model.V) == 1
-
-###
-
-#Restricao a[t,u,i,j]
-
-def const_atuij(model, i, j):
-    return (0,sum( sum( model.a[t,u,i,j] for t in model.S) for u in model.S),1)
-
-###
-
-#Determina que nao pode haver arestas em sentidos opostos para o mesmo par de nos
-def const_no_back(model, i, j):
-    return sum ( sum ( 2*model.AP[t,u,i,j] + model.AP[u,t,j,i] for u in model.S) for t in model.S) <= 2
-
 ###
 
 #Determina que nao pode existir aresta de caminho saindo e voltando para mesmo no, ou quando j nao for vizinho de i
@@ -131,22 +85,6 @@ def const_aij(model, t, u, i, j):
             return model.a[t,u,i,j] == 0
         else:
             return Constraint.Skip
-
-def const_AP0(model, i):
-    return sum( sum( model.AP[t,u,i,0] for t in model.S) for u in model.S) == model.A0[i]
-
-#Define AP[t,u,i,j] como a[i,j] * P[t,u,i,j]
-def const_AP1(model, t, u, i, j):
-    return model.AP[t,u,i,j] <= model.a[t,u,i,j]
-
-def const_AP2(model, t, u, i, j):
-    return model.AP[t,u,i,j] <= model.P[t,u,i,j]
-
-def const_AP3(model, t, u, i, j):
-    return model.AP[t,u,i,j] >= model.a[t,u,i,j] + model.P[t,u,i,j] - 1
-
-###
-#NOVAS RESTRICOES
 
 #Determina que o numero total de arestas que saem de cada no i ativo eh 1
 def const_aP(model, t, u, i, j):
@@ -165,7 +103,7 @@ def const_sN(model, t, i):
 #Determina que o nivel do no i deve ser sempre maior que o nivel do no j quando i tem aresta ligando a j
 def const_L1(model, t, u, i, j):
     if j in model.N[t,i]:
-        return model.L[i] >= model.L[j] + model.AP[t,u,i,j] - model.n * ( 1 - model.AP[t,u,i,j])
+        return model.L[i] >= model.L[j] + model.a[t,u,i,j] - model.n * ( 1 - model.a[t,u,i,j])
     else:
         return Constraint.Skip
 
@@ -217,8 +155,6 @@ def generate_model():
 
     # Vizinhanca dos nos (i.e. os nos que sao vizinhos de i)
     model.N = Set(model.S,model.V,initialize=init_N)
-    # "Anti-vizinhanca" dos nos (i.e. os nos que tem i como vizinho)
-    # model.N2 = Set(model.V0,initialize=init_N2)
 
     # Variaveis de decisao
     # ---
@@ -228,27 +164,15 @@ def generate_model():
     #Variavel de linearizacao que indica se para um par de nos, ambos sao ativos
     model.P = Var(model.S, model.S, model.V, model.V, within=Binary)
 
-    #Variavel que indica se existe aresta entre um no ativo e o sorvedouro (no 0)
-    model.A0 = Var(model.V, within=Binary)
-
     #Indica se aresta esta presente no caminho entre nos ficticios 0 e n+1
     model.a = Var(model.S, model.S, model.V, model.V0, within=Binary)
 
     #Nivel do no sensor
     model.L = Var(model.V0, within=Integers)
-    #Nivel do no sensor (nao-negativo)
-    # model.Ln = Var(model.V, within=NonNegativeIntegers)
-    #Multiplicacao de s[t,i] com Ln[i]
-    # model.Ls = Var(model.S, model.V, model.V, within=NonNegativeIntegers)
-
-    #Variavel de linearizacao que indica se aresta esta no caminho entre 0 e n+1 e ao mesmo tempo passa por um par de nos ativos/alocados
-    model.AP = Var(model.S, model.S, model.V, model.V0, within=Binary)
 
     ## Funcoes objetivo
     ## ---
 
-    # FO - TESTE
-    # model.E = Objective(rule=obj_Teste,sense=minimize)
     # FO - Consumo de Energia
     model.E = Objective(rule=obj_Energy_rule,sense=minimize)
     # FO - Area de Cobertura
@@ -256,8 +180,6 @@ def generate_model():
     # FO - Custo Monetario
     model.M = Objective(rule=obj_Monetary_rule,sense=minimize)
     
-    
-
     model.E.deactivate()
     model.C.deactivate()
     model.M.deactivate()
@@ -274,25 +196,9 @@ def generate_model():
     model.P1 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair1)
     model.P2 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair2)
     model.P3 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair3)
-    model.P4 = Constraint(rule=const_Pair4)
-
-    model.A0_1 = Constraint(model.V, rule=const_A0_1)
-    model.A0_2 = Constraint(model.V, rule=const_A0_2)
-    model.A0_3 = Constraint(model.V, rule=const_A0_3)
-    model.A0_4 = Constraint(rule=const_A0_4)
+    # model.P4 = Constraint(rule=const_Pair4)
 
     model.aij = Constraint(model.S, model.S, model.V,model.V, rule=const_aij)
-    # model.atuij = Constraint(model.V,model.V, rule=const_atuij)
-    # model.Ptuij = Constraint(model.V,model.V, rule=const_Ptuij)
-    
-    model.AP0 = Constraint(model.V,rule=const_AP0)
-
-    #Restricoes de excecao
-    model.no_bck = Constraint(model.V, model.V, rule=const_no_back)
-
-    model.AP1 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP1)
-    model.AP2 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP2)
-    model.AP3 = Constraint(model.S, model.S, model.V, model.V, rule=const_AP3)
 
     model.aP = Constraint(model.S, model.S, model.V, model.V, rule=const_aP)
     model.a1 = Constraint(model.V, rule=const_a1)
@@ -303,8 +209,6 @@ def generate_model():
     model.L1 = Constraint(model.S, model.S, model.V, model.V0, rule=const_L1)
     model.L2 = Constraint(model.V, rule=const_L2)
     model.L0 = Constraint(rule=const_L0)
-
-    # model.test = Constraint(model.V, rule=const_Ltest)
 
     return model
 

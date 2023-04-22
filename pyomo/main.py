@@ -16,7 +16,7 @@ logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 
 #Nome do arquivo da instancia a ser resolvida
 #instance_filename = '../instances_DAT/512/T1.dat'
-instance_filename = 'sap-100.dat'
+instance_filename = 'sap-10.dat'
 # instance_filename = 'sap-10.dat'
 #Solver a ser utilizado
 solver = 'cplex'
