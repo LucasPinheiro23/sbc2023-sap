@@ -132,7 +132,7 @@ def generate_model():
     ## ---
     # Conjunto de nos
     model.V = RangeSet(1,model.n)
-    # Conjunto de nos incluindo nos ficticios 0 e n+1
+    # Conjunto de nos incluindo 0
     model.V0 = RangeSet(0,model.n)
     # Conjunto de modelos/tipos de transceptor
     model.S = Set(initialize=["S2C","S2CPro","S3"],doc="Modelos")
@@ -193,6 +193,8 @@ def generate_model():
     # #Restricao de quantidade minima (LB) e maxima (UB) de alocacao
     model.numalloc = Constraint(rule=const_numalloc)
 
+    model.sN = Constraint(model.S, model.V, rule=const_sN)
+    
     model.P1 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair1)
     model.P2 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair2)
     model.P3 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair3)
@@ -203,8 +205,6 @@ def generate_model():
     model.aP = Constraint(model.S, model.S, model.V, model.V, rule=const_aP)
     model.a1 = Constraint(model.V, rule=const_a1)
     model.a0 = Constraint(model.S, model.S, model.V, rule=const_a0)
-
-    model.sN = Constraint(model.S, model.V, rule=const_sN)
 
     model.L1 = Constraint(model.S, model.S, model.V, model.V0, rule=const_L1)
     model.L2 = Constraint(model.V, rule=const_L2)
