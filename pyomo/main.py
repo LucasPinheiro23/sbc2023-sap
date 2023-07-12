@@ -15,9 +15,7 @@ os.chdir('./pyomo')
 logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 
 #Nome do arquivo da instancia a ser resolvida
-#instance_filename = '../instances_DAT/512/T1.dat'
-instance_filename = 'sap-10.dat'
-# instance_filename = 'sap-10.dat'
+instance_filename = '../instances_OL2A/10x10/SAP-inst_0.1_10x10.dat'
 #Solver a ser utilizado
 solver = 'cplex'
 #Executavel do solver
@@ -29,7 +27,7 @@ solver_exec = 'cplex'
 fo = {'E': 1, 'C': 1, 'M': 0}
 
 ## Seleciona valores de alpha para cada FO (ponderacao)
-alpha = {'E': 0.5, 'C': 0.5, 'M': 0}
+alpha = {'E': 0.25, 'C': 0.75, 'M': 0}
 
 #Se apenas 1 FO estiver ativa, zera os outros alphas e define o alpha respectivo como 1
 if sum(list(fo.values())) == 1:
