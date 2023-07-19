@@ -30,9 +30,9 @@ def obj_Energy_rule(model):
 
 # FO - Area de Cobertura
 def obj_Coverage_rule(model):
-    return sum(sum(math.pi*pow(model.RMAX[t],2)*model.s[t,i] for t in model.S) for i in model.V)
+    # return sum(sum(math.pi*pow(model.RMAX[t],2)*model.s[t,i] for t in model.S) for i in model.V)
     #Melhor resultado ate o momento
-    # return sum(sum( model.s[t,i] for t in model.S) for i in model.V) / model.n
+    return sum(sum( model.s[t,i] for t in model.S) for i in model.V) / model.n
     # return sum(sum(sum(sum( model.P[t,u,i,j] * model.D[i,j] for j in model.V) for t in model.S) for u in model.S) for i in model.V)
 
 # FO - Custo Monetario
