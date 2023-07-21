@@ -16,7 +16,7 @@ os.chdir('./pyomo')
 logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 t0 = time.time()
 
-for d in range(1,10):
+for d in range(5,8):
     for a in range (0, 125, 25):
 
         #Nome do arquivo da instancia a ser resolvida

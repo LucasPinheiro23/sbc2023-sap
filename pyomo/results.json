@@ -1,14 +1,14 @@
 {
     "Problem": [
         {
-            "Lower bound": 1.734723475976807e-18,
-            "Name": "../instances_OL2A/10x10/SAP-inst_0.9_10x10.dat",
-            "Number of constraints": 366663,
-            "Number of nonzeros": 775675,
+            "Lower bound": 3.469446951953614e-18,
+            "Name": "../instances_OL2A/10x10/SAP-inst_0.7_10x10.dat",
+            "Number of constraints": 222184,
+            "Number of nonzeros": 471318,
             "Number of objectives": 1,
-            "Number of variables": 146972,
+            "Number of variables": 89112,
             "Sense": "minimize",
-            "Upper bound": 1.734723475976807e-18
+            "Upper bound": 3.469446951953614e-18
         }
     ],
     "Solution": [
@@ -28,378 +28,285 @@
                     "Value": 1.0
                 },
                 "L[10]": {
-                    "Value": -89.0
+                    "Value": -1.0
                 },
                 "L[11]": {
-                    "Value": -87.0
+                    "Value": 3.0
                 },
                 "L[12]": {
-                    "Value": -87.0
+                    "Value": -66.0
                 },
                 "L[13]": {
-                    "Value": 2.0
+                    "Value": -69.0
                 },
                 "L[14]": {
-                    "Value": -87.0
+                    "Value": -69.0
                 },
                 "L[15]": {
-                    "Value": -87.0
+                    "Value": -1.0
                 },
                 "L[16]": {
-                    "Value": -87.0
+                    "Value": -1.0
                 },
                 "L[17]": {
-                    "Value": -87.0
+                    "Value": 2.0
                 },
                 "L[18]": {
-                    "Value": -89.0
+                    "Value": -1.0
                 },
                 "L[19]": {
-                    "Value": -89.0
+                    "Value": -66.0
                 },
                 "L[1]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[20]": {
-                    "Value": -87.0
+                    "Value": -1.0
                 },
                 "L[21]": {
-                    "Value": -87.0
+                    "Value": -68.0
                 },
                 "L[22]": {
-                    "Value": -87.0
+                    "Value": -1.0
                 },
                 "L[23]": {
-                    "Value": -87.0
+                    "Value": -66.0
                 },
                 "L[24]": {
-                    "Value": -87.0
+                    "Value": -67.0
                 },
                 "L[25]": {
-                    "Value": -87.0
+                    "Value": -68.0
                 },
                 "L[26]": {
-                    "Value": 3.0
+                    "Value": -69.0
                 },
                 "L[27]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[28]": {
-                    "Value": -89.0
+                    "Value": -68.0
                 },
                 "L[29]": {
-                    "Value": -89.0
+                    "Value": -67.0
                 },
                 "L[2]": {
-                    "Value": -87.0
+                    "Value": -1.0
                 },
                 "L[30]": {
-                    "Value": -87.0
+                    "Value": -67.0
                 },
                 "L[31]": {
-                    "Value": -87.0
+                    "Value": -67.0
                 },
                 "L[32]": {
-                    "Value": -87.0
+                    "Value": -68.0
                 },
                 "L[33]": {
-                    "Value": -87.0
+                    "Value": -69.0
                 },
                 "L[34]": {
-                    "Value": -87.0
+                    "Value": -69.0
                 },
                 "L[35]": {
-                    "Value": -87.0
+                    "Value": -69.0
                 },
                 "L[36]": {
-                    "Value": 2.0
+                    "Value": -69.0
                 },
                 "L[37]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[38]": {
-                    "Value": -89.0
+                    "Value": -68.0
                 },
                 "L[39]": {
-                    "Value": -89.0
+                    "Value": -68.0
                 },
                 "L[3]": {
-                    "Value": -87.0
+                    "Value": -1.0
                 },
                 "L[40]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[41]": {
-                    "Value": -88.0
+                    "Value": -69.0
                 },
                 "L[42]": {
-                    "Value": -88.0
+                    "Value": -69.0
                 },
                 "L[43]": {
-                    "Value": -88.0
+                    "Value": -69.0
                 },
                 "L[44]": {
-                    "Value": -87.0
+                    "Value": -69.0
                 },
                 "L[45]": {
-                    "Value": -87.0
+                    "Value": -69.0
                 },
                 "L[46]": {
-                    "Value": -87.0
+                    "Value": -69.0
                 },
                 "L[47]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[48]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[49]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[4]": {
-                    "Value": 3.0
+                    "Value": -1.0
                 },
                 "L[50]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[51]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[52]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[53]": {
-                    "Value": -88.0
+                    "Value": -69.0
                 },
                 "L[54]": {
-                    "Value": -87.0
+                    "Value": -69.0
                 },
                 "L[55]": {
-                    "Value": -87.0
+                    "Value": -69.0
                 },
                 "L[56]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[57]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[58]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[59]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[5]": {
-                    "Value": 2.0
+                    "Value": 69.0
                 },
                 "L[60]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[61]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[62]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[63]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[64]": {
-                    "Value": -88.0
+                    "Value": -69.0
                 },
                 "L[65]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[66]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[67]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[68]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[69]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[6]": {
-                    "Value": -87.0
+                    "Value": 4.0
                 },
                 "L[70]": {
-                    "Value": -89.0
-                },
-                "L[71]": {
-                    "Value": -89.0
-                },
-                "L[72]": {
-                    "Value": -89.0
-                },
-                "L[73]": {
-                    "Value": -89.0
-                },
-                "L[74]": {
-                    "Value": -89.0
-                },
-                "L[75]": {
-                    "Value": -89.0
-                },
-                "L[76]": {
-                    "Value": -89.0
-                },
-                "L[77]": {
-                    "Value": -89.0
-                },
-                "L[78]": {
-                    "Value": -89.0
-                },
-                "L[79]": {
-                    "Value": -89.0
+                    "Value": -69.0
                 },
                 "L[7]": {
-                    "Value": -87.0
-                },
-                "L[80]": {
-                    "Value": -89.0
-                },
-                "L[81]": {
-                    "Value": -89.0
-                },
-                "L[82]": {
-                    "Value": -89.0
-                },
-                "L[83]": {
-                    "Value": -89.0
-                },
-                "L[84]": {
-                    "Value": -89.0
-                },
-                "L[85]": {
-                    "Value": -89.0
-                },
-                "L[86]": {
-                    "Value": -89.0
-                },
-                "L[87]": {
-                    "Value": -89.0
-                },
-                "L[88]": {
-                    "Value": -89.0
-                },
-                "L[89]": {
-                    "Value": -89.0
+                    "Value": -1.0
                 },
                 "L[8]": {
-                    "Value": -87.0
-                },
-                "L[90]": {
-                    "Value": -89.0
+                    "Value": -66.0
                 },
                 "L[9]": {
-                    "Value": -87.0
+                    "Value": -69.0
                 },
-                "P[S2C,S2C,13,13]": {
+                "P[S2C,S2C,11,11]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,13,26]": {
+                "P[S2C,S2C,11,17]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,13,36]": {
+                "P[S2C,S2C,11,5]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,13,4]": {
+                "P[S2C,S2C,11,6]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,13,5]": {
+                "P[S2C,S2C,17,11]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,26,13]": {
+                "P[S2C,S2C,17,17]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,26,26]": {
+                "P[S2C,S2C,17,5]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,26,36]": {
+                "P[S2C,S2C,17,6]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,26,4]": {
+                "P[S2C,S2C,5,11]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,26,5]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S2C,36,13]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S2C,36,26]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S2C,36,36]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S2C,36,4]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S2C,36,5]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S2C,4,13]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S2C,4,26]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S2C,4,36]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S2C,4,4]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S2C,4,5]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S2C,5,13]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S2C,5,26]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S2C,5,36]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S2C,5,4]": {
+                "P[S2C,S2C,5,17]": {
                     "Value": 1.0
                 },
                 "P[S2C,S2C,5,5]": {
                     "Value": 1.0
                 },
-                "a[S2C,S2C,26,36]": {
+                "P[S2C,S2C,5,6]": {
                     "Value": 1.0
                 },
-                "a[S2C,S2C,36,0]": {
+                "P[S2C,S2C,6,11]": {
                     "Value": 1.0
                 },
-                "a[S2C,S2C,4,5]": {
+                "P[S2C,S2C,6,17]": {
                     "Value": 1.0
                 },
-                "a[S2C,S3,13,0]": {
+                "P[S2C,S2C,6,5]": {
                     "Value": 1.0
                 },
-                "a[S2C,S3,5,0]": {
+                "P[S2C,S2C,6,6]": {
                     "Value": 1.0
                 },
-                "s[S2C,13]": {
+                "a[S2C,S2C,11,17]": {
                     "Value": 1.0
                 },
-                "s[S2C,26]": {
+                "a[S2C,S2C,5,0]": {
                     "Value": 1.0
                 },
-                "s[S2C,36]": {
+                "a[S2C,S2C,6,11]": {
                     "Value": 1.0
                 },
-                "s[S2C,4]": {
+                "a[S2C,S2CPro,17,0]": {
+                    "Value": 1.0
+                },
+                "s[S2C,11]": {
+                    "Value": 1.0
+                },
+                "s[S2C,17]": {
                     "Value": 1.0
                 },
                 "s[S2C,5]": {
+                    "Value": 1.0
+                },
+                "s[S2C,6]": {
                     "Value": 1.0
                 }
             }
@@ -416,9 +323,9 @@
             },
             "Status": "ok",
             "Termination condition": "optimal",
-            "Termination message": "MIP - Integer optimal solution\\x3a Objective = 1.7347234760e-18",
-            "Time": 33.103166580200195,
-            "User time": 31.27
+            "Termination message": "MIP - Integer optimal solution\\x3a Objective = 3.4694469520e-18",
+            "Time": 32.786927938461304,
+            "User time": 30.53
         }
     ]
 }
