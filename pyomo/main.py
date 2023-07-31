@@ -16,11 +16,12 @@ os.chdir('./pyomo')
 logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 t0 = time.time()
 
-for d in range(5,8):
-    for a in range (0, 125, 25):
+for d in range(1,2):
+    for a in range(50, 75, 25):
 
         #Nome do arquivo da instancia a ser resolvida
-        instance_filename = "../instances_OL2A/10x10/SAP-inst_0."+str(d)+"_10x10.dat"
+        # instance_filename = "../instances_OL2A/10x10/SAP-inst_0."+str(d)+"_10x10.dat"
+        instance_filename = "SAP-inst_0.1_10x10-2.dat"
 
         #Solver a ser utilizado
         solver = 'cplex'
@@ -36,7 +37,8 @@ for d in range(5,8):
         alpha = {'E': (a/100), 'C': (1-(a/100)), 'M': 0}
 
         #Define nome da figura a salvar
-        figname = "10x10_d0."+str(d)+"_Ea"+str(a/100)+"_Ca"+str((1-(a/100)))
+        # figname = "10x10_d0."+str(d)+"_Ea"+str(a/100)+"_Ca"+str((1-(a/100)))
+        figname = "Teste_C_nova"
 
         #Se apenas 1 FO estiver ativa, zera os outros alphas e define o alpha respectivo como 1
         if sum(list(fo.values())) == 1:
@@ -189,6 +191,8 @@ for d in range(5,8):
         ax.axis("equal")
 
         for i in instance.V:
+            # plt.text(instance.X[i], instance.Y[i], str(i), color="purple", fontsize=12)
+
             if value(instance.s['S2C',i]) == 1:
                 ax.plot(instance.X[i],instance.Y[i],'go')
                 ax.add_patch(plt.Circle((instance.X[i],instance.Y[i]), (instance.RMAX['S2C']/instance.scale), color='g', alpha=0.1))
@@ -201,8 +205,6 @@ for d in range(5,8):
             else:
                 ax.plot(instance.X[i],instance.Y[i],'ko',fillstyle='none')
             
-            # plt.text(instance.X[i], instance.Y[i], str(i), color="red", fontsize=12)
-
         ax.grid(linestyle='--',linewidth=0.5,alpha=0.5)
         # ax.set_xticks(np.arange(int(instance.smallest_X),int(instance.biggest_X)+1,1))
         # ax.set_yticks(np.arange(int(instance.smallest_Y),int(instance.biggest_Y)+1,1))
@@ -213,6 +215,15 @@ for d in range(5,8):
 
         ax.legend(handles=[red_patch,blue_patch,green_patch], loc='upper right')
 
+        plt.plot([instance.W[1],instance.W[instance.dimW]],[instance.H[1],instance.H[1]],color='k')
+        plt.plot([instance.W[instance.dimW],instance.W[instance.dimW]],[instance.H[1],instance.H[instance.dimH]],color='k')
+        plt.plot([instance.W[1],instance.W[1]],[instance.H[1],instance.H[instance.dimH]],color='k')
+        plt.plot([instance.W[1],instance.W[instance.dimW]],[instance.H[instance.dimH],instance.H[instance.dimH]],color='k')
+
+        for i in instance.KW:
+            for j in instance.KH:
+                plt.plot(instance.W[i],instance.H[j],marker='x',color='k',alpha=0.3)
+
         plt.xlabel('Eixo X (m)')
         plt.ylabel('Eixo Y (m)')
         plt.title('Instancia: '+str(instance_filename)+'\nEscala: 1:'+str(int(instance.scale))+'m\nAlphas: '+str(alpha['E'])+'E, '+str(alpha['C'])+'C, '+str(alpha['M'])+'M  -  Tempo: '+str(results.solver.user_time)+' s')
@@ -221,4 +232,4 @@ for d in range(5,8):
         plt.close()
 
         t = time.time() - t0
-        print("Tempo total decorrido desde execução: "+str(t))
+        print("Tempo total decorrido desde execucao: "+str(t))

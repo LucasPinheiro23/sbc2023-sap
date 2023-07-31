@@ -1,3 +1,22 @@
+param dimW := 6;
+param dimH := 6;
+
+param W :=
+1 0.0
+2 1.2
+3 2.4
+4 3.6
+5 4.8
+6 6.0;
+
+param H :=
+1 0.0
+2 1.2
+3 2.4
+4 3.6
+5 4.8
+6 6.0;
+
 param n := 6;
 
 param scale := 1000;

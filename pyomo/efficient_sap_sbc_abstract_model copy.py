@@ -12,10 +12,6 @@ import math
 def init_D(model, i, j):
     return math.sqrt(pow((model.X[i]-model.X[j])*model.scale,2)+pow((model.Y[i]-model.Y[j])*model.scale,2))
 
-# Distancia entre posicoes de nos sensores e pontos parametrizados na regiao de monitoramento (DK)
-def init_DK(model, i, j, k):
-    return math.sqrt(pow((model.X[i]-model.W[j])*model.scale,2)+pow((model.Y[i]-model.H[k])*model.scale,2))
-
 # Vizinhanca dos nos (somente considerado vizinho se entre 80% e 100% do alcance maximo, de forma a garantir afastamento minimo)
 def init_N(model, t, i):
     for j in model.V:
@@ -34,7 +30,10 @@ def obj_Energy_rule(model):
 
 # FO - Area de Cobertura
 def obj_Coverage_rule(model):
-    return sum(sum(sum(sum( model.c[j,k,i,t] for j in model.KW) for k in model.KH) for t in model.S) for i in model.V)
+    return sum(sum(math.pi*pow(model.RMAX[t],2)*model.s[t,i] for t in model.S) for i in model.V)
+    #Melhor resultado ate o momento
+    # return sum(sum( model.s[t,i] for t in model.S) for i in model.V) / model.n
+    # return sum(sum(sum(sum( model.P[t,u,i,j] * model.D[i,j] for j in model.V) for t in model.S) for u in model.S) for i in model.V)
 
 # FO - Custo Monetario
 def obj_Monetary_rule(model):
@@ -121,26 +120,6 @@ def const_L2(model, i):
 def const_L0(model):
     return model.L[0] == 1
 
-#Determina que um ponto da parametrizacao esta coberto apenas se existe sensor alocado cujo raio de alcance cobre o ponto
-def const_C1(model, j, k, t, i):
-    if (model.DK[i,j,k] <= model.RMAX[t]):
-        return model.c[j,k,i,t] <= model.s[t,i]
-    else:
-        return model.c[j,k,i,t] == 0
-
-#Restringe sobreposição
-# def const_C2(model, k, l, t, u, i, j):
-#     if (model.DK[i,k,l] <= model.RMAX[t]) and (model.DK[j,k,l] <= model.RMAX[u]):
-#         return model.c[k,l,i,t] + model.c[k,l,j,t] >= model.P[t,u,i,j]
-#     else:
-#         return Constraint.Skip
-
-# #Restringe sobreposição
-# def const_C3(model, k, l, t, u, i, j):
-#     if (model.DK[i,k,l] <= model.RMAX[t]) and (model.DK[j,k,l] <= model.RMAX[u]):
-#         return model.c[k,l,i,t] + model.c[k,l,j,t] <= (2 - model.P[t,u,i,j])
-#     else:
-#         return Constraint.Skip
 
 # Funcao principal para gerar instancia do modelo
 def generate_model():
@@ -150,9 +129,6 @@ def generate_model():
 
     ## Parametros (Params)
     ## ---
-    # Dimensoes da regiao de monitoramento
-    model.dimW = Param(within=NonNegativeIntegers)
-    model.dimH = Param(within=NonNegativeIntegers)
     # Numero de nos
     model.n = Param(within=NonNegativeIntegers) #INICIALIZAR
     # Escala
@@ -160,9 +136,6 @@ def generate_model():
 
     ## Conjuntos (Sets)
     ## ---
-    # Conjunto de pontos parametrizados na regiao de monitoramento
-    model.KW = RangeSet(1,model.dimW)
-    model.KH = RangeSet(1,model.dimH)
     # Conjunto de nos
     model.V = RangeSet(1,model.n)
     # Conjunto de nos incluindo 0
@@ -177,9 +150,6 @@ def generate_model():
     model.X = Param(model.V) #INICIALIZAR
     # Coordenadas y dos nos
     model.Y = Param(model.V) #INICIALIZAR
-    # Conjuntos de pontos parametrizados na superficie
-    model.W = Param(model.KW, domain=NonNegativeReals) #INICIALIZAR
-    model.H = Param(model.KH, domain=NonNegativeReals) #INICIALIZAR
     # Conjunto de corrente consumida media (I)
     model.I = Param(model.S) #INICIALIZAR
     # Conjunto de custo medio em dolar (M)
@@ -188,8 +158,6 @@ def generate_model():
     model.RMAX = Param(model.S) #INICIALIZAR
     # Distancia entre pares de posicoes fixas (D)
     model.D = Param(model.V,model.V,initialize=init_D,domain=NonNegativeReals)
-    # Distancia entre posicoes de nos sensores e pontos parametrizados na regiao de monitoramento (DK)
-    model.DK = Param(model.V,model.KW,model.KH,initialize=init_DK,domain=NonNegativeReals)
 
     # Vizinhanca dos nos (i.e. os nos que sao vizinhos de i)
     model.N = Set(model.S,model.V,initialize=init_N)
@@ -207,9 +175,6 @@ def generate_model():
 
     #Nivel do no sensor
     model.L = Var(model.V0, within=Integers)
-
-    #Cobertura da regiao de monitoramento
-    model.c = Var(model.KW, model.KH, model.V, model.S, within=Binary)
 
     ## Funcoes objetivo
     ## ---
@@ -239,6 +204,7 @@ def generate_model():
     model.P1 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair1)
     model.P2 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair2)
     model.P3 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair3)
+    # model.P4 = Constraint(rule=const_Pair4)
 
     model.aij = Constraint(model.S, model.S, model.V,model.V, rule=const_aij)
 
@@ -250,10 +216,6 @@ def generate_model():
     model.L1 = Constraint(model.S, model.S, model.V, model.V0, rule=const_L1)
     model.L2 = Constraint(model.V, rule=const_L2)
     model.L0 = Constraint(rule=const_L0)
-
-    model.C1 = Constraint(model.KW, model.KH, model.S, model.V, rule=const_C1)
-    # model.C2 = Constraint(model.KW, model.KH, model.S, model.S, model.V, model.V, rule=const_C2)
-    # model.C3 = Constraint(model.KW, model.KH, model.S, model.S, model.V, model.V, rule=const_C3)
 
     return model
 
