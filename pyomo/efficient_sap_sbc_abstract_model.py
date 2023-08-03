@@ -34,7 +34,7 @@ def obj_Energy_rule(model):
 
 # FO - Area de Cobertura
 def obj_Coverage_rule(model):
-    return sum(sum(sum(sum( model.c[j,k,i,t] for j in model.KW) for k in model.KH) for t in model.S) for i in model.V)
+    return sum(sum(sum(sum( model.c[j,k,i,t] for j in model.KW) for k in model.KH) for t in model.S) for i in model.V)# - 0.2*sum(sum(sum(sum(sum(sum( model.cc[k,l,i,t,j,u] for k in model.KW) for l in model.KH) for i in model.V) for t in model.S) for j in model.V) for u in model.S)
 
 # FO - Custo Monetario
 def obj_Monetary_rule(model):
@@ -129,18 +129,21 @@ def const_C1(model, j, k, t, i):
         return model.c[j,k,i,t] == 0
 
 #Restringe sobreposição
-# def const_C2(model, k, l, t, u, i, j):
-#     if (model.DK[i,k,l] <= model.RMAX[t]) and (model.DK[j,k,l] <= model.RMAX[u]):
-#         return model.c[k,l,i,t] + model.c[k,l,j,t] >= model.P[t,u,i,j]
-#     else:
-#         return Constraint.Skip
+def const_C2(model, k, l, t, u, i, j):
+    if (model.DK[i,k,l] <= model.RMAX[t]) and (model.DK[j,k,l] <= model.RMAX[u]):
+        return model.cc[k,l,i,t,j,u] <= model.P[t,u,i,j]
+    else:
+        return model.cc[k,l,i,t,j,u] == 0
 
 # #Restringe sobreposição
-# def const_C3(model, k, l, t, u, i, j):
-#     if (model.DK[i,k,l] <= model.RMAX[t]) and (model.DK[j,k,l] <= model.RMAX[u]):
-#         return model.c[k,l,i,t] + model.c[k,l,j,t] <= (2 - model.P[t,u,i,j])
-#     else:
-#         return Constraint.Skip
+def const_C3(model):
+    return sum(sum(sum(sum(sum(sum( model.cc[k,l,i,t,j,u] for k in model.KW) for l in model.KH) for i in model.V) for t in model.S) for j in model.V) for u in model.S) <= sum(sum(sum(sum( model.c[k,l,i,t] for k in model.KW) for l in model.KH) for i in model.V) for t in model.S) - 1
+
+# def const_D1(model, i, j):
+#     return model.d[i,j] == model.D[i,j] * sum(sum( model.P[t,u,i,j] for t in model.S) for u in model.S)
+
+# def const_D2(model, i, j):
+#     return model.d[i,j] >= 1200 * sum(sum( model.P[t,u,i,j] for t in model.S) for u in model.S)
 
 # Funcao principal para gerar instancia do modelo
 def generate_model():
@@ -208,8 +211,14 @@ def generate_model():
     #Nivel do no sensor
     model.L = Var(model.V0, within=Integers)
 
-    #Cobertura da regiao de monitoramento
+    #Ponto da regiao de monitoramento coberto por ao menos um no sensor
     model.c = Var(model.KW, model.KH, model.V, model.S, within=Binary)
+
+    #Pontos da região de monitoramento cobertos por mais de um no sensor
+    # model.cc = Var(model.KW, model.KH, model.V, model.S, model.V, model.S, within=Binary)
+
+    #Distância entre cada par de no sensor ativo
+    model.d = Var(model.V, model.V, within=Reals)
 
     ## Funcoes objetivo
     ## ---
@@ -253,7 +262,10 @@ def generate_model():
 
     model.C1 = Constraint(model.KW, model.KH, model.S, model.V, rule=const_C1)
     # model.C2 = Constraint(model.KW, model.KH, model.S, model.S, model.V, model.V, rule=const_C2)
-    # model.C3 = Constraint(model.KW, model.KH, model.S, model.S, model.V, model.V, rule=const_C3)
+    # model.C3 = Constraint(rule=const_C3)
+    
+    # model.D1 = Constraint(model.V, model.V, rule=const_D1)
+    # model.D2 = Constraint(model.V, model.V, rule=const_D2)
 
     return model
 

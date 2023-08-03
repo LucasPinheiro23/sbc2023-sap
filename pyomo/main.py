@@ -21,7 +21,7 @@ for d in range(1,2):
 
         #Nome do arquivo da instancia a ser resolvida
         # instance_filename = "../instances_OL2A/10x10/SAP-inst_0."+str(d)+"_10x10.dat"
-        instance_filename = "SAP-inst_0.1_10x10-2.dat"
+        instance_filename = "SAP-inst_0.5_10x10-2.dat"
 
         #Solver a ser utilizado
         solver = 'cplex'
