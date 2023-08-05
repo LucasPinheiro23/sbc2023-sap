@@ -6,6 +6,9 @@ import math
 ### MODELAGEM ABSTRATA
 #--------------------#
 
+#Constante para linerizacao da funcao min()
+M = 100000
+
 #Funcoes de inicializacao do modelo
 
 # Distancia entre pares de posicoes fixas (D)
@@ -35,7 +38,8 @@ def obj_Energy_rule(model):
 # FO - Area de Cobertura
 def obj_Coverage_rule(model):
     # return sum(sum(sum(sum( model.c[j,k,i,t] for j in model.KW) for k in model.KH) for t in model.S) for i in model.V)# - 0.2*sum(sum(sum(sum(sum(sum( model.cc[k,l,i,t,j,u] for k in model.KW) for l in model.KH) for i in model.V) for t in model.S) for j in model.V) for u in model.S)
-    return ( sum( sum( sum( sum( sum( sum( model.d[k,l,m,n,i,j] for k in model.KW) for l in model.KH) for m in model.KW) for n in model.KH) for i in model.V) for j in model.V) ) / ( sum( sum( sum( sum( model.cc[k,l,i,j] for k in model.KW) for l in model.KH) for i in model.V) for j in model.V) )
+    # return ( sum( sum( sum( sum( sum( sum( model.d[k,l,m,n,i,j] for k in model.KW) for l in model.KH) for m in model.KW) for n in model.KH) for i in model.V) for j in model.V) )# / ( sum( sum( sum( sum( model.cc[k,l,i,j] for k in model.KW) for l in model.KH) for i in model.V) for j in model.V) )
+    return sum(sum( model.cc[k,l] for k in model.KW) for l in model.KH)
 
 # FO - Custo Monetario
 def obj_Monetary_rule(model):
@@ -130,18 +134,20 @@ def const_C1(model, j, k, t, i):
         return model.c[j,k,i,t] == 0
 
 #Restringe sobreposição
-def const_C2(model, k, l, m, n, i, j):
-    return model.cc[k,l,m,n,i,j] <= sum( model.c[k,l,i,t] for t in model.S)
+def const_C2(model, k, l):
+    return model.cc[k,l] <= 1
 
-def const_C3(model, k, l, m, n, i, j):
-    return model.cc[k,l,m,n,i,j] <= sum( model.c[m,n,j,u] for u in model.S)
+def const_C3(model, k, l):
+    return model.cc[k,l] <= sum(sum( model.c[k,l,i,t] for i in model.V) for t in model.S)
 
-def const_C4(model, k, l, m, n, i, j):
-    return model.cc[k,l,m,n,i,j] >= sum( model.c[k,l,i,t] for t in model.S) + sum( model.c[m,n,j,u] for u in model.S) - 1
+def const_C4(model, k, l):
+    return model.cc[k,l] >= 1 - M * model.ccY[k,l,1]
 
-def const_D1(model, k, l, m, n, i, j):
-    return model.d[k,l,m,n,i,j] == math.sqrt(pow((model.H[k] - model.H[l]),2) + pow((model.W[k] - model.W[l]),2)) * model.cc[k,l,m,n,i,j]
+def const_C5(model, k, l):
+    return model.cc[k,l] >= sum(sum( model.c[k,l,i,t] for i in model.V) for t in model.S) - M * model.ccY[k,l,2]
 
+def const_C6(model, k, l):
+    return model.ccY[k,l,1] + model.ccY[k,l,2] <= 1
 
 # Funcao principal para gerar instancia do modelo
 def generate_model():
@@ -212,11 +218,14 @@ def generate_model():
     #Ponto da regiao de monitoramento coberto por ao menos um no sensor
     model.c = Var(model.KW, model.KH, model.V, model.S, within=Binary)
 
-    #Pontos da região de monitoramento cobertos por mais de um no sensor
-    model.cc = Var(model.KW, model.KH, model.KW, model.KH, model.V, model.V, within=Binary)
+    #Pontos da região de monitoramento (se coberto ou nao, independente do no sensor)
+    model.cc = Var(model.KW, model.KH, within=Binary)
+
+    #Variaveis auxiliares de min
+    model.ccY = Var(model.KW, model.KH, RangeSet(1,2), within=Binary)
 
     #Distância entre cada par de pontos cobertos na regiao de monitoramento
-    model.d = Var(model.KW, model.KH, model.KW, model.KH, model.V, model.V, within=Reals)
+    # model.d = Var(model.KW, model.KH, model.KW, model.KH, model.V, model.V, within=Reals)
 
     ## Funcoes objetivo
     ## ---
@@ -259,14 +268,11 @@ def generate_model():
     model.L0 = Constraint(rule=const_L0)
 
     model.C1 = Constraint(model.KW, model.KH, model.S, model.V, rule=const_C1)
-    model.C2 = Constraint(model.KW, model.KH, model.KW, model.KH, model.V, model.V, rule=const_C2)
-    model.C3 = Constraint(model.KW, model.KH, model.KW, model.KH, model.V, model.V, rule=const_C3)
-    model.C4 = Constraint(model.KW, model.KH, model.KW, model.KH, model.V, model.V, rule=const_C4)
-    # model.C2 = Constraint(model.KW, model.KH, model.S, model.S, model.V, model.V, rule=const_C2)
-    # model.C3 = Constraint(rule=const_C3)
-    
-    model.D1 = Constraint(model.KW, model.KH, model.KW, model.KH, model.V, model.V, rule=const_D1)
-    # model.D2 = Constraint(model.V, model.V, rule=const_D2)
+    model.C2 = Constraint(model.KW, model.KH, rule=const_C2)
+    model.C3 = Constraint(model.KW, model.KH, rule=const_C3)
+    model.C4 = Constraint(model.KW, model.KH, rule=const_C4)
+    model.C5 = Constraint(model.KW, model.KH, rule=const_C5)
+    model.C6 = Constraint(model.KW, model.KH, rule=const_C6)
 
     return model
 

@@ -21,8 +21,8 @@ for d in range(1,2):
 
         #Nome do arquivo da instancia a ser resolvida
         # instance_filename = "../instances_OL2A/10x10/SAP-inst_0."+str(d)+"_10x10.dat"
-        # instance_filename = "SAP-inst_0.1_10x10-2.dat"
-        instance_filename = "sap-10.dat"
+        instance_filename = "SAP-inst_0.2_10x10-2.dat"
+        # instance_filename = "sap-10-2.dat"
 
         #Solver a ser utilizado
         solver = 'cplex'
@@ -194,7 +194,7 @@ for d in range(1,2):
         ax.axis("equal")
 
         for i in instance.V:
-            # plt.text(instance.X[i], instance.Y[i], str(i), color="purple", fontsize=12)
+            plt.text(instance.X[i], instance.Y[i], str(i), color="purple", fontsize=12)
 
             if value(instance.s['S2C',i]) == 1:
                 ax.plot(instance.X[i],instance.Y[i],'go')
