@@ -25,7 +25,8 @@ for L in range(10,30,5):
 #         for a in range(50, 75, 25):
             #Nome do arquivo da instancia a ser resolvida
             instance_path="./instances_OL2A_updated/"+str(L)+"x"+str(L)+"/"
-            instance_filename = "SAP-inst_"+str(L)+"x"+str(L)+"_d0."+str(d)+"_a0."+str(a)+".dat"
+            instance_filename = "SAP-inst_"+str(L)+"x"+str(L)+"_d0."+str(d)+".dat"
+            instance_a = "_a0."+str(a)
 
             #Solver a ser utilizado
             solver = 'cplex'
@@ -35,7 +36,7 @@ for L in range(10,30,5):
             # solver_exec = 'glpsol'
 
             #Nome do arquivo de log
-            sys.stdout = open('./output/logs/'+instance_filename[:-3]+'txt', 'w')
+            sys.stdout = open('./output/logs/'+instance_filename[:-3]+instance_a+'.txt', 'w')
 
             ## CONSTRUCAO DO MODELO E INSTANCIA
 
@@ -47,7 +48,7 @@ for L in range(10,30,5):
 
             #Define nome da figura a salvar
             # figname = "10x10_d0."+str(d)+"_Ea"+str(a/100)+"_Ca"+str((1-(a/100)))
-            figname = instance_filename
+            figname = instance_filename[:-3]+instance_a
 
             #Se apenas 1 FO estiver ativa, zera os outros alphas e define o alpha respectivo como 1
             if sum(list(fo.values())) == 1:

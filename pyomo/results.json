@@ -2,7 +2,7 @@
     "Problem": [
         {
             "Lower bound": -1.0,
-            "Name": "SAP-inst_0.2_10x10.dat",
+            "Name": "SAP-inst_10x10_d0.2.dat",
             "Number of constraints": 24985,
             "Number of nonzeros": 59575,
             "Number of objectives": 1,
@@ -1561,8 +1561,8 @@
             "Status": "ok",
             "Termination condition": "optimal",
             "Termination message": "MIP - Integer optimal solution\\x3a Objective = -1.0000000000e+00",
-            "Time": 6.658012628555298,
-            "User time": 6.22
+            "Time": 7.698272943496704,
+            "User time": 6.95
         }
     ]
 }
