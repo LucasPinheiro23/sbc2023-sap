@@ -18,8 +18,12 @@ logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 t0 = time.time()
 
 for L in range(10,30,5):
-    for d in range(1,9):
+    for d in range(3,9):
         for a in range(0, 125, 25):
+
+            if d == 3 and a == 0:
+                continue
+
 # for L in range(15,20,5):
 #     for d in range(1,2):
 #         for a in range(50, 75, 25):
@@ -164,7 +168,7 @@ for L in range(10,30,5):
                 print("E: "+str(value(instance.norm_E))+" -- "+ str(min_fo['E']+(max_fo['E']-min_fo['E'])*value(instance.norm_E)) +" mA")
 
             if(fo['C'] == 1):
-                print("C: "+str(value(instance.norm_C))+" -- "+ str(min_fo['C']+(max_fo['C']-min_fo['C'])*value(instance.norm_C)) +" m^2")
+                print("C: "+str(value(instance.norm_C))+" -- "+ str(min_fo['C']+(max_fo['C']-min_fo['C'])*value(instance.norm_C)) +" points")
 
             if(fo['M'] == 1):
                 print("M: "+str(value(instance.norm_M))+" -- $"+ str(min_fo['M']+(max_fo['M']-min_fo['M'])*value(instance.norm_M)))
