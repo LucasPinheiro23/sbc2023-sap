@@ -1405,8 +1405,8 @@
             "Status": "ok",
             "Termination condition": "optimal",
             "Termination message": "MIP - Integer optimal, tolerance (0.0001/1e-06)\\x3a Objective = -3.6409493367e-01",
-            "Time": 64463.73629832268,
-            "User time": 64453.55
+            "Time": 62602.24869298935,
+            "User time": 62595.02
         }
     ]
 }

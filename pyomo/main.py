@@ -8,6 +8,8 @@ import os
 import time
 import sys
 
+t0 = time.time()
+
 #Muda diretorio (BUG DO VSCODE)
 os.chdir('./pyomo')
 
@@ -15,18 +17,14 @@ os.chdir('./pyomo')
 
 #Suprime logs de warning do Pyomo (necessario pois gera muitas warnings durante alteracoes do modelo para calcular min-max)
 logging.getLogger('pyomo.core').setLevel(logging.ERROR)
-t0 = time.time()
 
-for L in range(10,30,5):
-    for d in range(3,9):
-        for a in range(0, 125, 25):
+# for L in range(10,30,5):
+#     for d in range(1,9):
+#         for a in range(0, 125, 25):
 
-            if d == 3 and a == 0:
-                continue
-
-# for L in range(15,20,5):
-#     for d in range(1,2):
-#         for a in range(50, 75, 25):
+for L in range(10,15,5):
+    for d in range(3,4):
+        for a in range(50, 75, 25):
             #Nome do arquivo da instancia a ser resolvida
             instance_path="./instances_OL2A_updated/"+str(L)+"x"+str(L)+"/"
             instance_filename = "SAP-inst_"+str(L)+"x"+str(L)+"_d0."+str(d)+".dat"
@@ -40,7 +38,7 @@ for L in range(10,30,5):
             # solver_exec = 'glpsol'
 
             #Nome do arquivo de log
-            sys.stdout = open('./output/logs/'+instance_filename[:-3]+instance_a+'.txt', 'w')
+            # sys.stdout = open('./output/logs/'+instance_filename[:-3]+instance_a+'.txt', 'w')
 
             ## CONSTRUCAO DO MODELO E INSTANCIA
 
@@ -74,8 +72,10 @@ for L in range(10,30,5):
 
             #Coleta os valores minimos e maximos de cada FO
             print("Calculando min-max:")
-            max_fo = get_fo_max(model, fo, instance_path+instance_filename, solver, solver_exec)
-            min_fo = get_fo_min(model, fo, instance_path+instance_filename, solver, solver_exec)
+            max_fo = {'E': 22.859400000000008, 'C': 99.0, 'M': 0}
+            min_fo = {'E': 0.611782, 'C': 0.0, 'M': 0}
+            # max_fo = get_fo_max(model, fo, instance_path+instance_filename, solver, solver_exec)
+            # min_fo = get_fo_min(model, fo, instance_path+instance_filename, solver, solver_exec)
             print("Maximos: "+str(max_fo))
             print("Minimos: "+str(min_fo))
 
@@ -137,7 +137,7 @@ for L in range(10,30,5):
 
             print("Resolvendo instancia...")
             #Resolve a instancia e armazena os resultados em um arquivo JSON
-            results = opt.solve(instance, tee=True)
+            results = opt.solve(instance)
             instance.solutions.store_to(results)
             results.problem.name = instance_filename
             results.write(filename='results.json',format='json')
@@ -236,7 +236,10 @@ for L in range(10,30,5):
 
             for i in instance.KW:
                 for j in instance.KH:
-                    plt.plot(instance.W[i],instance.H[j],marker='x',color='k',alpha=0.3)
+                    if(value(instance.cc[i,j])):
+                        plt.plot(instance.W[i],instance.H[j],marker='x',color='r',alpha=0.3)    
+                    else:
+                        plt.plot(instance.W[i],instance.H[j],marker='x',color='k',alpha=0.3)
 
             plt.xlabel('Eixo X (m)')
             plt.ylabel('Eixo Y (m)')

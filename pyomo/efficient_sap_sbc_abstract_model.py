@@ -418,7 +418,7 @@ def get_fo_min(model, fo, instance_filename,solver,solver_exec):
         ## Resolve para encontrar max
 
         #Resolve a instancia e pega resultado da FO
-        results = opt.solve(instance)
+        results = opt.solve(instance, tee=True)
         instance.solutions.store_to(results)
 
         if(results.solver.termination_condition == TerminationCondition.infeasible):
@@ -446,7 +446,7 @@ def get_fo_min(model, fo, instance_filename,solver,solver_exec):
         ## Resolve para encontrar max
 
         #Resolve a instancia e pega resultado da FO
-        results = opt.solve(instance)
+        results = opt.solve(instance, tee=True)
         instance.solutions.store_to(results)
 
         if(results.solver.termination_condition == TerminationCondition.infeasible):
