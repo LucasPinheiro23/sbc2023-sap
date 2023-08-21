@@ -129,7 +129,7 @@ def const_L0(model):
 #Determina que um ponto da parametrizacao esta coberto apenas se existe sensor alocado cujo raio de alcance cobre o ponto
 def const_C1(model, j, k, t, i):
     if (model.DK[i,j,k] <= model.RMAX[t]):
-        return model.c[j,k,i,t] <= model.s[t,i]
+        return model.c[j,k,i,t] == model.s[t,i]
     else:
         return model.c[j,k,i,t] == 0
 
@@ -487,3 +487,36 @@ def get_fo_min(model, fo, instance_filename,solver,solver_exec):
         model.M.deactivate()
 
     return min_fo
+
+####
+#Funcoes de pre-processamento do min-max das fos (usavel apenas se nao considerar rodar o solver para encontrar)
+
+def preproc_C_max(model):
+
+    for i in model.KW:
+        print(i)
+
+    x = [[0 for _ in model.KW] for _ in model.KH]
+    
+    for i in model.V:
+        for j in model.KW:
+            for k in model.KH:
+                if (value(model.DK[i,j,k]) <= value(model.RMAX['S3'])):
+                    x[j][k] == 1
+
+    sum_x = 0
+
+    for j in model.KW:
+        for k in model.KH:
+            sum_x += x[j][k]
+
+    return sum_x
+
+#Depende do solver resolver
+# def preproc_C_min(fo)
+
+def preproc_E_min(model):
+    return value(model.I['S2C'])*2
+
+def preproc_E_max(model):
+    return value(model.n) * value(model.I['S3'])
