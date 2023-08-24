@@ -493,22 +493,19 @@ def get_fo_min(model, fo, instance_filename,solver,solver_exec):
 
 def preproc_C_max(model):
 
-    for i in model.KW:
-        print(i)
-
     x = [[0 for _ in model.KW] for _ in model.KH]
-    
+
     for i in model.V:
         for j in model.KW:
             for k in model.KH:
                 if (value(model.DK[i,j,k]) <= value(model.RMAX['S3'])):
-                    x[j][k] == 1
+                    x[j-1][k-1] = 1
 
     sum_x = 0
 
     for j in model.KW:
         for k in model.KH:
-            sum_x += x[j][k]
+            sum_x += x[j-1][k-1]
 
     return sum_x
 

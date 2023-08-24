@@ -23,7 +23,7 @@ logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 #         for a in range(0, 125, 25):
 
 for L in range(10,15,5):
-    for d in range(3,4):
+    for d in range(1,4):
         for a in range(0, 125, 25):
             #Nome do arquivo da instancia a ser resolvida
             instance_path="./instances_OL2A_updated/"+str(L)+"x"+str(L)+"/"
@@ -64,24 +64,24 @@ for L in range(10,15,5):
 
             ## Gera modelo abstrato
             model = generate_model()
-            model.E.activate()
+            # model.E.activate()
             # model.C.activate()
 
             ##Normalizacao min-max - Etapa 1
 
             ## Carrega dados de instancia no modelo
-            # data = DataPortal()
-            # data.load(filename=instance_path+instance_filename, model=model)
-            # instance = model.create_instance(data)
+            data = DataPortal()
+            data.load(filename=instance_path+instance_filename, model=model)
+            instance1 = model.create_instance(data)
 
             #Coleta os valores minimos e maximos de cada FO
             print("Calculando min-max:")
             # max_fo = {'E': 22.859400000000008, 'C': 99.0, 'M': 0}
             # min_fo = {'E': 0.611782, 'C': 0.0, 'M': 0}
-            max_fo = get_fo_max(model, fo, instance_path+instance_filename, solver, solver_exec)
-            min_fo = get_fo_min(model, fo, instance_path+instance_filename, solver, solver_exec)
-            # max_fo = {'E': preproc_E_max(model), 'C': preproc_C_max(model)}
-            # min_fo = {'E': preproc_E_min(model), 'C': get_fo_min(model,{'E': 0, 'C': 1, 'M': 0},instance_path+instance_filename, solver, solver_exec)['C']}
+            # max_fo = get_fo_max(model, fo, instance_path+instance_filename, solver, solver_exec)
+            # min_fo = get_fo_min(model, fo, instance_path+instance_filename, solver, solver_exec)
+            max_fo = {'E': preproc_E_max(instance1), 'C': preproc_C_max(instance1)}
+            min_fo = {'E': preproc_E_min(instance1), 'C': get_fo_min(model,{'E': 0, 'C': 1, 'M': 0},instance_path+instance_filename, solver, solver_exec)['C']}
             print("Maximos: "+str(max_fo))
             print("Minimos: "+str(min_fo))
 
@@ -187,10 +187,10 @@ for L in range(10,15,5):
             #print(value(instance.s['S2C',1]))
 
             #Tempo de execucao do solver
-            print("Solving time: "+str(results.solver.user_time)+" s")
+            # print("Solving time: "+str(results.solver.user_time)+" s")
 
             #Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
-            print("Total Pyomo time: "+str(results.solver.time)+" s")
+            print("Total Solving time: "+str(results.solver.time)+" s")
 
             # instance.Pair_floor.pprint()
             # instance.Dist.pprint()
