@@ -22,9 +22,9 @@ logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 #     for d in range(1,9):
 #         for a in range(0, 125, 25):
 
-for L in range(10,15,5):
-    for d in range(1,4):
-        for a in range(0, 125, 25):
+for L in range(10,25,5):
+    for d in range(1,9):
+        for a in range(100, 125, 25):
             #Nome do arquivo da instancia a ser resolvida
             instance_path="./instances_OL2A_updated/"+str(L)+"x"+str(L)+"/"
             instance_filename = "SAP-inst_"+str(L)+"x"+str(L)+"_d0."+str(d)+".dat"
