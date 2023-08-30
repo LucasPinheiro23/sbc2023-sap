@@ -51,7 +51,7 @@ param H :=
 
 param n := 187;
 
-param scale := 1000;
+param scale := 500;
 
 set S := "S2C" "S2CPro" "S3";
 
