@@ -11,7 +11,7 @@ import sys
 t0 = time.time()
 
 #Muda diretorio (BUG DO VSCODE)
-#os.chdir('./pyomo')
+# os.chdir('./pyomo')
 
 # Script principal para resolver instancias do SAP
 
@@ -22,19 +22,19 @@ logging.getLogger('pyomo.core').setLevel(logging.ERROR)
 #     for d in range(1,9):
 #         for a in range(0, 125, 25):
 
-for L in range(10,25,5):
+for L in range(10,30,5):
     for d in range(1,9):
-        for a in range(100, 125, 25):
+        for a in range(0, 125, 25):
             #Nome do arquivo da instancia a ser resolvida
             instance_path="./instances_OL2A_updated/"+str(L)+"x"+str(L)+"/"
             instance_filename = "SAP-inst_"+str(L)+"x"+str(L)+"_d0."+str(d)+".dat"
-            instance_a = "_a0."+str(a)
+            instance_a = "_a0."+str(a)+"E"
 
             #Solver a ser utilizado
-            #solver = 'cplex'
+            # solver = 'cplex'
             solver = 'glpk'
             #Executavel do solver
-            #solver_exec = 'cplex'
+            # solver_exec = 'cplex'
             solver_exec = 'glpsol'
 
             #Nome do arquivo de log
@@ -74,16 +74,18 @@ for L in range(10,25,5):
             data.load(filename=instance_path+instance_filename, model=model)
             instance1 = model.create_instance(data)
 
+            print("Instance Data Loaded. Initializing...\n\n")
+            print("Instance Scale = 1:"+ str(value(instance1.scale)) +"\n")
             #Coleta os valores minimos e maximos de cada FO
-            print("Calculando min-max:")
+            print("Calculating min-max:\n")
             # max_fo = {'E': 22.859400000000008, 'C': 99.0, 'M': 0}
             # min_fo = {'E': 0.611782, 'C': 0.0, 'M': 0}
             # max_fo = get_fo_max(model, fo, instance_path+instance_filename, solver, solver_exec)
             # min_fo = get_fo_min(model, fo, instance_path+instance_filename, solver, solver_exec)
             max_fo = {'E': preproc_E_max(instance1), 'C': preproc_C_max(instance1)}
             min_fo = {'E': preproc_E_min(instance1), 'C': get_fo_min(model,{'E': 0, 'C': 1, 'M': 0},instance_path+instance_filename, solver, solver_exec)['C']}
-            print("Maximos: "+str(max_fo))
-            print("Minimos: "+str(min_fo))
+            print("\n\n----------\n\nMaximums: "+str(max_fo)+"\n")
+            print("Minimums: "+str(min_fo)+"\n\n----------\n")
 
             # #Cria novos objetivos normalizados
             if(fo['E'] == 1):
@@ -139,14 +141,21 @@ for L in range(10,25,5):
 
             #Cria um solver
             opt = SolverFactory(solver, executable=solver_exec)
-            #opt = SolverFactory('glpk', executable='glpsol')
+            opt.options['tmlim'] = 1200
+            opt.options['mipgap'] = 0.0001
 
-            print("Resolvendo instancia...")
+            print("Translating instance to solver...\n")
             #Resolve a instancia e armazena os resultados em um arquivo JSON
             results = opt.solve(instance, tee=True)
             instance.solutions.store_to(results)
             results.problem.name = instance_filename
             results.write(filename='results.json',format='json')
+
+            if(results.solver.termination_condition == "maxTimeLimit"):
+                print("\n\nSOLVER TIME LIMIT EXCEEDED\n\n")
+                if(math.isinf(results.problem.lower_bound) or math.isinf(results.problem.upper_bound)):
+                    print("\n\nNO SOLUTION FOUND FOR THIS INSTANCE!\n\n")
+                    continue
 
             #Normalizacao min-max - Etapa 2 (normaliza os resultados de acordo com os valores calculados previamente)
             if fo['E'] == 1:
@@ -167,7 +176,7 @@ for L in range(10,25,5):
             norm_WEIGHTED = alpha['E'] * fo['E'] * norm_E - alpha['C'] * fo['C'] * norm_C + alpha['M'] * fo['M'] * norm_M
 
             #Pega resultados diretamente
-            print("\nResultados:\n")
+            print("\nResults:\n")
 
             #Funcoes objetivo (valores otimos)
             if(fo['E'] == 1):
@@ -206,12 +215,12 @@ for L in range(10,25,5):
             # Plota todos os espacos disponiveis para alocacao como circulos nao-preenchidos pretos
             # Se estiver alocado, preenche o circulo e colore de acordo com modelo de transceptor ativo
 
-            fig = plt.figure('Resultado Ótimo do PAS')
+            fig = plt.figure('SAP Optimal Result')
             ax = fig.add_subplot(1,1,1)
             ax.axis("equal")
 
             for i in instance.V:
-                plt.text(instance.X[i], instance.Y[i], str(i), color="purple", fontsize=12)
+                plt.text(instance.X[i]+0.1, instance.Y[i]+0.1, str(i), color="k", fontsize=10)
 
                 if value(instance.s['S2C',i]) == 1:
                     ax.plot(instance.X[i],instance.Y[i],'go')
@@ -229,7 +238,7 @@ for L in range(10,25,5):
             # ax.set_xticks(np.arange(int(instance.smallest_X),int(instance.biggest_X)+1,1))
             # ax.set_yticks(np.arange(int(instance.smallest_Y),int(instance.biggest_Y)+1,1))
 
-            red_patch = mpatches.Patch(color='red', label='S3')
+            red_patch = mpatches.Patch(color='red', label='S3Pro')
             blue_patch = mpatches.Patch(color='blue', label='S2CPro')
             green_patch = mpatches.Patch(color='green', label='S2C')
 
@@ -247,9 +256,9 @@ for L in range(10,25,5):
                     else:
                         plt.plot(instance.W[i],instance.H[j],marker='x',color='k',alpha=0.3)
 
-            plt.xlabel('Eixo X (m)')
-            plt.ylabel('Eixo Y (m)')
-            plt.title('Instancia: '+str(instance_filename)+'\nEscala: 1:'+str(int(instance.scale))+'m\nAlphas: '+str(alpha['E'])+'E, '+str(alpha['C'])+'C, '+str(alpha['M'])+'M  -  Tempo: '+str(results.solver.user_time)+' s')
+            plt.xlabel('X Coordinates (m)')
+            plt.ylabel('Y Coordinates (m)')
+            # plt.title('Instance: '+str(instance_filename)+'\nScale: 1:'+str(int(instance.scale))+'m\nAlphas: '+str(alpha['E'])+'E, '+str(alpha['C'])+'C, '+str(alpha['M'])+'M  -  Time: '+str(results.solver.user_time)+' s')
             # plt.show()
             plt.savefig('./output/'+figname+".svg")
             plt.close()

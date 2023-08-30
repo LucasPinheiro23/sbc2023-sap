@@ -301,13 +301,13 @@ def get_fo_max(model, fo, instance_filename,solver,solver_exec):
         ##Ativa apenas FO E
         model.E.activate()
 
-        print("Criando instancia max-E...")
+        print("Creating instance max-E...")
         ## Carrega dados de instancia no modelo
         data = DataPortal()
         data.load(filename=instance_filename, model=model)
         instance = model.create_instance(data)
-        print("Instancia criada.")
-        print("Resolvendo instancia...")
+        print("Instance created.")
+        print("Translating instance to solver...")
         ## Resolve para encontrar max
 
         #Resolve a instancia e pega resultado da FO
@@ -315,7 +315,7 @@ def get_fo_max(model, fo, instance_filename,solver,solver_exec):
         instance.solutions.store_to(results)
 
         if(results.solver.termination_condition == TerminationCondition.infeasible):
-            print("ERRO: Nenhuma solucao encontrada para Max E.")
+            print("ERROR: No solution found for Max E.")
             exit(-1)
 
         max_fo['E'] = value(instance.E)
@@ -328,14 +328,14 @@ def get_fo_max(model, fo, instance_filename,solver,solver_exec):
         ##Ativa apenas FO C
         model.C.activate()
 
-        print("Criando instancia max-C...")
+        print("Creating instance max-C...")
         ## Carrega dados de instancia no modelo
         
         data.load(filename=instance_filename, model=model)
         instance = model.create_instance(data)
 
-        print("Instancia criada.")
-        print("Resolvendo instancia...")
+        print("Instance created.")
+        print("Translating instance to solver...")
 
         ## Resolve para encontrar max
 
@@ -344,7 +344,7 @@ def get_fo_max(model, fo, instance_filename,solver,solver_exec):
         instance.solutions.store_to(results)
 
         if(results.solver.termination_condition == TerminationCondition.infeasible):
-            print("ERRO: Nenhuma solucao encontrada para Max C.")
+            print("ERROR: No solution found for Max C.")
             exit(-1)
 
         max_fo['C'] = value(instance.C)
@@ -356,14 +356,14 @@ def get_fo_max(model, fo, instance_filename,solver,solver_exec):
         ##Ativa apenas FO M
         model.M.activate()
 
-        print("Criando instancia max-M...")
+        print("Creating instance max-M...")
         ## Carrega dados de instancia no modelo
         data = DataPortal()
         data.load(filename=instance_filename, model=model)
         instance = model.create_instance(data)
 
-        print("Instancia criada.")
-        print("Resolvendo instancia...")
+        print("Instance created.")
+        print("Translating instance to solver...")
 
         ## Resolve para encontrar max
 
@@ -372,7 +372,7 @@ def get_fo_max(model, fo, instance_filename,solver,solver_exec):
         instance.solutions.store_to(results)
 
         if(results.solver.termination_condition == TerminationCondition.infeasible):
-            print("ERRO: Nenhuma solucao encontrada para Max M.")
+            print("ERROR: No solution found for Max M.")
             exit(-1)
 
         max_fo['M'] = value(instance.M)
@@ -406,14 +406,14 @@ def get_fo_min(model, fo, instance_filename,solver,solver_exec):
         ##Ativa apenas FO E
         model.E.activate()
 
-        print("Criando instancia min-E...")
+        print("Creating instance min-E...")
         ## Carrega dados de instancia no modelo
         data = DataPortal()
         data.load(filename=instance_filename, model=model)
         instance = model.create_instance(data)
 
-        print("Instancia criada.")
-        print("Resolvendo instancia...")
+        print("Instance created.")
+        print("Translating instance to solver...")
 
         ## Resolve para encontrar max
 
@@ -422,7 +422,7 @@ def get_fo_min(model, fo, instance_filename,solver,solver_exec):
         instance.solutions.store_to(results)
 
         if(results.solver.termination_condition == TerminationCondition.infeasible):
-            print("ERRO: Nenhuma solucao encontrada para Min E.")
+            print("ERROR: No solution found for Min E.")
             exit(-1)
 
         min_fo['E'] = value(instance.E)
@@ -434,14 +434,14 @@ def get_fo_min(model, fo, instance_filename,solver,solver_exec):
         ##Ativa apenas FO C
         model.C.activate()
 
-        print("Criando instancia min-C...")
+        print("Creating instance min-C...")
         ## Carrega dados de instancia no modelo
         
         data.load(filename=instance_filename, model=model)
         instance = model.create_instance(data)
 
-        print("Instancia criada.")
-        print("Resolvendo instancia...")
+        print("Instance created.")
+        print("Translating instance to solver...")
 
         ## Resolve para encontrar max
 
@@ -450,7 +450,7 @@ def get_fo_min(model, fo, instance_filename,solver,solver_exec):
         instance.solutions.store_to(results)
 
         if(results.solver.termination_condition == TerminationCondition.infeasible):
-            print("ERRO: Nenhuma solucao encontrada para Min C.")
+            print("ERROR: No solution found for Min C.")
             exit(-1)
 
         min_fo['C'] = value(instance.C)
@@ -462,14 +462,14 @@ def get_fo_min(model, fo, instance_filename,solver,solver_exec):
         ##Ativa apenas FO M
         model.M.activate()
 
-        print("Criando instancia min-M...")
+        print("Creating instance min-M...")
         ## Carrega dados de instancia no modelo
         data = DataPortal()
         data.load(filename=instance_filename, model=model)
         instance = model.create_instance(data)
 
-        print("Instancia criada.")
-        print("Resolvendo instancia...")
+        print("Instance created.")
+        print("Solving instance...")
 
         ## Resolve para encontrar max
 
@@ -478,7 +478,7 @@ def get_fo_min(model, fo, instance_filename,solver,solver_exec):
         instance.solutions.store_to(results)
 
         if(results.solver.termination_condition == TerminationCondition.infeasible):
-            print("ERRO: Nenhuma solucao encontrada para Min M.")
+            print("ERROR: No solution found for Min M.")
             exit(-1)
 
         min_fo['M'] = value(instance.M)
