@@ -1,14 +1,14 @@
 {
     "Problem": [
         {
-            "Lower bound": -1.0,
-            "Name": "SAP-inst_10x10_d0.3.dat",
-            "Number of constraints": 50724,
-            "Number of nonzeros": 116201,
+            "Lower bound": 0.011602862133649,
+            "Name": "SAP-inst_10x10_d0.7.dat",
+            "Number of constraints": 243684,
+            "Number of nonzeros": 538801,
             "Number of objectives": 1,
-            "Number of variables": 25892,
+            "Number of variables": 110412,
             "Sense": "minimize",
-            "Upper bound": -1.0
+            "Upper bound": 0.011602862133649
         }
     ],
     "Solution": [
@@ -22,7 +22,7 @@
             "Message": null,
             "Objective": {
                 "WEIGHTED": {
-                    "Value": -1.0
+                    "Value": 0.011602862133648953
                 }
             },
             "Problem": {},
@@ -32,2277 +32,381 @@
                     "Value": 1.0
                 },
                 "L[10]": {
-                    "Value": 10.0
-                },
-                "L[11]": {
-                    "Value": -18.0
-                },
-                "L[12]": {
-                    "Value": -20.0
-                },
-                "L[13]": {
-                    "Value": 7.0
-                },
-                "L[14]": {
-                    "Value": -20.0
-                },
-                "L[15]": {
-                    "Value": -25.0
-                },
-                "L[16]": {
-                    "Value": -23.0
-                },
-                "L[17]": {
-                    "Value": 5.0
-                },
-                "L[18]": {
-                    "Value": -24.0
-                },
-                "L[19]": {
-                    "Value": 6.0
-                },
-                "L[1]": {
-                    "Value": 9.0
-                },
-                "L[20]": {
-                    "Value": 6.0
-                },
-                "L[21]": {
-                    "Value": 5.0
-                },
-                "L[22]": {
-                    "Value": -24.0
-                },
-                "L[23]": {
-                    "Value": -24.0
-                },
-                "L[24]": {
-                    "Value": 5.0
-                },
-                "L[25]": {
-                    "Value": 4.0
-                },
-                "L[26]": {
-                    "Value": -24.0
-                },
-                "L[27]": {
-                    "Value": 2.0
-                },
-                "L[28]": {
-                    "Value": 5.0
-                },
-                "L[29]": {
-                    "Value": 6.0
-                },
-                "L[2]": {
-                    "Value": -20.0
-                },
-                "L[30]": {
                     "Value": 3.0
                 },
+                "L[11]": {
+                    "Value": -65.0
+                },
+                "L[12]": {
+                    "Value": -69.0
+                },
+                "L[13]": {
+                    "Value": -69.0
+                },
+                "L[14]": {
+                    "Value": 2.0
+                },
+                "L[15]": {
+                    "Value": -65.0
+                },
+                "L[16]": {
+                    "Value": -65.0
+                },
+                "L[17]": {
+                    "Value": -69.0
+                },
+                "L[18]": {
+                    "Value": -69.0
+                },
+                "L[19]": {
+                    "Value": -69.0
+                },
+                "L[1]": {
+                    "Value": -65.0
+                },
+                "L[20]": {
+                    "Value": -66.0
+                },
+                "L[21]": {
+                    "Value": -65.0
+                },
+                "L[22]": {
+                    "Value": -69.0
+                },
+                "L[23]": {
+                    "Value": -69.0
+                },
+                "L[24]": {
+                    "Value": -69.0
+                },
+                "L[25]": {
+                    "Value": -69.0
+                },
+                "L[26]": {
+                    "Value": -69.0
+                },
+                "L[27]": {
+                    "Value": -67.0
+                },
+                "L[28]": {
+                    "Value": -68.0
+                },
+                "L[29]": {
+                    "Value": -69.0
+                },
+                "L[2]": {
+                    "Value": 4.0
+                },
+                "L[30]": {
+                    "Value": -69.0
+                },
+                "L[31]": {
+                    "Value": -69.0
+                },
+                "L[32]": {
+                    "Value": -69.0
+                },
+                "L[33]": {
+                    "Value": -69.0
+                },
+                "L[34]": {
+                    "Value": -69.0
+                },
+                "L[35]": {
+                    "Value": -68.0
+                },
+                "L[36]": {
+                    "Value": -68.0
+                },
+                "L[37]": {
+                    "Value": -68.0
+                },
+                "L[38]": {
+                    "Value": -69.0
+                },
+                "L[39]": {
+                    "Value": -69.0
+                },
                 "L[3]": {
-                    "Value": 8.0
+                    "Value": 5.0
+                },
+                "L[40]": {
+                    "Value": -69.0
+                },
+                "L[41]": {
+                    "Value": -69.0
+                },
+                "L[42]": {
+                    "Value": -69.0
+                },
+                "L[43]": {
+                    "Value": -69.0
+                },
+                "L[44]": {
+                    "Value": -69.0
+                },
+                "L[45]": {
+                    "Value": -69.0
+                },
+                "L[46]": {
+                    "Value": -69.0
+                },
+                "L[47]": {
+                    "Value": -69.0
+                },
+                "L[48]": {
+                    "Value": -69.0
+                },
+                "L[49]": {
+                    "Value": -69.0
                 },
                 "L[4]": {
-                    "Value": -18.0
+                    "Value": -65.0
+                },
+                "L[50]": {
+                    "Value": -69.0
+                },
+                "L[51]": {
+                    "Value": -69.0
+                },
+                "L[52]": {
+                    "Value": -69.0
+                },
+                "L[53]": {
+                    "Value": -69.0
+                },
+                "L[54]": {
+                    "Value": -69.0
+                },
+                "L[55]": {
+                    "Value": -69.0
+                },
+                "L[56]": {
+                    "Value": -69.0
+                },
+                "L[57]": {
+                    "Value": -69.0
+                },
+                "L[58]": {
+                    "Value": -69.0
+                },
+                "L[59]": {
+                    "Value": -69.0
                 },
                 "L[5]": {
-                    "Value": 12.0
+                    "Value": -65.0
+                },
+                "L[60]": {
+                    "Value": -69.0
+                },
+                "L[61]": {
+                    "Value": -69.0
+                },
+                "L[62]": {
+                    "Value": -69.0
+                },
+                "L[63]": {
+                    "Value": -69.0
+                },
+                "L[64]": {
+                    "Value": -69.0
+                },
+                "L[65]": {
+                    "Value": -69.0
+                },
+                "L[66]": {
+                    "Value": -69.0
+                },
+                "L[67]": {
+                    "Value": -69.0
+                },
+                "L[68]": {
+                    "Value": -69.0
+                },
+                "L[69]": {
+                    "Value": -69.0
                 },
                 "L[6]": {
-                    "Value": 12.0
+                    "Value": -65.0
+                },
+                "L[70]": {
+                    "Value": -69.0
                 },
                 "L[7]": {
-                    "Value": 11.0
+                    "Value": -69.0
                 },
                 "L[8]": {
-                    "Value": 9.0
+                    "Value": -69.0
                 },
                 "L[9]": {
-                    "Value": 10.0
+                    "Value": -69.0
                 },
-                "P[S2C,S2C,24,24]": {
+                "P[S2C,S2C,10,10]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,24,28]": {
+                "P[S2C,S2C,10,14]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,24,6]": {
+                "P[S2C,S2C,10,2]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,28,24]": {
+                "P[S2C,S2C,10,3]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,28,28]": {
+                "P[S2C,S2C,14,10]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,28,6]": {
+                "P[S2C,S2C,14,14]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,6,24]": {
+                "P[S2C,S2C,14,2]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,6,28]": {
+                "P[S2C,S2C,14,3]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2C,6,6]": {
+                "P[S2C,S2C,2,10]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,24,10]": {
+                "P[S2C,S2C,2,14]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,24,19]": {
+                "P[S2C,S2C,2,2]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,24,1]": {
+                "P[S2C,S2C,2,3]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,24,20]": {
+                "P[S2C,S2C,3,10]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,24,21]": {
+                "P[S2C,S2C,3,14]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,24,25]": {
+                "P[S2C,S2C,3,2]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,24,29]": {
+                "P[S2C,S2C,3,3]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,24,3]": {
+                "a[S2C,S2C,10,14]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,28,10]": {
+                "a[S2C,S2C,2,10]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,28,19]": {
+                "a[S2C,S2C,3,2]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,28,1]": {
+                "a[S2C,S3,14,0]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,28,20]": {
+                "c[1,3,2,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,28,21]": {
+                "c[1,3,3,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,28,25]": {
+                "c[1,4,3,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,28,29]": {
+                "c[2,2,10,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,28,3]": {
+                "c[2,2,2,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,6,10]": {
+                "c[2,3,10,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,6,19]": {
+                "c[2,3,2,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,6,1]": {
+                "c[2,3,3,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,6,20]": {
+                "c[2,4,3,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,6,21]": {
+                "c[3,2,10,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,6,25]": {
+                "c[3,2,14,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,6,29]": {
+                "c[3,3,10,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,6,3]": {
+                "c[3,3,14,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S3,24,13]": {
+                "c[4,2,14,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S3,24,17]": {
+                "c[4,3,14,S2C]": {
                     "Value": 1.0
                 },
-                "P[S2C,S3,24,27]": {
+                "ccY[1,1,1]": {
                     "Value": 1.0
                 },
-                "P[S2C,S3,24,30]": {
+                "ccY[1,10,1]": {
                     "Value": 1.0
                 },
-                "P[S2C,S3,24,5]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,24,7]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,24,8]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,24,9]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,28,13]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,28,17]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,28,27]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,28,30]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,28,5]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,28,7]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,28,8]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,28,9]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,6,13]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,6,17]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,6,27]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,6,30]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,6,5]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,6,7]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,6,8]": {
-                    "Value": 1.0
-                },
-                "P[S2C,S3,6,9]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,1,24]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,1,28]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,1,6]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,10,24]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,10,28]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,10,6]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,19,24]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,19,28]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,19,6]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,20,24]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,20,28]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,20,6]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,21,24]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,21,28]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,21,6]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,25,24]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,25,28]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,25,6]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,29,24]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,29,28]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,29,6]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,3,24]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,3,28]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2C,3,6]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,1,10]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,1,19]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,1,1]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,1,20]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,1,21]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,1,25]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,1,29]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,1,3]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,10,10]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,10,19]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,10,1]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,10,20]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,10,21]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,10,25]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,10,29]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,10,3]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,19,10]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,19,19]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,19,1]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,19,20]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,19,21]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,19,25]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,19,29]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,19,3]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,20,10]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,20,19]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,20,1]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,20,20]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,20,21]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,20,25]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,20,29]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,20,3]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,21,10]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,21,19]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,21,1]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,21,20]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,21,21]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,21,25]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,21,29]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,21,3]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,25,10]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,25,19]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,25,1]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,25,20]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,25,21]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,25,25]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,25,29]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,25,3]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,29,10]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,29,19]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,29,1]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,29,20]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,29,21]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,29,25]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,29,29]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,29,3]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,3,10]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,3,19]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,3,1]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,3,20]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,3,21]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,3,25]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,3,29]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S2CPro,3,3]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,1,13]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,1,17]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,1,27]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,1,30]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,1,5]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,1,7]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,1,8]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,1,9]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,10,13]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,10,17]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,10,27]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,10,30]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,10,5]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,10,7]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,10,8]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,10,9]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,19,13]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,19,17]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,19,27]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,19,30]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,19,5]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,19,7]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,19,8]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,19,9]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,20,13]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,20,17]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,20,27]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,20,30]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,20,5]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,20,7]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,20,8]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,20,9]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,21,13]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,21,17]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,21,27]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,21,30]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,21,5]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,21,7]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,21,8]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,21,9]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,25,13]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,25,17]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,25,27]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,25,30]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,25,5]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,25,7]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,25,8]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,25,9]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,29,13]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,29,17]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,29,27]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,29,30]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,29,5]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,29,7]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,29,8]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,29,9]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,3,13]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,3,17]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,3,27]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,3,30]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,3,5]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,3,7]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,3,8]": {
-                    "Value": 1.0
-                },
-                "P[S2CPro,S3,3,9]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,13,24]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,13,28]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,13,6]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,17,24]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,17,28]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,17,6]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,27,24]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,27,28]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,27,6]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,30,24]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,30,28]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,30,6]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,5,24]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,5,28]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,5,6]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,7,24]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,7,28]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,7,6]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,8,24]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,8,28]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,8,6]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,9,24]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,9,28]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2C,9,6]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,13,10]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,13,19]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,13,1]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,13,20]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,13,21]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,13,25]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,13,29]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,13,3]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,17,10]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,17,19]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,17,1]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,17,20]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,17,21]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,17,25]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,17,29]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,17,3]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,27,10]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,27,19]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,27,1]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,27,20]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,27,21]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,27,25]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,27,29]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,27,3]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,30,10]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,30,19]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,30,1]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,30,20]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,30,21]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,30,25]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,30,29]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,30,3]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,5,10]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,5,19]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,5,1]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,5,20]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,5,21]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,5,25]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,5,29]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,5,3]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,7,10]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,7,19]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,7,1]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,7,20]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,7,21]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,7,25]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,7,29]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,7,3]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,8,10]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,8,19]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,8,1]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,8,20]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,8,21]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,8,25]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,8,29]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,8,3]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,9,10]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,9,19]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,9,1]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,9,20]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,9,21]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,9,25]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,9,29]": {
-                    "Value": 1.0
-                },
-                "P[S3,S2CPro,9,3]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,13,13]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,13,17]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,13,27]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,13,30]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,13,5]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,13,7]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,13,8]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,13,9]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,17,13]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,17,17]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,17,27]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,17,30]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,17,5]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,17,7]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,17,8]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,17,9]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,27,13]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,27,17]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,27,27]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,27,30]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,27,5]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,27,7]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,27,8]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,27,9]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,30,13]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,30,17]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,30,27]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,30,30]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,30,5]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,30,7]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,30,8]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,30,9]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,5,13]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,5,17]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,5,27]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,5,30]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,5,5]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,5,7]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,5,8]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,5,9]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,7,13]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,7,17]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,7,27]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,7,30]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,7,5]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,7,7]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,7,8]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,7,9]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,8,13]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,8,17]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,8,27]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,8,30]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,8,5]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,8,7]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,8,8]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,8,9]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,9,13]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,9,17]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,9,27]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,9,30]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,9,5]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,9,7]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,9,8]": {
-                    "Value": 1.0
-                },
-                "P[S3,S3,9,9]": {
-                    "Value": 1.0
-                },
-                "a[S2C,S2CPro,24,25]": {
-                    "Value": 1.0
-                },
-                "a[S2C,S2CPro,28,25]": {
-                    "Value": 1.0
-                },
-                "a[S2C,S3,6,7]": {
-                    "Value": 1.0
-                },
-                "a[S2CPro,S2C,19,28]": {
-                    "Value": 1.0
-                },
-                "a[S2CPro,S2C,20,24]": {
-                    "Value": 1.0
-                },
-                "a[S2CPro,S2CPro,1,3]": {
-                    "Value": 1.0
-                },
-                "a[S2CPro,S2CPro,10,1]": {
-                    "Value": 1.0
-                },
-                "a[S2CPro,S2CPro,21,25]": {
-                    "Value": 1.0
-                },
-                "a[S2CPro,S3,25,30]": {
-                    "Value": 1.0
-                },
-                "a[S2CPro,S3,29,17]": {
-                    "Value": 1.0
-                },
-                "a[S2CPro,S3,3,13]": {
-                    "Value": 1.0
-                },
-                "a[S3,S2C,27,0]": {
-                    "Value": 1.0
-                },
-                "a[S3,S2CPro,13,19]": {
-                    "Value": 1.0
-                },
-                "a[S3,S2CPro,17,25]": {
-                    "Value": 1.0
-                },
-                "a[S3,S2CPro,8,3]": {
-                    "Value": 1.0
-                },
-                "a[S3,S3,30,27]": {
-                    "Value": 1.0
-                },
-                "a[S3,S3,5,7]": {
-                    "Value": 1.0
-                },
-                "a[S3,S3,7,9]": {
-                    "Value": 1.0
-                },
-                "a[S3,S3,9,8]": {
-                    "Value": 1.0
-                },
-                "c[1,1,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[1,1,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[1,10,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,2,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[1,2,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[1,2,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[1,3,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[1,3,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[1,4,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[1,4,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[1,4,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,5,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[1,5,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,5,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,6,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[1,6,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,6,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,6,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,7,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,7,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,7,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,7,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,8,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,8,6,S2C]": {
-                    "Value": 1.0
-                },
-                "c[1,8,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,8,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,8,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,9,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,9,6,S2C]": {
-                    "Value": 1.0
-                },
-                "c[1,9,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[1,9,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[10,1,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[10,2,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[10,2,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[10,3,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[10,3,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[10,4,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[10,4,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[10,5,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[10,5,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[10,6,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[10,6,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[10,6,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[10,7,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[10,7,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[10,8,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[10,9,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[2,1,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[2,1,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[2,10,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,10,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,2,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[2,2,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[2,2,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[2,3,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[2,3,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[2,3,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[2,4,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[2,4,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[2,4,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,4,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[2,4,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,5,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,5,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[2,5,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,5,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,6,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[2,6,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,6,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,6,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,7,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,7,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,7,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,7,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,8,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,8,6,S2C]": {
-                    "Value": 1.0
-                },
-                "c[2,8,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,8,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,8,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,9,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,9,6,S2C]": {
-                    "Value": 1.0
-                },
-                "c[2,9,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[2,9,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,1,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[3,1,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[3,10,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,10,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,2,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[3,2,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[3,2,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[3,3,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[3,3,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[3,3,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,3,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[3,4,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[3,4,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[3,4,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,4,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[3,4,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,5,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,5,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[3,5,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,5,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,6,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,6,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[3,6,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,6,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,6,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,7,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,7,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,7,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,7,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,8,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,8,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,8,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,8,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,9,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,9,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[3,9,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,1,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[4,1,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[4,10,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,2,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[4,2,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[4,2,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,3,1,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[4,3,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[4,3,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,3,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[4,4,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[4,4,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,4,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[4,4,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,5,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,5,3,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[4,5,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,6,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,6,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,6,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,6,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,6,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,7,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,7,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,7,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,7,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,8,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,8,5,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,8,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,8,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,8,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,9,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,9,7,S3]": {
-                    "Value": 1.0
-                },
-                "c[4,9,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,1,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,10,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,2,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,2,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,3,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,3,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,3,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,4,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,4,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,4,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,5,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,5,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,5,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,5,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,6,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,6,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,6,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,6,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,6,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,6,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,6,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,7,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,7,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,7,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,7,8,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,7,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,8,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,8,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,8,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[5,8,9,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,9,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[5,9,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,1,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,1,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[6,10,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[6,10,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,2,10,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,2,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,2,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[6,3,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[6,3,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,4,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[6,4,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,4,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,5,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[6,5,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[6,5,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,5,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,5,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,6,13,S3]": {
-                    "Value": 1.0
-                },
-                "c[6,6,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[6,6,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,6,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,6,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,6,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,7,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[6,7,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,7,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,7,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,7,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,8,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[6,8,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,8,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,8,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,8,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,9,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[6,9,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[6,9,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,1,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[7,10,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[7,10,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,2,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,2,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[7,3,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,3,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[7,4,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,4,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,4,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[7,4,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[7,5,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,5,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,5,24,S2C]": {
-                    "Value": 1.0
-                },
-                "c[7,5,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,5,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[7,6,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[7,6,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,6,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,6,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,6,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,6,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,7,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[7,7,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,7,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,7,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,7,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,8,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[7,8,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,8,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,8,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,8,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,9,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[7,9,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,9,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[7,9,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,1,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[8,10,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,10,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,2,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,2,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[8,3,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,3,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[8,3,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[8,4,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,4,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,4,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[8,4,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[8,5,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,5,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,5,24,S2C]": {
-                    "Value": 1.0
-                },
-                "c[8,5,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,5,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[8,6,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[8,6,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,6,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,6,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,6,24,S2C]": {
-                    "Value": 1.0
-                },
-                "c[8,6,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,6,28,S2C]": {
-                    "Value": 1.0
-                },
-                "c[8,6,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,6,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[8,7,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[8,7,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,7,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,7,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,7,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,8,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[8,8,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,8,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,8,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,8,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,9,17,S3]": {
-                    "Value": 1.0
-                },
-                "c[8,9,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,9,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[8,9,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,1,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[9,10,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,2,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[9,2,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[9,3,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,3,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[9,3,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[9,4,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,4,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,4,27,S3]": {
-                    "Value": 1.0
-                },
-                "c[9,4,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[9,5,19,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,5,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,5,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[9,6,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,6,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,6,28,S2C]": {
-                    "Value": 1.0
-                },
-                "c[9,6,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,6,30,S3]": {
-                    "Value": 1.0
-                },
-                "c[9,7,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,7,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,7,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,7,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,8,20,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,8,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,8,25,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,8,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,9,21,S2CPro]": {
-                    "Value": 1.0
-                },
-                "c[9,9,29,S2CPro]": {
-                    "Value": 1.0
-                },
-                "ccY[1,1,2]": {
-                    "Value": 1.0
-                },
-                "ccY[1,10,2]": {
-                    "Value": 1.0
-                },
-                "ccY[1,2,2]": {
+                "ccY[1,2,1]": {
                     "Value": 1.0
                 },
                 "ccY[1,3,2]": {
                     "Value": 1.0
                 },
-                "ccY[1,4,2]": {
+                "ccY[1,5,1]": {
                     "Value": 1.0
                 },
-                "ccY[1,5,2]": {
+                "ccY[1,6,1]": {
                     "Value": 1.0
                 },
-                "ccY[1,6,2]": {
+                "ccY[1,7,1]": {
                     "Value": 1.0
                 },
-                "ccY[1,7,2]": {
+                "ccY[1,8,1]": {
                     "Value": 1.0
                 },
-                "ccY[1,8,2]": {
+                "ccY[1,9,1]": {
                     "Value": 1.0
                 },
-                "ccY[1,9,2]": {
-                    "Value": 1.0
-                },
-                "ccY[10,1,2]": {
+                "ccY[10,1,1]": {
                     "Value": 1.0
                 },
                 "ccY[10,10,1]": {
                     "Value": 1.0
                 },
-                "ccY[10,2,2]": {
+                "ccY[10,2,1]": {
                     "Value": 1.0
                 },
-                "ccY[10,3,2]": {
+                "ccY[10,3,1]": {
                     "Value": 1.0
                 },
-                "ccY[10,4,2]": {
+                "ccY[10,4,1]": {
                     "Value": 1.0
                 },
-                "ccY[10,5,2]": {
+                "ccY[10,5,1]": {
                     "Value": 1.0
                 },
-                "ccY[10,6,2]": {
+                "ccY[10,6,1]": {
                     "Value": 1.0
                 },
-                "ccY[10,7,2]": {
+                "ccY[10,7,1]": {
                     "Value": 1.0
                 },
-                "ccY[10,8,2]": {
+                "ccY[10,8,1]": {
                     "Value": 1.0
                 },
-                "ccY[10,9,2]": {
+                "ccY[10,9,1]": {
                     "Value": 1.0
                 },
-                "ccY[2,1,2]": {
+                "ccY[2,1,1]": {
                     "Value": 1.0
                 },
-                "ccY[2,10,2]": {
+                "ccY[2,10,1]": {
                     "Value": 1.0
                 },
                 "ccY[2,2,2]": {
@@ -2311,28 +415,25 @@
                 "ccY[2,3,2]": {
                     "Value": 1.0
                 },
-                "ccY[2,4,2]": {
+                "ccY[2,5,1]": {
                     "Value": 1.0
                 },
-                "ccY[2,5,2]": {
+                "ccY[2,6,1]": {
                     "Value": 1.0
                 },
-                "ccY[2,6,2]": {
+                "ccY[2,7,1]": {
                     "Value": 1.0
                 },
-                "ccY[2,7,2]": {
+                "ccY[2,8,1]": {
                     "Value": 1.0
                 },
-                "ccY[2,8,2]": {
+                "ccY[2,9,1]": {
                     "Value": 1.0
                 },
-                "ccY[2,9,2]": {
+                "ccY[3,1,1]": {
                     "Value": 1.0
                 },
-                "ccY[3,1,2]": {
-                    "Value": 1.0
-                },
-                "ccY[3,10,2]": {
+                "ccY[3,10,1]": {
                     "Value": 1.0
                 },
                 "ccY[3,2,2]": {
@@ -2341,265 +442,202 @@
                 "ccY[3,3,2]": {
                     "Value": 1.0
                 },
-                "ccY[3,4,2]": {
+                "ccY[3,4,1]": {
                     "Value": 1.0
                 },
-                "ccY[3,5,2]": {
+                "ccY[3,5,1]": {
                     "Value": 1.0
                 },
-                "ccY[3,6,2]": {
+                "ccY[3,6,1]": {
                     "Value": 1.0
                 },
-                "ccY[3,7,2]": {
+                "ccY[3,7,1]": {
                     "Value": 1.0
                 },
-                "ccY[3,8,2]": {
+                "ccY[3,8,1]": {
                     "Value": 1.0
                 },
-                "ccY[3,9,2]": {
+                "ccY[3,9,1]": {
                     "Value": 1.0
                 },
-                "ccY[4,1,2]": {
+                "ccY[4,1,1]": {
                     "Value": 1.0
                 },
-                "ccY[4,10,2]": {
+                "ccY[4,10,1]": {
                     "Value": 1.0
                 },
-                "ccY[4,2,2]": {
+                "ccY[4,4,1]": {
                     "Value": 1.0
                 },
-                "ccY[4,3,2]": {
+                "ccY[4,5,1]": {
                     "Value": 1.0
                 },
-                "ccY[4,4,2]": {
+                "ccY[4,6,1]": {
                     "Value": 1.0
                 },
-                "ccY[4,5,2]": {
+                "ccY[4,7,1]": {
                     "Value": 1.0
                 },
-                "ccY[4,6,2]": {
+                "ccY[4,8,1]": {
                     "Value": 1.0
                 },
-                "ccY[4,7,2]": {
+                "ccY[4,9,1]": {
                     "Value": 1.0
                 },
-                "ccY[4,8,2]": {
+                "ccY[5,1,1]": {
                     "Value": 1.0
                 },
-                "ccY[4,9,2]": {
+                "ccY[5,10,1]": {
                     "Value": 1.0
                 },
-                "ccY[5,1,2]": {
+                "ccY[5,2,1]": {
                     "Value": 1.0
                 },
-                "ccY[5,10,2]": {
+                "ccY[5,3,1]": {
                     "Value": 1.0
                 },
-                "ccY[5,2,2]": {
+                "ccY[5,4,1]": {
                     "Value": 1.0
                 },
-                "ccY[5,3,2]": {
+                "ccY[5,5,1]": {
                     "Value": 1.0
                 },
-                "ccY[5,4,2]": {
+                "ccY[5,6,1]": {
                     "Value": 1.0
                 },
-                "ccY[5,5,2]": {
+                "ccY[5,7,1]": {
                     "Value": 1.0
                 },
-                "ccY[5,6,2]": {
+                "ccY[5,8,1]": {
                     "Value": 1.0
                 },
-                "ccY[5,7,2]": {
+                "ccY[5,9,1]": {
                     "Value": 1.0
                 },
-                "ccY[5,8,2]": {
+                "ccY[6,1,1]": {
                     "Value": 1.0
                 },
-                "ccY[5,9,2]": {
+                "ccY[6,10,1]": {
                     "Value": 1.0
                 },
-                "ccY[6,1,2]": {
+                "ccY[6,2,1]": {
                     "Value": 1.0
                 },
-                "ccY[6,10,2]": {
+                "ccY[6,3,1]": {
                     "Value": 1.0
                 },
-                "ccY[6,2,2]": {
+                "ccY[6,4,1]": {
                     "Value": 1.0
                 },
-                "ccY[6,3,2]": {
+                "ccY[6,5,1]": {
                     "Value": 1.0
                 },
-                "ccY[6,4,2]": {
+                "ccY[6,6,1]": {
                     "Value": 1.0
                 },
-                "ccY[6,5,2]": {
+                "ccY[6,7,1]": {
                     "Value": 1.0
                 },
-                "ccY[6,6,2]": {
+                "ccY[6,8,1]": {
                     "Value": 1.0
                 },
-                "ccY[6,7,2]": {
+                "ccY[6,9,1]": {
                     "Value": 1.0
                 },
-                "ccY[6,8,2]": {
+                "ccY[7,1,1]": {
                     "Value": 1.0
                 },
-                "ccY[6,9,2]": {
+                "ccY[7,10,1]": {
                     "Value": 1.0
                 },
-                "ccY[7,1,2]": {
+                "ccY[7,2,1]": {
                     "Value": 1.0
                 },
-                "ccY[7,10,2]": {
+                "ccY[7,3,1]": {
                     "Value": 1.0
                 },
-                "ccY[7,2,2]": {
+                "ccY[7,4,1]": {
                     "Value": 1.0
                 },
-                "ccY[7,3,2]": {
+                "ccY[7,5,1]": {
                     "Value": 1.0
                 },
-                "ccY[7,4,2]": {
+                "ccY[7,6,1]": {
                     "Value": 1.0
                 },
-                "ccY[7,5,2]": {
+                "ccY[7,7,1]": {
                     "Value": 1.0
                 },
-                "ccY[7,6,2]": {
+                "ccY[7,8,1]": {
                     "Value": 1.0
                 },
-                "ccY[7,7,2]": {
+                "ccY[7,9,1]": {
                     "Value": 1.0
                 },
-                "ccY[7,8,2]": {
+                "ccY[8,1,1]": {
                     "Value": 1.0
                 },
-                "ccY[7,9,2]": {
+                "ccY[8,10,1]": {
                     "Value": 1.0
                 },
-                "ccY[8,1,2]": {
+                "ccY[8,2,1]": {
                     "Value": 1.0
                 },
-                "ccY[8,10,2]": {
+                "ccY[8,3,1]": {
                     "Value": 1.0
                 },
-                "ccY[8,2,2]": {
+                "ccY[8,4,1]": {
                     "Value": 1.0
                 },
-                "ccY[8,3,2]": {
+                "ccY[8,5,1]": {
                     "Value": 1.0
                 },
-                "ccY[8,4,2]": {
+                "ccY[8,6,1]": {
                     "Value": 1.0
                 },
-                "ccY[8,5,2]": {
+                "ccY[8,7,1]": {
                     "Value": 1.0
                 },
-                "ccY[8,6,2]": {
+                "ccY[8,8,1]": {
                     "Value": 1.0
                 },
-                "ccY[8,7,2]": {
+                "ccY[8,9,1]": {
                     "Value": 1.0
                 },
-                "ccY[8,8,2]": {
+                "ccY[9,1,1]": {
                     "Value": 1.0
                 },
-                "ccY[8,9,2]": {
+                "ccY[9,10,1]": {
                     "Value": 1.0
                 },
-                "ccY[9,1,2]": {
+                "ccY[9,2,1]": {
                     "Value": 1.0
                 },
-                "ccY[9,10,2]": {
+                "ccY[9,3,1]": {
                     "Value": 1.0
                 },
-                "ccY[9,2,2]": {
+                "ccY[9,4,1]": {
                     "Value": 1.0
                 },
-                "ccY[9,3,2]": {
+                "ccY[9,5,1]": {
                     "Value": 1.0
                 },
-                "ccY[9,4,2]": {
+                "ccY[9,6,1]": {
                     "Value": 1.0
                 },
-                "ccY[9,5,2]": {
+                "ccY[9,7,1]": {
                     "Value": 1.0
                 },
-                "ccY[9,6,2]": {
+                "ccY[9,8,1]": {
                     "Value": 1.0
                 },
-                "ccY[9,7,2]": {
-                    "Value": 1.0
-                },
-                "ccY[9,8,2]": {
-                    "Value": 1.0
-                },
-                "ccY[9,9,2]": {
-                    "Value": 1.0
-                },
-                "cc[1,10]": {
-                    "Value": 1.0
-                },
-                "cc[1,1]": {
-                    "Value": 1.0
-                },
-                "cc[1,2]": {
+                "ccY[9,9,1]": {
                     "Value": 1.0
                 },
                 "cc[1,3]": {
                     "Value": 1.0
                 },
                 "cc[1,4]": {
-                    "Value": 1.0
-                },
-                "cc[1,5]": {
-                    "Value": 1.0
-                },
-                "cc[1,6]": {
-                    "Value": 1.0
-                },
-                "cc[1,7]": {
-                    "Value": 1.0
-                },
-                "cc[1,8]": {
-                    "Value": 1.0
-                },
-                "cc[1,9]": {
-                    "Value": 1.0
-                },
-                "cc[10,1]": {
-                    "Value": 1.0
-                },
-                "cc[10,2]": {
-                    "Value": 1.0
-                },
-                "cc[10,3]": {
-                    "Value": 1.0
-                },
-                "cc[10,4]": {
-                    "Value": 1.0
-                },
-                "cc[10,5]": {
-                    "Value": 1.0
-                },
-                "cc[10,6]": {
-                    "Value": 1.0
-                },
-                "cc[10,7]": {
-                    "Value": 1.0
-                },
-                "cc[10,8]": {
-                    "Value": 1.0
-                },
-                "cc[10,9]": {
-                    "Value": 1.0
-                },
-                "cc[2,10]": {
-                    "Value": 1.0
-                },
-                "cc[2,1]": {
                     "Value": 1.0
                 },
                 "cc[2,2]": {
@@ -2611,55 +649,10 @@
                 "cc[2,4]": {
                     "Value": 1.0
                 },
-                "cc[2,5]": {
-                    "Value": 1.0
-                },
-                "cc[2,6]": {
-                    "Value": 1.0
-                },
-                "cc[2,7]": {
-                    "Value": 1.0
-                },
-                "cc[2,8]": {
-                    "Value": 1.0
-                },
-                "cc[2,9]": {
-                    "Value": 1.0
-                },
-                "cc[3,10]": {
-                    "Value": 1.0
-                },
-                "cc[3,1]": {
-                    "Value": 1.0
-                },
                 "cc[3,2]": {
                     "Value": 1.0
                 },
                 "cc[3,3]": {
-                    "Value": 1.0
-                },
-                "cc[3,4]": {
-                    "Value": 1.0
-                },
-                "cc[3,5]": {
-                    "Value": 1.0
-                },
-                "cc[3,6]": {
-                    "Value": 1.0
-                },
-                "cc[3,7]": {
-                    "Value": 1.0
-                },
-                "cc[3,8]": {
-                    "Value": 1.0
-                },
-                "cc[3,9]": {
-                    "Value": 1.0
-                },
-                "cc[4,10]": {
-                    "Value": 1.0
-                },
-                "cc[4,1]": {
                     "Value": 1.0
                 },
                 "cc[4,2]": {
@@ -2668,229 +661,16 @@
                 "cc[4,3]": {
                     "Value": 1.0
                 },
-                "cc[4,4]": {
+                "s[S2C,10]": {
                     "Value": 1.0
                 },
-                "cc[4,5]": {
+                "s[S2C,14]": {
                     "Value": 1.0
                 },
-                "cc[4,6]": {
+                "s[S2C,2]": {
                     "Value": 1.0
                 },
-                "cc[4,7]": {
-                    "Value": 1.0
-                },
-                "cc[4,8]": {
-                    "Value": 1.0
-                },
-                "cc[4,9]": {
-                    "Value": 1.0
-                },
-                "cc[5,10]": {
-                    "Value": 1.0
-                },
-                "cc[5,1]": {
-                    "Value": 1.0
-                },
-                "cc[5,2]": {
-                    "Value": 1.0
-                },
-                "cc[5,3]": {
-                    "Value": 1.0
-                },
-                "cc[5,4]": {
-                    "Value": 1.0
-                },
-                "cc[5,5]": {
-                    "Value": 1.0
-                },
-                "cc[5,6]": {
-                    "Value": 1.0
-                },
-                "cc[5,7]": {
-                    "Value": 1.0
-                },
-                "cc[5,8]": {
-                    "Value": 1.0
-                },
-                "cc[5,9]": {
-                    "Value": 1.0
-                },
-                "cc[6,10]": {
-                    "Value": 1.0
-                },
-                "cc[6,1]": {
-                    "Value": 1.0
-                },
-                "cc[6,2]": {
-                    "Value": 1.0
-                },
-                "cc[6,3]": {
-                    "Value": 1.0
-                },
-                "cc[6,4]": {
-                    "Value": 1.0
-                },
-                "cc[6,5]": {
-                    "Value": 1.0
-                },
-                "cc[6,6]": {
-                    "Value": 1.0
-                },
-                "cc[6,7]": {
-                    "Value": 1.0
-                },
-                "cc[6,8]": {
-                    "Value": 1.0
-                },
-                "cc[6,9]": {
-                    "Value": 1.0
-                },
-                "cc[7,10]": {
-                    "Value": 1.0
-                },
-                "cc[7,1]": {
-                    "Value": 1.0
-                },
-                "cc[7,2]": {
-                    "Value": 1.0
-                },
-                "cc[7,3]": {
-                    "Value": 1.0
-                },
-                "cc[7,4]": {
-                    "Value": 1.0
-                },
-                "cc[7,5]": {
-                    "Value": 1.0
-                },
-                "cc[7,6]": {
-                    "Value": 1.0
-                },
-                "cc[7,7]": {
-                    "Value": 1.0
-                },
-                "cc[7,8]": {
-                    "Value": 1.0
-                },
-                "cc[7,9]": {
-                    "Value": 1.0
-                },
-                "cc[8,10]": {
-                    "Value": 1.0
-                },
-                "cc[8,1]": {
-                    "Value": 1.0
-                },
-                "cc[8,2]": {
-                    "Value": 1.0
-                },
-                "cc[8,3]": {
-                    "Value": 1.0
-                },
-                "cc[8,4]": {
-                    "Value": 1.0
-                },
-                "cc[8,5]": {
-                    "Value": 1.0
-                },
-                "cc[8,6]": {
-                    "Value": 1.0
-                },
-                "cc[8,7]": {
-                    "Value": 1.0
-                },
-                "cc[8,8]": {
-                    "Value": 1.0
-                },
-                "cc[8,9]": {
-                    "Value": 1.0
-                },
-                "cc[9,10]": {
-                    "Value": 1.0
-                },
-                "cc[9,1]": {
-                    "Value": 1.0
-                },
-                "cc[9,2]": {
-                    "Value": 1.0
-                },
-                "cc[9,3]": {
-                    "Value": 1.0
-                },
-                "cc[9,4]": {
-                    "Value": 1.0
-                },
-                "cc[9,5]": {
-                    "Value": 1.0
-                },
-                "cc[9,6]": {
-                    "Value": 1.0
-                },
-                "cc[9,7]": {
-                    "Value": 1.0
-                },
-                "cc[9,8]": {
-                    "Value": 1.0
-                },
-                "cc[9,9]": {
-                    "Value": 1.0
-                },
-                "s[S2C,24]": {
-                    "Value": 1.0
-                },
-                "s[S2C,28]": {
-                    "Value": 1.0
-                },
-                "s[S2C,6]": {
-                    "Value": 1.0
-                },
-                "s[S2CPro,10]": {
-                    "Value": 1.0
-                },
-                "s[S2CPro,19]": {
-                    "Value": 1.0
-                },
-                "s[S2CPro,1]": {
-                    "Value": 1.0
-                },
-                "s[S2CPro,20]": {
-                    "Value": 1.0
-                },
-                "s[S2CPro,21]": {
-                    "Value": 1.0
-                },
-                "s[S2CPro,25]": {
-                    "Value": 1.0
-                },
-                "s[S2CPro,29]": {
-                    "Value": 1.0
-                },
-                "s[S2CPro,3]": {
-                    "Value": 1.0
-                },
-                "s[S3,13]": {
-                    "Value": 1.0
-                },
-                "s[S3,17]": {
-                    "Value": 1.0
-                },
-                "s[S3,27]": {
-                    "Value": 1.0
-                },
-                "s[S3,30]": {
-                    "Value": 1.0
-                },
-                "s[S3,5]": {
-                    "Value": 1.0
-                },
-                "s[S3,7]": {
-                    "Value": 1.0
-                },
-                "s[S3,8]": {
-                    "Value": 1.0
-                },
-                "s[S3,9]": {
+                "s[S2C,3]": {
                     "Value": 1.0
                 }
             }
@@ -2901,15 +681,13 @@
             "Error rc": 0,
             "Statistics": {
                 "Branch and bound": {
-                    "Number of bounded subproblems": 0,
-                    "Number of created subproblems": 0
+                    "Number of bounded subproblems": "20571",
+                    "Number of created subproblems": "20571"
                 }
             },
             "Status": "ok",
             "Termination condition": "optimal",
-            "Termination message": "MIP - Integer optimal solution\\x3a Objective = -1.0000000000e+00",
-            "Time": 15.861018419265747,
-            "User time": 15.59
+            "Time": 11014.915762901306
         }
     ]
 }

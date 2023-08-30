@@ -1,0 +1,175 @@
+Calculando min-max:
+Criando instancia min-C...
+Instancia criada.
+Resolvendo instancia...
+GLPSOL--GLPK LP/MIP Solver 5.0
+Parameter(s) specified in the command line:
+ --write /tmp/tmpykaakxdg.glpk.raw --wglp /tmp/tmpp94hhgzk.glpk.glp --cpxlp
+ /tmp/tmpexjwdis9.pyomo.lp
+Reading problem data from '/tmp/tmpexjwdis9.pyomo.lp'...
+/tmp/tmpexjwdis9.pyomo.lp:1035375: warning: lower bound of variable 'x2' redefined
+/tmp/tmpexjwdis9.pyomo.lp:1035375: warning: upper bound of variable 'x2' redefined
+181944 rows, 83881 columns, 405490 non-zeros
+83881 integer variables, 83820 of which are binary
+1119195 lines were read
+Writing problem data to '/tmp/tmpp94hhgzk.glpk.glp'...
+809419 lines were written
+GLPK Integer Optimizer 5.0
+181944 rows, 83881 columns, 405490 non-zeros
+83881 integer variables, 83820 of which are binary
+Preprocessing...
+277 hidden packing inequaliti(es) were detected
+31252 hidden covering inequaliti(es) were detected
+100 constraint coefficient(s) were reduced
+111061 rows, 41370 columns, 272761 non-zeros
+41370 integer variables, 41310 of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  6.100e+01  ratio =  6.100e+01
+GM: min|aij| =  3.601e-01  max|aij| =  2.777e+00  ratio =  7.710e+00
+EQ: min|aij| =  1.314e-01  max|aij| =  1.000e+00  ratio =  7.611e+00
+2N: min|aij| =  6.250e-02  max|aij| =  1.438e+00  ratio =  2.300e+01
+Constructing initial basis...
+Size of triangular part is 111061
+Solving LP relaxation...
+GLPK Simplex Optimizer 5.0
+111061 rows, 41370 columns, 272761 non-zeros
+      0: obj =   0.000000000e+00 inf =   5.381e+01 (104)
+Perturbing LP to avoid stalling [200]...
+   1399: obj =   9.393750001e+01 inf =   6.223e-07 (0) 2
+*  3804: obj =   1.786016640e-01 inf =   3.166e-05 (2466) 7
+*  6270: obj =   1.010579925e-01 inf =   8.689e-05 (481) 6
+Removing LP perturbation [7085]...
+*  7085: obj =   1.010444092e-01 inf =   4.441e-16 (0) 3
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
+Long-step dual simplex will be used
++  7085: mip =     not found yet >=              -inf        (1; 0)
++  8166: mip =     not found yet >=   1.000000000e+00        (13; 0)
++  8691: mip =     not found yet >=   1.000000000e+00        (25; 0)
++  9109: mip =     not found yet >=   1.000000000e+00        (37; 0)
++ 10021: mip =     not found yet >=   1.000000000e+00        (43; 1)
++ 10360: mip =     not found yet >=   1.000000000e+00        (55; 1)
++ 11224: mip =     not found yet >=   1.000000000e+00        (66; 2)
++ 11726: mip =     not found yet >=   1.000000000e+00        (75; 6)
++ 12358: mip =     not found yet >=   1.000000000e+00        (84; 9)
++ 12736: mip =     not found yet >=   1.000000000e+00        (96; 9)
++ 14333: mip =     not found yet >=   1.000000000e+00        (103; 12)
++ 15018: mip =     not found yet >=   1.000000000e+00        (113; 13)
+Time used: 60.4 secs.  Memory used: 158.3 Mb.
++ 15631: mip =     not found yet >=   2.000000000e+00        (124; 16)
++ 16260: mip =     not found yet >=   2.000000000e+00        (135; 18)
++ 17026: mip =     not found yet >=   2.000000000e+00        (143; 23)
++ 17464: mip =     not found yet >=   2.000000000e+00        (156; 23)
++ 18223: mip =     not found yet >=   2.000000000e+00        (167; 25)
++ 18630: mip =     not found yet >=   2.000000000e+00        (179; 25)
++ 19242: mip =     not found yet >=   2.000000000e+00        (190; 26)
++ 19755: mip =     not found yet >=   2.000000000e+00        (203; 26)
++ 20707: mip =     not found yet >=   2.000000000e+00        (213; 27)
++ 21763: mip =     not found yet >=   2.000000000e+00        (222; 28)
++ 22443: mip =     not found yet >=   2.000000000e+00        (232; 30)
++ 22810: mip =     not found yet >=   2.000000000e+00        (239; 37)
+Time used: 120.8 secs.  Memory used: 163.5 Mb.
++ 23225: mip =     not found yet >=   2.000000000e+00        (249; 40)
++ 24045: mip =     not found yet >=   2.000000000e+00        (257; 42)
++ 24381: mip =     not found yet >=   2.000000000e+00        (264; 49)
++ 24939: mip =     not found yet >=   2.000000000e+00        (278; 53)
++ 25963: mip =     not found yet >=   2.000000000e+00        (285; 55)
++ 27067: mip =     not found yet >=   2.000000000e+00        (292; 59)
++ 28155: mip =     not found yet >=   2.000000000e+00        (304; 60)
++ 29312: mip =     not found yet >=   2.000000000e+00        (315; 61)
++ 30164: mip =     not found yet >=   2.000000000e+00        (326; 61)
++ 31837: mip =     not found yet >=   2.000000000e+00        (330; 65)
++ 32866: mip =     not found yet >=   2.000000000e+00        (342; 65)
+Time used: 181.0 secs.  Memory used: 175.4 Mb.
++ 33512: mip =     not found yet >=   2.000000000e+00        (353; 65)
++ 35588: mip =     not found yet >=   2.000000000e+00        (358; 66)
++ 35970: mip =     not found yet >=   2.000000000e+00        (366; 69)
++ 36769: mip =     not found yet >=   2.000000000e+00        (374; 74)
++ 37440: mip =     not found yet >=   2.000000000e+00        (380; 80)
++ 38331: mip =     not found yet >=   2.000000000e+00        (392; 81)
++ 39101: mip =     not found yet >=   2.000000000e+00        (403; 81)
++ 39610: mip =     not found yet >=   2.000000000e+00        (416; 82)
++ 40276: mip =     not found yet >=   2.000000000e+00        (425; 86)
++ 40753: mip =     not found yet >=   2.000000000e+00        (438; 87)
++ 41161: mip =     not found yet >=   2.000000000e+00        (451; 87)
++ 42201: mip =     not found yet >=   2.000000000e+00        (462; 89)
+Time used: 241.3 secs.  Memory used: 182.9 Mb.
++ 42829: mip =     not found yet >=   2.000000000e+00        (472; 94)
++ 43423: mip =     not found yet >=   2.000000000e+00        (481; 98)
++ 43987: mip =     not found yet >=   2.000000000e+00        (490; 100)
++ 45132: mip =     not found yet >=   2.000000000e+00        (497; 104)
++ 45751: mip =     not found yet >=   2.000000000e+00        (509; 106)
++ 46735: mip =     not found yet >=   2.000000000e+00        (518; 107)
++ 46996: mip =     not found yet >=   2.000000000e+00        (528; 110)
++ 47727: mip =     not found yet >=   3.000000000e+00        (536; 117)
++ 48251: mip =     not found yet >=   3.000000000e+00        (546; 122)
++ 49911: mip =     not found yet >=   3.000000000e+00        (557; 123)
++ 50782: mip =     not found yet >=   3.000000000e+00        (571; 123)
+Time used: 301.6 secs.  Memory used: 188.6 Mb.
++ 52385: mip =     not found yet >=   3.000000000e+00        (582; 125)
++ 52432: >>>>>   3.000000000e+00 >=   3.000000000e+00 < 0.1% (586; 125)
++ 52432: mip =   3.000000000e+00 >=     tree is empty   0.0% (0; 1421)
+INTEGER OPTIMAL SOLUTION FOUND
+Time used:   320.9 secs
+Memory used: 215.8 Mb (226257226 bytes)
+Writing MIP solution to '/tmp/tmpykaakxdg.glpk.raw'...
+265834 lines were written
+Maximos: {'E': 45.7188, 'C': 100}
+Minimos: {'E': 0.611782, 'C': 3.0}
+Resolvendo instancia...
+GLPSOL--GLPK LP/MIP Solver 5.0
+Parameter(s) specified in the command line:
+ --write /tmp/tmp_5okbghz.glpk.raw --wglp /tmp/tmpl0xk23da.glpk.glp --cpxlp
+ /tmp/tmpgxjkp18w.pyomo.lp
+Reading problem data from '/tmp/tmpgxjkp18w.pyomo.lp'...
+/tmp/tmpgxjkp18w.pyomo.lp:1035457: warning: lower bound of variable 'x3' redefined
+/tmp/tmpgxjkp18w.pyomo.lp:1035457: warning: upper bound of variable 'x3' redefined
+181944 rows, 83882 columns, 405490 non-zeros
+83881 integer variables, 83820 of which are binary
+1119277 lines were read
+Writing problem data to '/tmp/tmpl0xk23da.glpk.glp'...
+809502 lines were written
+GLPK Integer Optimizer 5.0
+181944 rows, 83882 columns, 405490 non-zeros
+83881 integer variables, 83820 of which are binary
+Preprocessing...
+277 hidden packing inequaliti(es) were detected
+31252 hidden covering inequaliti(es) were detected
+100 constraint coefficient(s) were reduced
+111061 rows, 41370 columns, 272761 non-zeros
+41370 integer variables, 41310 of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  6.100e+01  ratio =  6.100e+01
+GM: min|aij| =  3.601e-01  max|aij| =  2.777e+00  ratio =  7.710e+00
+EQ: min|aij| =  1.314e-01  max|aij| =  1.000e+00  ratio =  7.611e+00
+2N: min|aij| =  6.250e-02  max|aij| =  1.438e+00  ratio =  2.300e+01
+Constructing initial basis...
+Size of triangular part is 111061
+Solving LP relaxation...
+GLPK Simplex Optimizer 5.0
+111061 rows, 41370 columns, 272761 non-zeros
+      0: obj =  -1.356290057e-02 inf =   5.381e+01 (104)
+Perturbing LP to avoid stalling [301]...
+   1990: obj =   1.073044200e-01 inf =   9.021e-16 (0) 3
+Removing LP perturbation [2839]...
+*  2839: obj =   6.781450283e-03 inf =   1.911e-12 (0) 3
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
+Long-step dual simplex will be used
++  2839: mip =     not found yet >=              -inf        (1; 0)
++  3192: mip =     not found yet >=   6.781450283e-03        (12; 0)
++  3753: >>>>>   6.781450283e-03 >=   6.781450283e-03 < 0.1% (22; 1)
++  3753: mip =   6.781450283e-03 >=     tree is empty   0.0% (0; 45)
+INTEGER OPTIMAL SOLUTION FOUND
+Time used:   16.2 secs
+Memory used: 176.0 Mb (184512654 bytes)
+Writing MIP solution to '/tmp/tmp_5okbghz.glpk.raw'...
+265835 lines were written
+
+Resultados:
+
+E: 0.006781450283412661 -- 0.9176730000000001 mA
+C: 0.041237113402061855 -- 7.0 points
+WEIGHTED: 0.006781450283412661
+Total Solving time: 16.954209089279175 s
+Total elapsed time since execution: 708.930858373642

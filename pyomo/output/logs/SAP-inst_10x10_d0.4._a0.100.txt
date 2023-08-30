@@ -1,0 +1,111 @@
+Calculando min-max:
+Criando instancia min-C...
+Instancia criada.
+Resolvendo instancia...
+GLPSOL--GLPK LP/MIP Solver 5.0
+Parameter(s) specified in the command line:
+ --write /tmp/tmpgcscxnao.glpk.raw --wglp /tmp/tmprytgn6d7.glpk.glp --cpxlp
+ /tmp/tmpjxbuo6m7.pyomo.lp
+Reading problem data from '/tmp/tmpjxbuo6m7.pyomo.lp'...
+/tmp/tmpjxbuo6m7.pyomo.lp:494533: warning: lower bound of variable 'x2' redefined
+/tmp/tmpjxbuo6m7.pyomo.lp:494533: warning: upper bound of variable 'x2' redefined
+85464 rows, 41621 columns, 196368 non-zeros
+41621 integer variables, 41580 of which are binary
+536113 lines were read
+Writing problem data to '/tmp/tmprytgn6d7.glpk.glp'...
+386161 lines were written
+GLPK Integer Optimizer 5.0
+85464 rows, 41621 columns, 196368 non-zeros
+41621 integer variables, 41580 of which are binary
+Preprocessing...
+207 hidden packing inequaliti(es) were detected
+12975 hidden covering inequaliti(es) were detected
+93 constraint coefficient(s) were reduced
+48930 rows, 19001 columns, 122129 non-zeros
+19001 integer variables, 18961 of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  4.500e+01  ratio =  4.500e+01
+GM: min|aij| =  3.884e-01  max|aij| =  2.575e+00  ratio =  6.631e+00
+EQ: min|aij| =  1.526e-01  max|aij| =  1.000e+00  ratio =  6.554e+00
+2N: min|aij| =  1.250e-01  max|aij| =  1.438e+00  ratio =  1.150e+01
+Constructing initial basis...
+Size of triangular part is 48930
+Solving LP relaxation...
+GLPK Simplex Optimizer 5.0
+48930 rows, 19001 columns, 122129 non-zeros
+      0: obj =   0.000000000e+00 inf =   5.538e+01 (97)
+Perturbing LP to avoid stalling [200]...
+   1274: obj =   8.712500000e+01 inf =   3.896e-09 (0) 2
+Removing LP perturbation [2850]...
+*  2850: obj =   7.421203016e-02 inf =   0.000e+00 (0) 7
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
+Long-step dual simplex will be used
++  2850: mip =     not found yet >=              -inf        (1; 0)
++  5754: mip =     not found yet >=   1.000000000e+00        (42; 7)
++  7887: >>>>>   2.000000000e+00 >=   2.000000000e+00   0.0% (64; 15)
++  7887: mip =   2.000000000e+00 >=     tree is empty   0.0% (0; 157)
+INTEGER OPTIMAL SOLUTION FOUND
+Time used:   10.7 secs
+Memory used: 82.6 Mb (86662193 bytes)
+Writing MIP solution to '/tmp/tmpgcscxnao.glpk.raw'...
+127094 lines were written
+Maximos: {'E': 30.4792, 'C': 93}
+Minimos: {'E': 0.611782, 'C': 2.0}
+Resolvendo instancia...
+GLPSOL--GLPK LP/MIP Solver 5.0
+Parameter(s) specified in the command line:
+ --write /tmp/tmp3dqi0f6i.glpk.raw --wglp /tmp/tmplmjfan_7.glpk.glp --cpxlp
+ /tmp/tmpp7dodltx.pyomo.lp
+Reading problem data from '/tmp/tmpp7dodltx.pyomo.lp'...
+/tmp/tmpp7dodltx.pyomo.lp:494555: warning: lower bound of variable 'x3' redefined
+/tmp/tmpp7dodltx.pyomo.lp:494555: warning: upper bound of variable 'x3' redefined
+85464 rows, 41622 columns, 196368 non-zeros
+41621 integer variables, 41580 of which are binary
+536135 lines were read
+Writing problem data to '/tmp/tmplmjfan_7.glpk.glp'...
+386184 lines were written
+GLPK Integer Optimizer 5.0
+85464 rows, 41622 columns, 196368 non-zeros
+41621 integer variables, 41580 of which are binary
+Preprocessing...
+207 hidden packing inequaliti(es) were detected
+12975 hidden covering inequaliti(es) were detected
+93 constraint coefficient(s) were reduced
+48930 rows, 19001 columns, 122129 non-zeros
+19001 integer variables, 18961 of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  4.500e+01  ratio =  4.500e+01
+GM: min|aij| =  3.884e-01  max|aij| =  2.575e+00  ratio =  6.631e+00
+EQ: min|aij| =  1.526e-01  max|aij| =  1.000e+00  ratio =  6.554e+00
+2N: min|aij| =  1.250e-01  max|aij| =  1.438e+00  ratio =  1.150e+01
+Constructing initial basis...
+Size of triangular part is 48930
+Solving LP relaxation...
+GLPK Simplex Optimizer 5.0
+48930 rows, 19001 columns, 122129 non-zeros
+      0: obj =  -2.048325704e-02 inf =   5.538e+01 (97)
+Perturbing LP to avoid stalling [200]...
+   1259: obj =   1.561570789e-01 inf =   5.069e-10 (0) 2
+Removing LP perturbation [1833]...
+*  1833: obj =   3.469446952e-18 inf =   4.934e-18 (0) 3
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
+Long-step dual simplex will be used
++  1833: mip =     not found yet >=              -inf        (1; 0)
++  3202: mip =     not found yet >=   0.000000000e+00        (28; 7)
++  3444: >>>>>   0.000000000e+00 >=   0.000000000e+00   1.4% (33; 8)
++  3444: mip =   0.000000000e+00 >=     tree is empty   0.0% (0; 81)
+INTEGER OPTIMAL SOLUTION FOUND
+Time used:   7.2 secs
+Memory used: 79.6 Mb (83471419 bytes)
+Writing MIP solution to '/tmp/tmp3dqi0f6i.glpk.raw'...
+127095 lines were written
+
+Resultados:
+
+E: 0.0 -- 0.611782 mA
+C: 0.02197802197802198 -- 4.0 points
+WEIGHTED: 0.0
+Total Solving time: 7.518009901046753 s
+Total elapsed time since execution: 42.649943828582764

@@ -11,7 +11,7 @@ import sys
 t0 = time.time()
 
 #Muda diretorio (BUG DO VSCODE)
-os.chdir('./pyomo')
+#os.chdir('./pyomo')
 
 # Script principal para resolver instancias do SAP
 
@@ -31,11 +31,11 @@ for L in range(10,25,5):
             instance_a = "_a0."+str(a)
 
             #Solver a ser utilizado
-            solver = 'cplex'
-            # solver = 'glpk'
+            #solver = 'cplex'
+            solver = 'glpk'
             #Executavel do solver
-            solver_exec = 'cplex'
-            # solver_exec = 'glpsol'
+            #solver_exec = 'cplex'
+            solver_exec = 'glpsol'
 
             #Nome do arquivo de log
             sys.stdout = open('./output/logs/'+instance_filename[:-3]+instance_a+'.txt', 'w')
