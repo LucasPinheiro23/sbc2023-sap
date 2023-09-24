@@ -3,6 +3,8 @@ from efficient_sap_sbc_abstract_model import *
 from pyomo.environ import *
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
+import scipy.interpolate as sp
+import numpy as np
 import logging
 import os
 import time
@@ -277,9 +279,13 @@ for L in range(10, 15, 5):
     ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
     # ax.set_xticks(np.arange(int(instance.smallest_X),int(instance.biggest_X)+1,1))
     # ax.set_yticks(np.arange(int(instance.smallest_Y),int(instance.biggest_Y)+1,1))
-    ax.plot(sol_E, sol_C, "y*")
 
-    plt.xlabel("E - Obj. Function (mA)")
-    plt.ylabel("C - Obj. Function (points)")
+    f = sp.interp1d(sol_E,sol_C)
+    xnew = np.arange(sol_E[0],sol_E[-1],0.1)
+    ynew = f(xnew)
+    ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b-")
+
+    plt.xlabel("E (mA)")
+    plt.ylabel("C (points)")
     plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-3] +"_pareto.svg")
     plt.close()
