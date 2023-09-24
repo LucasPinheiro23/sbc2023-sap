@@ -280,7 +280,7 @@ for L in range(10, 15, 5):
     # ax.set_xticks(np.arange(int(instance.smallest_X),int(instance.biggest_X)+1,1))
     # ax.set_yticks(np.arange(int(instance.smallest_Y),int(instance.biggest_Y)+1,1))
 
-    f = sp.interp1d(sol_E,sol_C)
+    f = sp.interp1d(sol_E,sol_C,kind='cubic')
     xnew = np.arange(sol_E[0],sol_E[-1],0.1)
     ynew = f(xnew)
     ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b-")
