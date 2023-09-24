@@ -8,7 +8,20 @@ import os
 import time
 import sys
 
-t0 = time.time()
+#Constante que determina variacao toleravel no valor da FO durante a variacao dos epsilon. Determina o encerramento da execucao
+# T = 5
+
+# Zera o tempo decorrido total
+tt0 = time.time()
+
+# Lista de solucoes da FO E
+sol_E = []
+# Lista de solucoes da FO C
+sol_C = []
+# Lista de epsilons
+sol_eps = []
+# Lista de tempo de solucao
+sol_time = []
 
 # Muda diretorio (BUG DO VSCODE)
 os.chdir("./pyomo")
@@ -33,7 +46,7 @@ for L in range(10, 15, 5):
             "SAP-inst_" + str(L) + "x" + str(L) + "_d0." + str(d) + ".dat"
         )
 
-        ## Gera modelo abstrato inicial
+        ## Gera modelo abstrato inicial com qualquer epsilon (indiferente)
         model = generate_model(0)
 
         ## Carrega dados de instancia no modelo
@@ -41,9 +54,19 @@ for L in range(10, 15, 5):
         data.load(filename=instance_path + instance_filename, model=model)
         instance1 = model.create_instance(data)
 
+        #Calcula o epsilon maximo para a respectiva FO
         eps_MAX = preproc_C_max(instance1)
 
-        for eps in range(0, eps_MAX, 5):
+        eps_MIN = 0
+
+        eps_step = floor(eps_MAX/8)
+
+        #Executa o solver para variados epsilon, comecando do maximo. Quando encontra muita variacao na FO, para a execucao.
+        for eps in range(eps_MIN, eps_MAX, eps_step):
+
+            # Zera o tempo decorrido no epsilon
+            t0 = time.time()
+
             # Nome do arquivo da instancia a ser resolvida
 
             instance_eps = "_eps" + str(eps)
@@ -52,18 +75,7 @@ for L in range(10, 15, 5):
             figname = instance_filename[:-3] + instance_eps
 
             # Nome do arquivo de log
-            # sys.stdout = open(
-            #     "./output/logs/"
-            #     + str(L)
-            #     + "x"
-            #     + str(L)
-            #     + "/d0."
-            #     + str(d)
-            #     + "/"
-            #     + figname
-            #     + ".txt",
-            #     "w",
-            # )
+            sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt","w")
 
             ## CONSTRUCAO DO MODELO E INSTANCIA
 
@@ -75,8 +87,9 @@ for L in range(10, 15, 5):
             data.load(filename=instance_path + instance_filename, model=model)
             instance = model.create_instance(data)
 
-            instance.objC.pprint()
-            continue
+            # instance.epsC.pprint()
+            # instance.objC.pprint()
+            # continue
             # -----------------------------------------------------------#
 
             ## SOLVER
@@ -111,23 +124,23 @@ for L in range(10, 15, 5):
             # TEMPO DE EXECUCAO (DO SOLVER)
             # GAP DE OTIMALIDADE
             #
-            # Funcao multiobjetivo (valor otimo)
-            # print("WEIGHTED: " + str(value(instance.WEIGHTED)))
+            # Funcao objetivo de Energia (valor otimo)
+            E_now = value(instance.E)
+            sol_E.append(E_now)
+            print("E = " + str(E_now) + "mA")
 
-            # Variavel de decisao (exemplo)
-            # print(value(instance.s['S2C',1]))
+            # Variavel de decisao da Cobertura (valor otimo)
+            C_now = value(instance.objC)
+            sol_C.append(C_now)
+            print("C = " + str(C_now) + "points")
 
-            # Tempo de execucao do solver
-            # print("Solving time: "+str(results.solver.user_time)+" s")
+            # Valor de epsilon utilizado nessa execucao
+            sol_eps.append(eps)
+            print("Epsilon = " + str(eps))
 
+            sol_time.append(results.solver.time)
             # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
             print("Total Solving time: " + str(results.solver.time) + " s")
-
-            # instance.Pair_floor.pprint()
-            # instance.Dist.pprint()
-
-            # Imprime resultados
-            # print(results)
 
             # -----------------------------------------------------------#
 
@@ -237,10 +250,36 @@ for L in range(10, 15, 5):
             plt.ylabel("Y Coordinates (m)")
             # plt.title('Instance: '+str(instance_filename)+'\nScale: 1:'+str(int(instance.scale))+'m\nAlphas: '+str(alpha['E'])+'E, '+str(alpha['C'])+'C, '+str(alpha['M'])+'M  -  Time: '+str(results.solver.user_time)+' s')
             # plt.show()
-            plt.savefig("./output/" + figname + ".svg")
+            plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname +".svg")
             plt.close()
 
             t = time.time() - t0
-            print("Total elapsed time since execution: " + str(t))
+            tt = time.time() - tt0
+            print("Total elapsed time for this epsilon: " + str(t))
+            print("\n\nTotal elapsed time since execution: " + str(tt))
+
+            ###Condicao de parada!
+            # if(eps != eps_MIN):
+                
+            #     #Se o valor atual de E eh maior ou igual a um percentual T determinado do E original (minimo), entao encerra a execucao
+            #     if(E_now >= T*E0):
+                    
+            #         print("HALTED BY EPSILON")
+            #         exit(1)
+            # else:
+            #     E0 = E_now
 
             sys.stdout.close()
+
+    # Plotando a fronteira de pareto
+    fig = plt.figure("Pareto Frontier")
+    ax = fig.add_subplot(1, 1, 1)
+    ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
+    # ax.set_xticks(np.arange(int(instance.smallest_X),int(instance.biggest_X)+1,1))
+    # ax.set_yticks(np.arange(int(instance.smallest_Y),int(instance.biggest_Y)+1,1))
+    ax.plot(sol_E, sol_C, "y*")
+
+    plt.xlabel("E - Obj. Function (mA)")
+    plt.ylabel("C - Obj. Function (points)")
+    plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-3] +"_pareto.svg")
+    plt.close()

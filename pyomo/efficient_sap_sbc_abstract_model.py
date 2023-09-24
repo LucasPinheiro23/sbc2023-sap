@@ -182,8 +182,8 @@ def const_C6(model, k, l):
 def const_obj_C1(model):
     return model.FO_C == sum(sum(model.cc[k, l] for k in model.KW) for l in model.KH)
 
-def const_obj_C(model, epsC):
-    return model.FO_C >= epsC
+def const_obj_C(model):
+    return model.FO_C >= model.epsC
 
 def const_obj_M(model, epsM):
     return (
@@ -272,7 +272,7 @@ def generate_model(epsC):
     model.ccY = Var(model.KW, model.KH, RangeSet(1, 2), within=Binary)
 
     # Epsilons para restricoes de objetivo
-    model.epsC = Param(model.UNIT, initialize=epsC, within=NonNegativeReals)
+    model.epsC = Param(initialize=epsC, within=NonNegativeReals)
     # model.epsM = Param(domain=NonNegativeReals)
 
     ## Funcoes objetivo
@@ -288,10 +288,11 @@ def generate_model(epsC):
     # Restricao de tipo (apenas um t por posicao)
     model.typenum = Constraint(model.V, rule=const_typenum)
 
-    # #Restricao de quantidade minima (LB) e maxima (UB) de alocacao
+    # Restricao de quantidade minima (LB) e maxima (UB) de alocacao
     model.numalloc = Constraint(rule=const_numalloc)
 
-    model.sN = Constraint(model.S, model.V, rule=const_sN)
+    # Restricao que limita as solucoes. Posicoes de alocacao mais afastadas sempre receberao nos com maior alcance, o que torna a execucao mais rapida.
+    # model.sN = Constraint(model.S, model.V, rule=const_sN)
 
     model.P1 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair1)
     model.P2 = Constraint(model.S, model.S, model.V, model.V, rule=const_Pair2)
@@ -315,7 +316,7 @@ def generate_model(epsC):
     model.C5 = Constraint(model.KW, model.KH, rule=const_C5)
     model.C6 = Constraint(model.KW, model.KH, rule=const_C6)
 
-    model.objC = Constraint(model.UNIT, rule=const_obj_C)
+    model.objC = Constraint(rule=const_obj_C)
     model.objC1 = Constraint(rule=const_obj_C1)
     # model.objM = Constraint(model.epsM, rule=const_obj_M)
 

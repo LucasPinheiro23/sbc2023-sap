@@ -23,13 +23,16 @@ logging.getLogger("pyomo.core").setLevel(logging.ERROR)
 #         for a in range(0, 125, 25):
 
 for L in range(10, 15, 5):
-    for d in range(2, 3):
+    for d in range(1, 2):
         for a in range(50, 75, 25):
             # Nome do arquivo da instancia a ser resolvida
-            instance_path = "./instances_OL2A_updated/" + str(L) + "x" + str(L) + "/"
-            instance_filename = (
-                "SAP-inst_" + str(L) + "x" + str(L) + "_d0." + str(d) + ".dat"
-            )
+            # instance_path = "./instances_OL2A_updated/" + str(L) + "x" + str(L) + "/"
+            # instance_filename = (
+                # "SAP-inst_" + str(L) + "x" + str(L) + "_d0." + str(d) + ".dat"
+            # )
+
+            instance_path = ""
+            instance_filename = "sap-10.dat"
             instance_a = "_a0." + str(a) + "E"
 
             # Solver a ser utilizado
