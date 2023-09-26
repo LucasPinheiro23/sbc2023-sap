@@ -26,7 +26,7 @@ sol_eps = []
 sol_time = []
 
 # Muda diretorio (BUG DO VSCODE)
-os.chdir("./pyomo")
+#os.chdir("./pyomo")
 
 # Script principal para resolver instancias do SAP
 
@@ -272,7 +272,8 @@ for L in range(10, 15, 5):
             #     E0 = E_now
 
             sys.stdout.close()
-
+    
+    sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-3] + "-pareto.txt","w")
     # Plotando a fronteira de pareto
     fig = plt.figure("Pareto Frontier")
     ax = fig.add_subplot(1, 1, 1)
@@ -288,4 +289,6 @@ for L in range(10, 15, 5):
     plt.xlabel("E (mA)")
     plt.ylabel("C (points)")
     plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-3] +"_pareto.svg")
+    print("Pareto plot successful!")
     plt.close()
+    sys.stdout.close()

@@ -1,0 +1,13 @@
+Translating instance to solver...
+
+
+Results:
+
+E = 1.511782mA
+C = 46.0points
+Epsilon = 40
+Total Solving time: 60.36954140663147 s
+Total elapsed time for this epsilon: 60.76220107078552
+
+
+Total elapsed time since execution: 79.00818753242493
