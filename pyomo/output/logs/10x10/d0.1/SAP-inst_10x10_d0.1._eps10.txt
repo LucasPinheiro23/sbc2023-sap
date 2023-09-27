@@ -6,8 +6,8 @@ Results:
 E = 0.9176730000000001mA
 C = 10.0points
 Epsilon = 10
-Total Solving time: 14.82339334487915 s
-Total elapsed time for this epsilon: 15.238009452819824
+Total Solving time: 20.18248224258423 s
+Total elapsed time for this epsilon: 23.09994649887085
 
 
-Total elapsed time since execution: 16.009860038757324
+Total elapsed time since execution: 32.730496644973755

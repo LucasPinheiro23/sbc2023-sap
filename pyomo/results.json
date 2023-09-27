@@ -3,10 +3,10 @@
         {
             "Lower bound": 3.329455,
             "Name": "SAP-inst_10x10_d0.1.dat",
-            "Number of constraints": 8216,
-            "Number of nonzeros": 21187,
+            "Number of constraints": 8217,
+            "Number of nonzeros": 21188,
             "Number of objectives": 1,
-            "Number of variables": 5232,
+            "Number of variables": 5233,
             "Sense": "minimize",
             "Upper bound": 3.329455
         }
@@ -139,7 +139,7 @@
                 "P[S2CPro,S2CPro,9,9]": {
                     "Value": 1.0
                 },
-                "a[S2C,S2C,6,0]": {
+                "a[S2C,S3,6,0]": {
                     "Value": 1.0
                 },
                 "a[S2CPro,S2C,3,6]": {
@@ -921,13 +921,13 @@
             "Error rc": 0,
             "Statistics": {
                 "Branch and bound": {
-                    "Number of bounded subproblems": "1851",
-                    "Number of created subproblems": "1851"
+                    "Number of bounded subproblems": "1435",
+                    "Number of created subproblems": "1435"
                 }
             },
             "Status": "ok",
             "Termination condition": "optimal",
-            "Time": 11.220942497253418
+            "Time": 31.963948965072632
         }
     ]
 }

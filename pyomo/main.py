@@ -26,7 +26,7 @@ sol_eps = []
 sol_time = []
 
 # Muda diretorio (BUG DO VSCODE)
-#os.chdir("./pyomo")
+os.chdir("./pyomo")
 
 # Script principal para resolver instancias do SAP
 
@@ -274,20 +274,60 @@ for L in range(10, 15, 5):
             sys.stdout.close()
     
     sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-3] + "-pareto.txt","w")
+    # sys.stdout = sys.__stdout__
+    
     # Plotando a fronteira de pareto
+    print("Checking if x is strictly increasing sequence...")
+
+    # print("\nBefore (E): " + str(sol_E))
+    # print("\nBefore (C): " + str(sol_C))
+
+    # x1 = 0
+    # x2 = 1
+
+    # new_sol_E = sol_E
+    # new_sol_C = sol_C
+
+    # print("\n")
+
+    # for x in range(0,len(sol_E)-3):
+        
+    #     # print("\nX1: "+ str(sol_E[x1]))
+    #     # print("\nX2: "+ str(sol_E[x2]))
+
+    #     if sol_E[x1] == sol_E[x2]:
+    #         del new_sol_E[x1]
+    #         del new_sol_C[x1]
+        
+    #     x1 += 1
+    #     x2 += 1
+        
+    # print("\nAfter (E): " + str(new_sol_E))
+    # print("\nAfter (C): " + str(new_sol_C))
+
+    # print("Started to plot Pareto Frontier...\n")
+
+
     fig = plt.figure("Pareto Frontier")
     ax = fig.add_subplot(1, 1, 1)
     ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
     # ax.set_xticks(np.arange(int(instance.smallest_X),int(instance.biggest_X)+1,1))
     # ax.set_yticks(np.arange(int(instance.smallest_Y),int(instance.biggest_Y)+1,1))
 
-    f = sp.interp1d(sol_E,sol_C,kind='cubic')
-    xnew = np.arange(sol_E[0],sol_E[-1],0.1)
-    ynew = f(xnew)
-    ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b-")
+    # f = sp.interp1d(new_sol_E,new_sol_C,kind='cubic')
+    f = sp.interp1d(sol_C,sol_E,kind='cubic')
 
-    plt.xlabel("E (mA)")
-    plt.ylabel("C (points)")
+    # xnew = np.arange(new_sol_E[0],new_sol_E[-1],0.1)
+    xnew = np.arange(sol_C[0],sol_C[-1],0.1)
+    ynew = f(xnew)
+    # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
+    ax.plot(sol_C, sol_E, "y*", xnew, ynew, "b--")
+
+    # plt.xlabel("E (mA)")
+    plt.xlabel("C (points)")
+    # plt.ylabel("C (points)")
+    plt.ylabel("E (mA)")
+    
     plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-3] +"_pareto.svg")
     print("Pareto plot successful!")
     plt.close()
