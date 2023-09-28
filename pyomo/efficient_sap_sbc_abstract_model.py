@@ -15,16 +15,16 @@ M = 100000
 # Distancia entre pares de posicoes fixas (D)
 def init_D(model, i, j):
     return math.sqrt(
-        pow((model.X[i] - model.X[j]) * model.scale, 2)
-        + pow((model.Y[i] - model.Y[j]) * model.scale, 2)
+        pow((model.X[i] - model.X[j]), 2)
+        + pow((model.Y[i] - model.Y[j]), 2)
     )
 
 
 # Distancia entre posicoes de nos sensores e pontos parametrizados na regiao de monitoramento (DK)
 def init_DK(model, i, j, k):
     return math.sqrt(
-        pow((model.X[i] - model.W[j]) * model.scale, 2)
-        + pow((model.Y[i] - model.H[k]) * model.scale, 2)
+        pow((model.X[i]-1 - model.W[j]), 2)
+        + pow((model.Y[i]-1 - model.H[k]), 2)
     )
 
 
@@ -204,7 +204,7 @@ def generate_model(epsC):
     # Numero de nos
     model.n = Param(within=NonNegativeIntegers)  # INICIALIZAR
     # Escala
-    model.scale = Param(within=NonNegativeIntegers)  # INICIALIZAR
+    model.scale = Param(within=NonNegativeReals)  # INICIALIZAR
 
     ## Conjuntos (Sets)
     ## ---
