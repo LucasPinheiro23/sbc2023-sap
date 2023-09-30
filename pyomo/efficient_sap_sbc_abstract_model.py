@@ -22,7 +22,7 @@ def init_D(model, i, j):
 
 # Distancia entre posicoes de nos sensores e pontos parametrizados na regiao de monitoramento (DK)
 def init_DK(model, i, j, k):
-    return math.sqrt(
+    return model.scale * math.sqrt(
         pow((model.X[i]-1 - model.W[j]), 2)
         + pow((model.Y[i]-1 - model.H[k]), 2)
     )

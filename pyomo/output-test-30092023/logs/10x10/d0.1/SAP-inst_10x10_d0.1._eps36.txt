@@ -1,0 +1,16 @@
+Translating instance to solver...
+
+
+Results:
+
+E = 1.061782mA
+C = 36.0points
+C ~= 14.4km^2
+Minimum Epsilon for this instance = 0
+Maximum Epsilon for this instance = 96
+Current Epsilon = 36
+Time in solver (for this epsilon): 8.20477294921875 s
+Elapsed time (for this epsilon): 10.21304965019226
+
+
+Total elapsed time since execution of first epsilon: 67.63053369522095

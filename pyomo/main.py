@@ -10,8 +10,8 @@ import os
 import time
 import sys
 
-#Constante que determina variacao toleravel no valor da FO durante a variacao dos epsilon. Determina o encerramento da execucao
-# T = 5
+#Constante que determina o percentual minimo da cobertura maxima a ser alcancado
+stop_perc = 0.95
 
 # Zera o tempo decorrido total
 tt0 = time.time()
@@ -57,11 +57,13 @@ for L in range(10, 15, 5):
         instance1 = model.create_instance(data)
 
         #Calcula o epsilon maximo para a respectiva FO
+        ttt0 = time.time()
         eps_MAX = preproc_C_max(instance1)
+        ttt = time.time() - ttt0
 
         eps_MIN = 0
 
-        eps_step = floor(eps_MAX/10)
+        eps_step = floor(eps_MAX/3)
 
         #Inicializa variavel de execucao adicional para o ultimo epsilon
         ad_run = False
@@ -111,7 +113,7 @@ for L in range(10, 15, 5):
 
             print("Translating instance to solver...\n")
             # Resolve a instancia e armazena os resultados em um arquivo JSON
-            results = opt.solve(instance)  # , tee=True)
+            results = opt.solve(instance, tee=True)
             instance.solutions.store_to(results)
             results.problem.name = instance_filename
             results.write(filename="results.json", format="json")
@@ -146,13 +148,14 @@ for L in range(10, 15, 5):
 
             # Valor de epsilon utilizado nessa execucao
             sol_eps.append(eps)
-            print("Minimum Epsilon for this instance = " + str(eps_MIN))
+            print("\nMinimum Epsilon for this instance = " + str(eps_MIN))
             print("Maximum Epsilon for this instance = " + str(eps_MAX))
             print("Current Epsilon = " + str(eps))
+            print("\nInstance Maximum Epsilon Preprocessing Time: " + str(ttt))
 
             sol_time.append(results.solver.time)
             # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
-            print("Time in solver (for this epsilon): " + str(results.solver.time) + " s")
+            print("\nTime in solver (for this epsilon): " + str(results.solver.time) + " s")
             
             t = time.time() - t0
             print("Elapsed time (for this epsilon): " + str(t))
@@ -273,234 +276,221 @@ for L in range(10, 15, 5):
             plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname +".svg")
             plt.close()
 
-            ###Condicao de parada!
-            # if(eps != eps_MIN):
-                
-            #     #Se o valor atual de E eh maior ou igual a um percentual T determinado do E original (minimo), entao encerra a execucao
-            #     if(E_now >= T*E0):
+            eps_END = eps
+
+            ###Condicao de parada! Se alcancou pelo menos 90% da cobertura maxima.
+            # if(C_now >= stop_perc * eps_MAX):
                     
-            #         print("HALTED BY EPSILON")
-            #         exit(1)
-            # else:
-            #     E0 = E_now
+            #     print("Stopped by epsilon. " + str(C_now) + " >= 90% * " + str(eps_MAX))
+            #     sys.stdout.close()
+            #     break
 
             sys.stdout.close()
     
-    #Executa rodada adicional apenas para o ultimo epsilon, caso ja nao tenha sido considerado
-    if(ad_run):
+    # #Executa rodada adicional apenas para o ultimo epsilon, caso ja nao tenha sido considerado
+    # if(ad_run):
 
-        eps = eps_MAX
+    #     eps = eps_MAX
 
-        # Zera o tempo decorrido no epsilon
-        t0 = time.time()
+    #     # Zera o tempo decorrido no epsilon
+    #     t0 = time.time()
 
-        # Nome do arquivo da instancia a ser resolvida
+    #     # Nome do arquivo da instancia a ser resolvida
 
-        instance_eps = "_eps" + str(eps)
+    #     instance_eps = "_eps" + str(eps)
 
-        # Define nome da figura a salvar
-        figname = instance_filename[:-4] + instance_eps
+    #     # Define nome da figura a salvar
+    #     figname = instance_filename[:-4] + instance_eps
 
-        # Nome do arquivo de log
-        sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt","w")
+    #     # Nome do arquivo de log
+    #     sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt","w")
 
-        ## CONSTRUCAO DO MODELO E INSTANCIA
+    #     ## CONSTRUCAO DO MODELO E INSTANCIA
 
-        ## Gera modelo abstrato com epsilon correspondente
-        model = generate_model(eps)
+    #     ## Gera modelo abstrato com epsilon correspondente
+    #     model = generate_model(eps)
 
-        ## Carrega dados de instancia no modelo
-        data = DataPortal()
-        data.load(filename=instance_path + instance_filename, model=model)
-        instance = model.create_instance(data)
+    #     ## Carrega dados de instancia no modelo
+    #     data = DataPortal()
+    #     data.load(filename=instance_path + instance_filename, model=model)
+    #     instance = model.create_instance(data)
 
-        # instance.epsC.pprint()
-        # instance.objC.pprint()
-        # continue
-        # -----------------------------------------------------------#
+    #     # instance.epsC.pprint()
+    #     # instance.objC.pprint()
+    #     # continue
+    #     # -----------------------------------------------------------#
 
-        ## SOLVER
-        ## ------
+    #     ## SOLVER
+    #     ## ------
 
-        # Cria um solver
-        opt = SolverFactory(solver, executable=solver_exec)
-        # opt.options["tmlim"] = 1200
-        opt.options["mipgap"] = 0.0001
+    #     # Cria um solver
+    #     opt = SolverFactory(solver, executable=solver_exec)
+    #     # opt.options["tmlim"] = 1200
+    #     opt.options["mipgap"] = 0.0001
 
-        print("Translating instance to solver...\n")
-        # Resolve a instancia e armazena os resultados em um arquivo JSON
-        results = opt.solve(instance)  # , tee=True)
-        instance.solutions.store_to(results)
-        results.problem.name = instance_filename
-        results.write(filename="results.json", format="json")
+    #     print("Translating instance to solver...\n")
+    #     # Resolve a instancia e armazena os resultados em um arquivo JSON
+    #     results = opt.solve(instance, tee=True)
+    #     instance.solutions.store_to(results)
+    #     results.problem.name = instance_filename
+    #     results.write(filename="results.json", format="json")
 
-        if results.solver.termination_condition == "maxTimeLimit":
-            print("\n\nSOLVER TIME LIMIT EXCEEDED\n\n")
-            if math.isinf(results.problem.lower_bound) or math.isinf(
-                results.problem.upper_bound
-            ):
-                print("\n\nNO SOLUTION FOUND FOR THIS INSTANCE!\n\n")
-                continue
+    #     if results.solver.termination_condition == "maxTimeLimit":
+    #         print("\n\nSOLVER TIME LIMIT EXCEEDED\n\n")
+    #         if math.isinf(results.problem.lower_bound) or math.isinf(
+    #             results.problem.upper_bound
+    #         ):
+    #             print("\n\nNO SOLUTION FOUND FOR THIS INSTANCE!\n\n")
+    #             continue
 
-        # Pega resultados diretamente
-        print("\nResults:\n")
+    #     # Pega resultados diretamente
+    #     print("\nResults:\n")
 
-        # PEGAR RESULTADOS:
-        # VALOR DA FO DE ENERGIA
-        # VALOR DA RESTRICAO DE COBERTURA (FO DE COBERTURA)
-        # TEMPO DE EXECUCAO (DO SOLVER)
-        # GAP DE OTIMALIDADE
-        #
-        # Funcao objetivo de Energia (valor otimo)
-        E_now = value(instance.E)
-        sol_E.append(E_now)
-        print("E = " + str(E_now) + "mA")
+    #     # PEGAR RESULTADOS:
+    #     # VALOR DA FO DE ENERGIA
+    #     # VALOR DA RESTRICAO DE COBERTURA (FO DE COBERTURA)
+    #     # TEMPO DE EXECUCAO (DO SOLVER)
+    #     # GAP DE OTIMALIDADE
+    #     #
+    #     # Funcao objetivo de Energia (valor otimo)
+    #     E_now = value(instance.E)
+    #     sol_E.append(E_now)
+    #     print("E = " + str(E_now) + "mA")
 
-        # Variavel de decisao da Cobertura (valor otimo)
-        C_now = value(instance.objC)
-        sol_C.append(C_now)
-        print("C = " + str(C_now) + "points")
-        print("C ~= " + str((C_now/4)*1.6) + "km^2")
+    #     # Variavel de decisao da Cobertura (valor otimo)
+    #     C_now = value(instance.objC)
+    #     sol_C.append(C_now)
+    #     print("C = " + str(C_now) + "points")
+    #     print("C ~= " + str(((C_now-2)/2)*1.6) + "km^2")
 
-        # Valor de epsilon utilizado nessa execucao
-        sol_eps.append(eps)
-        print("Minimum Epsilon for this instance = " + str(eps_MIN))
-        print("Maximum Epsilon for this instance = " + str(eps_MAX))
-        print("Current Epsilon = " + str(eps))
+    #     # Valor de epsilon utilizado nessa execucao
+    #     sol_eps.append(eps)
+    #     print("Minimum Epsilon for this instance = " + str(eps_MIN))
+    #     print("Maximum Epsilon for this instance = " + str(eps_MAX))
+    #     print("Current Epsilon = " + str(eps))
 
-        sol_time.append(results.solver.time)
-        # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
-        print("Time in solver (for this epsilon): " + str(results.solver.time) + " s")
+    #     sol_time.append(results.solver.time)
+    #     # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
+    #     print("Time in solver (for this epsilon): " + str(results.solver.time) + " s")
         
-        t = time.time() - t0
-        print("Elapsed time (for this epsilon): " + str(t))
+    #     t = time.time() - t0
+    #     print("Elapsed time (for this epsilon): " + str(t))
 
-        tt = time.time() - tt0
-        print("\n\nTotal elapsed time since execution of first epsilon: " + str(tt))
+    #     tt = time.time() - tt0
+    #     print("\n\nTotal elapsed time since execution of first epsilon: " + str(tt))
 
-        # -----------------------------------------------------------#
+    #     # -----------------------------------------------------------#
 
-        ## POS-PROCESSAMENTO
-        ## -----------------
+    #     ## POS-PROCESSAMENTO
+    #     ## -----------------
 
-        # Plota todos os espacos disponiveis para alocacao como circulos nao-preenchidos pretos
-        # Se estiver alocado, preenche o circulo e colore de acordo com modelo de transceptor ativo
+    #     # Plota todos os espacos disponiveis para alocacao como circulos nao-preenchidos pretos
+    #     # Se estiver alocado, preenche o circulo e colore de acordo com modelo de transceptor ativo
 
-        fig = plt.figure("SAP Optimal Result")
-        ax = fig.add_subplot(1, 1, 1)
-        ax.axis("equal")
+    #     fig = plt.figure("SAP Optimal Result")
+    #     ax = fig.add_subplot(1, 1, 1)
+    #     ax.axis("equal")
 
-        for i in instance.V:
-            plt.text(
-                (instance.X[i]-1 + 0.1)*instance.scale,
-                (instance.Y[i]-1 + 0.1)*instance.scale,
-                str(i),
-                color="k",
-                fontsize=10,
-            )
+    #     for i in instance.V:
+    #         plt.text(
+    #             (instance.X[i]-1 + 0.1)*instance.scale,
+    #             (instance.Y[i]-1 + 0.1)*instance.scale,
+    #             str(i),
+    #             color="k",
+    #             fontsize=10,
+    #         )
 
-            if value(instance.s["S2C", i]) == 1:
-                ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "go")
-                ax.add_patch(
-                    plt.Circle(
-                        ((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale),
-                        (instance.RMAX["S2C"]),
-                        color="g",
-                        alpha=0.1,
-                    )
-                )
-            elif value(instance.s["S2CPro", i]) == 1:
-                ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "bo")
-                ax.add_patch(
-                    plt.Circle(
-                        ((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale),
-                        (instance.RMAX["S2CPro"]),
-                        color="b",
-                        alpha=0.1,
-                    )
-                )
-            elif value(instance.s["S3", i]) == 1:
-                ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "ro")
-                ax.add_patch(
-                    plt.Circle(
-                        ((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale),
-                        (instance.RMAX["S3"]),
-                        color="r",
-                        alpha=0.1,
-                    )
-                )
-            else:
-                ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "ko", fillstyle="none")
+    #         if value(instance.s["S2C", i]) == 1:
+    #             ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "go")
+    #             ax.add_patch(
+    #                 plt.Circle(
+    #                     ((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale),
+    #                     (instance.RMAX["S2C"]),
+    #                     color="g",
+    #                     alpha=0.1,
+    #                 )
+    #             )
+    #         elif value(instance.s["S2CPro", i]) == 1:
+    #             ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "bo")
+    #             ax.add_patch(
+    #                 plt.Circle(
+    #                     ((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale),
+    #                     (instance.RMAX["S2CPro"]),
+    #                     color="b",
+    #                     alpha=0.1,
+    #                 )
+    #             )
+    #         elif value(instance.s["S3", i]) == 1:
+    #             ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "ro")
+    #             ax.add_patch(
+    #                 plt.Circle(
+    #                     ((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale),
+    #                     (instance.RMAX["S3"]),
+    #                     color="r",
+    #                     alpha=0.1,
+    #                 )
+    #             )
+    #         else:
+    #             ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "ko", fillstyle="none")
 
-        ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
-        ax.set_xticks(np.arange(instance.W[1]*instance.scale,instance.W[instance.dimW]*instance.scale))
-        ax.set_yticks(np.arange(instance.H[1]*instance.scale,instance.H[instance.dimH]*instance.scale))
+    #     ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
+    #     ax.set_xticks(np.arange(instance.W[1]*instance.scale,instance.W[instance.dimW]*instance.scale))
+    #     ax.set_yticks(np.arange(instance.H[1]*instance.scale,instance.H[instance.dimH]*instance.scale))
 
-        red_patch = mpatches.Patch(color="red", label="S3Pro")
-        blue_patch = mpatches.Patch(color="blue", label="S2CPro")
-        green_patch = mpatches.Patch(color="green", label="S2C")
+    #     red_patch = mpatches.Patch(color="red", label="S3Pro")
+    #     blue_patch = mpatches.Patch(color="blue", label="S2CPro")
+    #     green_patch = mpatches.Patch(color="green", label="S2C")
 
-        ax.legend(handles=[red_patch, blue_patch, green_patch], loc="upper right")
+    #     ax.legend(handles=[red_patch, blue_patch, green_patch], loc="upper right")
 
-        plt.plot(
-            [instance.W[1]*instance.scale, instance.W[instance.dimW]*instance.scale],
-            [instance.H[1]*instance.scale, instance.H[1]*instance.scale],
-            color="k",
-        )
-        plt.plot(
-            [instance.W[instance.dimW]*instance.scale, instance.W[instance.dimW]*instance.scale],
-            [instance.H[1]*instance.scale, instance.H[instance.dimH]*instance.scale],
-            color="k",
-        )
-        plt.plot(
-            [instance.W[1]*instance.scale, instance.W[1]*instance.scale],
-            [instance.H[1]*instance.scale, instance.H[instance.dimH]*instance.scale],
-            color="k",
-        )
-        plt.plot(
-            [instance.W[1]*instance.scale, instance.W[instance.dimW]*instance.scale],
-            [instance.H[instance.dimH]*instance.scale, instance.H[instance.dimH]*instance.scale],
-            color="k",
-        )
+    #     plt.plot(
+    #         [instance.W[1]*instance.scale, instance.W[instance.dimW]*instance.scale],
+    #         [instance.H[1]*instance.scale, instance.H[1]*instance.scale],
+    #         color="k",
+    #     )
+    #     plt.plot(
+    #         [instance.W[instance.dimW]*instance.scale, instance.W[instance.dimW]*instance.scale],
+    #         [instance.H[1]*instance.scale, instance.H[instance.dimH]*instance.scale],
+    #         color="k",
+    #     )
+    #     plt.plot(
+    #         [instance.W[1]*instance.scale, instance.W[1]*instance.scale],
+    #         [instance.H[1]*instance.scale, instance.H[instance.dimH]*instance.scale],
+    #         color="k",
+    #     )
+    #     plt.plot(
+    #         [instance.W[1]*instance.scale, instance.W[instance.dimW]*instance.scale],
+    #         [instance.H[instance.dimH]*instance.scale, instance.H[instance.dimH]*instance.scale],
+    #         color="k",
+    #     )
 
-        # for i in instance.KW:
-        #     for j in instance.KH:
-        #         if value(instance.cc[i, j]):
-        #             plt.plot(
-        #                 instance.W[i],
-        #                 instance.H[j],
-        #                 marker="x",
-        #                 color="r",
-        #                 alpha=0.3,
-        #             )
-        #         else:
-        #             plt.plot(
-        #                 instance.W[i],
-        #                 instance.H[j],
-        #                 marker="x",
-        #                 color="k",
-        #                 alpha=0.3,
-        #             )
+    #     # for i in instance.KW:
+    #     #     for j in instance.KH:
+    #     #         if value(instance.cc[i, j]):
+    #     #             plt.plot(
+    #     #                 instance.W[i],
+    #     #                 instance.H[j],
+    #     #                 marker="x",
+    #     #                 color="r",
+    #     #                 alpha=0.3,
+    #     #             )
+    #     #         else:
+    #     #             plt.plot(
+    #     #                 instance.W[i],
+    #     #                 instance.H[j],
+    #     #                 marker="x",
+    #     #                 color="k",
+    #     #                 alpha=0.3,
+    #     #             )
 
-        plt.xlabel("X Coordinates (km)")
-        plt.ylabel("Y Coordinates (km)")
-        # plt.title('Instance: '+str(instance_filename)+'\nScale: 1:'+str(int(instance.scale))+'m\nAlphas: '+str(alpha['E'])+'E, '+str(alpha['C'])+'C, '+str(alpha['M'])+'M  -  Time: '+str(results.solver.user_time)+' s')
-        # plt.show()
-        plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname +".svg")
-        plt.close()
+    #     plt.xlabel("X Coordinates (km)")
+    #     plt.ylabel("Y Coordinates (km)")
+    #     # plt.title('Instance: '+str(instance_filename)+'\nScale: 1:'+str(int(instance.scale))+'m\nAlphas: '+str(alpha['E'])+'E, '+str(alpha['C'])+'C, '+str(alpha['M'])+'M  -  Time: '+str(results.solver.user_time)+' s')
+    #     # plt.show()
+    #     plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname +".svg")
+    #     plt.close()
 
-        ###Condicao de parada!
-        # if(eps != eps_MIN):
-            
-        #     #Se o valor atual de E eh maior ou igual a um percentual T determinado do E original (minimo), entao encerra a execucao
-        #     if(E_now >= T*E0):
-                
-        #         print("HALTED BY EPSILON")
-        #         exit(1)
-        # else:
-        #     E0 = E_now
-
-        sys.stdout.close()
+    #     sys.stdout.close()
 
     sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] + "_pareto.txt","w")
     # sys.stdout = sys.__stdout__
@@ -550,12 +540,24 @@ for L in range(10, 15, 5):
         xnew = np.arange(sol_C[0],sol_C[-1],0.1)
         ynew = f(xnew)
         # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
-        ax.plot(sol_C, sol_E, "y*", xnew, ynew, "b--")
+        ax.plot(sol_C, sol_E, "b*")
+        ax.plot(xnew, ynew, "b--", alpha = 0.2)
+        ax.set_xticks(sol_C)
+        ax.set_yticks(sol_E)
 
         # plt.xlabel("E (mA)")
         plt.xlabel("C (points)")
         # plt.ylabel("C (points)")
         plt.ylabel("E (mA)")
+
+        #Clona eixo y
+        ax2 = ax.twinx()
+
+        #Configura eixo secundario
+        ax2.plot(sol_C,np.arange(eps_MIN,eps_END+eps_step,eps_step), alpha=0)
+        ax2.set_yticks(np.arange(eps_MIN,eps_END+eps_step,eps_step))
+        ax2.get_xaxis().set_visible(False)
+        ax2.set_ylabel("$\\epsilon$ (points)")
         
         plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] +"_pareto.svg")
         print("Pareto plot successful!")

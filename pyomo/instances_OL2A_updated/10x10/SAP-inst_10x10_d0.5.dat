@@ -42,9 +42,9 @@ param MC :=
 "S3" 40.32;
 
 param RMAX :=
-"S2C" 1200
-"S2CPro" 3200
-"S3" 3200;
+"S2C" 1.2
+"S2CPro" 3.2
+"S3" 3.2;
 
 param X :=
 1 1
