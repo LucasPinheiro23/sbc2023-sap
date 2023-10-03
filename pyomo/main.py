@@ -95,7 +95,7 @@ for L in range(10, 15, 5):
             instance_eps = "_eps" + str(eps)
 
             # Define nome da figura a salvar
-            figname = instance_filename[:-4] + instance_eps
+            figname = instance_filename[9:-4] + instance_eps
 
             # Nome do arquivo de log
             sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt","w")
@@ -132,11 +132,11 @@ for L in range(10, 15, 5):
 
             #timing.report_timing(f, stream=True, level=20)
             
-            print("Took "+ str(presolve_time) + " s to build and translate to solver.")
+            print("\nTook "+ str(presolve_time) + " s to build and translate to solver.\n")
 
             instance.solutions.store_to(results)
             results.problem.name = instance_filename
-            results.write(filename="results.json", format="json")
+            results.write(filename="./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + "-results.json", format="json")
 
             if results.solver.termination_condition == "maxTimeLimit":
                 print("\n\nSOLVER TIME LIMIT EXCEEDED\n\n")
