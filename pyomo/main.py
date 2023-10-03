@@ -1,6 +1,8 @@
 # from sap_sbc_abstract_model import *
 from efficient_sap_sbc_abstract_model import *
 from pyomo.environ import *
+from pyomo.common import timing
+from matplotlib.ticker import AutoMinorLocator
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import scipy.interpolate as sp
@@ -10,8 +12,8 @@ import os
 import time
 import sys
 
-#Constante que determina o percentual minimo da cobertura maxima a ser alcancado
-stop_perc = 0.95
+#Constante que determina o percentual minimo da cobertura maxima a ser alcancado. Condicao de parada.
+stop_perc = 0.90
 
 # Zera o tempo decorrido total
 tt0 = time.time()
@@ -63,16 +65,26 @@ for L in range(10, 15, 5):
 
         eps_MIN = 0
 
-        eps_step = floor(eps_MAX/3)
+        eps_step = floor(eps_MAX/2)
 
         #Inicializa variavel de execucao adicional para o ultimo epsilon
         ad_run = False
 
         #Executa o solver para variados epsilon, comecando do maximo. Quando encontra muita variacao na FO, para a execucao.
-        for eps in range(eps_MIN, eps_MAX, eps_step):
+        eps = eps_MIN
+        
+        while eps <= eps_MAX:
+        # for eps in range(eps_MIN, eps_MAX, eps_step):
             
+            #Se esta na run adicional, epsilon atual deve ser o epsilon maximo. Programa encerramento atualizando o valor de epsilon maximo original.
+            if(ad_run):
+                eps = eps_bkp
+                eps_MAX = eps_bkp
+
             #Se o proximo passo ultrapassar o maximo, precisa de uma nova execucao para eps_MAX
             if(eps + eps_step > eps_MAX):
+                eps_bkp = eps_MAX
+                eps_MAX = eps_MAX*1000
                 ad_run = True
 
             # Zera o tempo decorrido no epsilon
@@ -83,7 +95,7 @@ for L in range(10, 15, 5):
             instance_eps = "_eps" + str(eps)
 
             # Define nome da figura a salvar
-            figname = instance_filename[:-3] + instance_eps
+            figname = instance_filename[:-4] + instance_eps
 
             # Nome do arquivo de log
             sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt","w")
@@ -109,11 +121,16 @@ for L in range(10, 15, 5):
             # Cria um solver
             opt = SolverFactory(solver, executable=solver_exec)
             # opt.options["tmlim"] = 1200
-            opt.options["mipgap"] = 0.0001
+            opt.options["mipgap"] = 0.001
 
             print("Translating instance to solver...\n")
             # Resolve a instancia e armazena os resultados em um arquivo JSON
             results = opt.solve(instance, tee=True)
+
+            # Adiciona log do tempo do Pyomo
+            f = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + "_timing.txt","w")
+            timing.report_timing(f, stream=True, level=20)
+            
             instance.solutions.store_to(results)
             results.problem.name = instance_filename
             results.write(filename="results.json", format="json")
@@ -143,25 +160,27 @@ for L in range(10, 15, 5):
             # Variavel de decisao da Cobertura (valor otimo)
             C_now = value(instance.objC)
             sol_C.append(C_now)
-            print("C = " + str(C_now) + "points")
-            print("C ~= " + str((C_now/4)*1.6) + "km^2")
+            print("C = " + str(C_now) + " points")
+            print("C ~= " + str((C_now/4)*1.6) + " km^2")
 
             # Valor de epsilon utilizado nessa execucao
             sol_eps.append(eps)
             print("\nMinimum Epsilon for this instance = " + str(eps_MIN))
             print("Maximum Epsilon for this instance = " + str(eps_MAX))
             print("Current Epsilon = " + str(eps))
-            print("\nInstance Maximum Epsilon Preprocessing Time: " + str(ttt))
+            print("\nInstance Maximum Epsilon Preprocessing Time: " + str(ttt) + " s")
 
             sol_time.append(results.solver.time)
             # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
             print("\nTime in solver (for this epsilon): " + str(results.solver.time) + " s")
             
             t = time.time() - t0
-            print("Elapsed time (for this epsilon): " + str(t))
+            print("Elapsed time (for this epsilon): " + str(t) + " s")
 
             tt = time.time() - tt0
-            print("\n\nTotal elapsed time since execution of first epsilon: " + str(tt))
+            print("\n\nTotal elapsed time since execution of first epsilon: " + str(tt) + " s")
+
+            sys.stdout.close()
 
             # -----------------------------------------------------------#
 
@@ -278,14 +297,15 @@ for L in range(10, 15, 5):
 
             eps_END = eps
 
-            ###Condicao de parada! Se alcancou pelo menos 90% da cobertura maxima.
+            eps = eps + eps_step
+
+            ###Condicao de parada! Se alcancou pelo menos X% da cobertura maxima.
             # if(C_now >= stop_perc * eps_MAX):
                     
             #     print("Stopped by epsilon. " + str(C_now) + " >= 90% * " + str(eps_MAX))
             #     sys.stdout.close()
             #     break
 
-            sys.stdout.close()
     
     # #Executa rodada adicional apenas para o ultimo epsilon, caso ja nao tenha sido considerado
     # if(ad_run):
@@ -530,6 +550,9 @@ for L in range(10, 15, 5):
         fig = plt.figure("Pareto Frontier")
         ax = fig.add_subplot(1, 1, 1)
         ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
+        # Enabling minor grid lines:
+        ax.grid(which = "minor")
+        ax.minorticks_on()
         # ax.set_xticks(np.arange(int(instance.smallest_X),int(instance.biggest_X)+1,1))
         # ax.set_yticks(np.arange(int(instance.smallest_Y),int(instance.biggest_Y)+1,1))
 
@@ -542,13 +565,16 @@ for L in range(10, 15, 5):
         # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
         ax.plot(sol_C, sol_E, "b*")
         ax.plot(xnew, ynew, "b--", alpha = 0.2)
-        ax.set_xticks(sol_C)
-        ax.set_yticks(sol_E)
+        # ax.set_xticks(sol_C)
+        # ax.set_yticks(sol_E)
 
         # plt.xlabel("E (mA)")
         plt.xlabel("C (points)")
         # plt.ylabel("C (points)")
         plt.ylabel("E (mA)")
+
+        ax.xaxis.set_minor_locator(AutoMinorLocator())
+        ax.yaxis.set_minor_locator(AutoMinorLocator())
 
         #Clona eixo y
         ax2 = ax.twinx()
@@ -558,6 +584,10 @@ for L in range(10, 15, 5):
         ax2.set_yticks(np.arange(eps_MIN,eps_END+eps_step,eps_step))
         ax2.get_xaxis().set_visible(False)
         ax2.set_ylabel("$\\epsilon$ (points)")
+        ax2.yaxis.label.set_color('blue')
+        ax2.tick_params(axis='y', colors='blue')
+
+        # ax2.yaxis.set_minor_locator(AutoMinorLocator())
         
         plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] +"_pareto.svg")
         print("Pareto plot successful!")
