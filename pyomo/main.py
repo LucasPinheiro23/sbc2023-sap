@@ -121,16 +121,19 @@ for L in range(10, 15, 5):
             # Cria um solver
             opt = SolverFactory(solver, executable=solver_exec)
             # opt.options["tmlim"] = 1200
-            opt.options["mipgap"] = 0.001
+            opt.options["mipgap"] = 0.01
 
             print("Translating instance to solver...\n")
             # Resolve a instancia e armazena os resultados em um arquivo JSON
-            results = opt.solve(instance, tee=True)
+            results, presolve_time = opt.solve(instance, tee=True)
 
             # Adiciona log do tempo do Pyomo
-            f = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + "_timing.txt","w")
-            timing.report_timing(f, stream=True, level=20)
+            # f = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + "_timing.txt","w")
+
+            #timing.report_timing(f, stream=True, level=20)
             
+            print("Took "+ str(presolve_time) + " s to build and translate to solver.")
+
             instance.solutions.store_to(results)
             results.problem.name = instance_filename
             results.write(filename="results.json", format="json")
