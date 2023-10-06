@@ -1,14 +1,14 @@
 {
     "Problem": [
         {
-            "Lower bound": 1.061782,
+            "Lower bound": -Infinity,
             "Name": "SAP-inst_10x10_d0.1.dat",
-            "Number of constraints": 8217,
-            "Number of nonzeros": 21294,
+            "Number of constraints": 8216,
+            "Number of nonzeros": 21293,
             "Number of objectives": 1,
-            "Number of variables": 5233,
+            "Number of variables": 5232,
             "Sense": "minimize",
-            "Upper bound": 1.061782
+            "Upper bound": Infinity
         }
     ],
     "Solution": [
@@ -18,24 +18,24 @@
         },
         {
             "Constraint": "No values",
-            "Gap": 0.0,
+            "Gap": null,
             "Message": null,
             "Objective": {
                 "E": {
-                    "Value": 1.061782
+                    "Value": 1.511782
                 }
             },
             "Problem": {},
-            "Status": "optimal",
+            "Status": "feasible",
             "Variable": {
                 "FO_C": {
-                    "Value": 50.0
+                    "Value": 57.0
                 },
                 "L[0]": {
                     "Value": 1.0
                 },
                 "L[10]": {
-                    "Value": -7.0
+                    "Value": 2.0
                 },
                 "L[1]": {
                     "Value": -9.0
@@ -44,13 +44,13 @@
                     "Value": -9.0
                 },
                 "L[3]": {
-                    "Value": -8.0
+                    "Value": -9.0
                 },
                 "L[4]": {
                     "Value": -9.0
                 },
                 "L[5]": {
-                    "Value": 2.0
+                    "Value": -7.0
                 },
                 "L[6]": {
                     "Value": -7.0
@@ -59,201 +59,276 @@
                     "Value": -7.0
                 },
                 "L[8]": {
-                    "Value": 3.0
-                },
-                "L[9]": {
                     "Value": -7.0
                 },
-                "P[S2C,S2C,5,5]": {
+                "L[9]": {
+                    "Value": 3.0
+                },
+                "P[S2CPro,S2CPro,10,10]": {
                     "Value": 1.0
                 },
-                "P[S2C,S2CPro,5,8]": {
+                "P[S2CPro,S2CPro,10,9]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S2C,8,5]": {
+                "P[S2CPro,S2CPro,9,10]": {
                     "Value": 1.0
                 },
-                "P[S2CPro,S2CPro,8,8]": {
+                "P[S2CPro,S2CPro,9,9]": {
                     "Value": 1.0
                 },
-                "a[S2C,S3,5,0]": {
+                "a[S2CPro,S2CPro,9,10]": {
                     "Value": 1.0
                 },
-                "a[S2CPro,S2C,8,5]": {
+                "a[S2CPro,S3,10,0]": {
                     "Value": 1.0
                 },
-                "c[10,6,8,S2CPro]": {
+                "c[10,2,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[2,6,8,S2CPro]": {
+                "c[10,3,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[3,3,5,S2C]": {
+                "c[10,3,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[3,4,5,S2C]": {
+                "c[10,4,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[3,4,8,S2CPro]": {
+                "c[10,4,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[3,5,5,S2C]": {
+                "c[10,5,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[3,5,8,S2CPro]": {
+                "c[10,5,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[3,6,8,S2CPro]": {
+                "c[10,6,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[3,7,8,S2CPro]": {
+                "c[10,6,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[3,8,8,S2CPro]": {
+                "c[10,7,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[4,3,5,S2C]": {
+                "c[10,8,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[4,3,8,S2CPro]": {
+                "c[10,9,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[4,4,5,S2C]": {
+                "c[3,4,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[4,4,8,S2CPro]": {
+                "c[4,2,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[4,5,5,S2C]": {
+                "c[4,3,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[4,5,8,S2CPro]": {
+                "c[4,4,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[4,6,8,S2CPro]": {
+                "c[4,5,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[4,7,8,S2CPro]": {
+                "c[4,6,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[4,8,8,S2CPro]": {
+                "c[5,1,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[4,9,8,S2CPro]": {
+                "c[5,2,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[5,3,5,S2C]": {
+                "c[5,3,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[5,3,8,S2CPro]": {
+                "c[5,4,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[5,4,5,S2C]": {
+                "c[5,5,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[5,4,8,S2CPro]": {
+                "c[5,6,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[5,5,5,S2C]": {
+                "c[5,6,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[5,5,8,S2CPro]": {
+                "c[5,7,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[5,6,8,S2CPro]": {
+                "c[6,1,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[5,7,8,S2CPro]": {
+                "c[6,2,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[5,8,8,S2CPro]": {
+                "c[6,3,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[5,9,8,S2CPro]": {
+                "c[6,4,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[6,10,8,S2CPro]": {
+                "c[6,4,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[6,2,8,S2CPro]": {
+                "c[6,5,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[6,3,8,S2CPro]": {
+                "c[6,5,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[6,4,8,S2CPro]": {
+                "c[6,6,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[6,5,8,S2CPro]": {
+                "c[6,6,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[6,6,8,S2CPro]": {
+                "c[6,7,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[6,7,8,S2CPro]": {
+                "c[6,7,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[6,8,8,S2CPro]": {
+                "c[6,8,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[6,9,8,S2CPro]": {
+                "c[7,1,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[7,3,8,S2CPro]": {
+                "c[7,2,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[7,4,8,S2CPro]": {
+                "c[7,3,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[7,5,8,S2CPro]": {
+                "c[7,3,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[7,6,8,S2CPro]": {
+                "c[7,4,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[7,7,8,S2CPro]": {
+                "c[7,4,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[7,8,8,S2CPro]": {
+                "c[7,5,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[7,9,8,S2CPro]": {
+                "c[7,5,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[8,3,8,S2CPro]": {
+                "c[7,6,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[8,4,8,S2CPro]": {
+                "c[7,6,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[8,5,8,S2CPro]": {
+                "c[7,7,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[8,6,8,S2CPro]": {
+                "c[7,7,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[8,7,8,S2CPro]": {
+                "c[7,8,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[8,8,8,S2CPro]": {
+                "c[7,8,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[8,9,8,S2CPro]": {
+                "c[7,9,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[9,4,8,S2CPro]": {
+                "c[8,1,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[9,5,8,S2CPro]": {
+                "c[8,2,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[9,6,8,S2CPro]": {
+                "c[8,3,10,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[9,7,8,S2CPro]": {
+                "c[8,3,9,S2CPro]": {
                     "Value": 1.0
                 },
-                "c[9,8,8,S2CPro]": {
+                "c[8,4,10,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[8,4,9,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[8,5,10,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[8,5,9,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[8,6,10,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[8,6,9,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[8,7,10,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[8,7,9,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[8,8,10,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[8,9,10,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,1,9,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,10,10,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,2,10,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,2,9,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,3,10,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,3,9,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,4,10,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,4,9,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,5,10,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,5,9,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,6,10,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,6,9,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,7,10,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,7,9,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,8,10,S2CPro]": {
+                    "Value": 1.0
+                },
+                "c[9,9,10,S2CPro]": {
                     "Value": 1.0
                 },
                 "ccY[1,1,1]": {
@@ -286,25 +361,16 @@
                 "ccY[1,9,1]": {
                     "Value": 1.0
                 },
-                "ccY[10,2,1]": {
+                "ccY[10,3,2]": {
                     "Value": 1.0
                 },
-                "ccY[10,3,1]": {
+                "ccY[10,4,2]": {
                     "Value": 1.0
                 },
-                "ccY[10,4,1]": {
+                "ccY[10,5,2]": {
                     "Value": 1.0
                 },
-                "ccY[10,5,1]": {
-                    "Value": 1.0
-                },
-                "ccY[10,7,1]": {
-                    "Value": 1.0
-                },
-                "ccY[10,8,1]": {
-                    "Value": 1.0
-                },
-                "ccY[10,9,1]": {
+                "ccY[10,6,2]": {
                     "Value": 1.0
                 },
                 "ccY[2,1,1]": {
@@ -346,10 +412,10 @@
                 "ccY[3,2,1]": {
                     "Value": 1.0
                 },
-                "ccY[3,4,2]": {
+                "ccY[3,3,1]": {
                     "Value": 1.0
                 },
-                "ccY[3,5,2]": {
+                "ccY[3,5,1]": {
                     "Value": 1.0
                 },
                 "ccY[3,6,1]": {
@@ -358,7 +424,7 @@
                 "ccY[3,7,1]": {
                     "Value": 1.0
                 },
-                "ccY[3,8,2]": {
+                "ccY[3,8,1]": {
                     "Value": 1.0
                 },
                 "ccY[3,9,1]": {
@@ -370,88 +436,145 @@
                 "ccY[4,10,1]": {
                     "Value": 1.0
                 },
-                "ccY[4,2,1]": {
+                "ccY[4,7,1]": {
                     "Value": 1.0
                 },
-                "ccY[4,3,2]": {
+                "ccY[4,8,1]": {
                     "Value": 1.0
                 },
-                "ccY[4,4,2]": {
-                    "Value": 1.0
-                },
-                "ccY[4,5,2]": {
-                    "Value": 1.0
-                },
-                "ccY[5,1,1]": {
+                "ccY[4,9,1]": {
                     "Value": 1.0
                 },
                 "ccY[5,10,1]": {
                     "Value": 1.0
                 },
-                "ccY[5,2,1]": {
+                "ccY[5,6,2]": {
                     "Value": 1.0
                 },
-                "ccY[5,3,2]": {
+                "ccY[5,8,1]": {
                     "Value": 1.0
                 },
-                "ccY[5,4,2]": {
-                    "Value": 1.0
-                },
-                "ccY[5,5,2]": {
+                "ccY[5,9,1]": {
                     "Value": 1.0
                 },
                 "ccY[6,1,1]": {
                     "Value": 1.0
                 },
+                "ccY[6,10,1]": {
+                    "Value": 1.0
+                },
+                "ccY[6,4,2]": {
+                    "Value": 1.0
+                },
+                "ccY[6,5,2]": {
+                    "Value": 1.0
+                },
+                "ccY[6,6,2]": {
+                    "Value": 1.0
+                },
+                "ccY[6,7,2]": {
+                    "Value": 1.0
+                },
+                "ccY[6,9,1]": {
+                    "Value": 1.0
+                },
                 "ccY[7,1,1]": {
                     "Value": 1.0
                 },
-                "ccY[7,2,1]": {
+                "ccY[7,3,2]": {
                     "Value": 1.0
                 },
-                "ccY[8,1,1]": {
+                "ccY[7,4,2]": {
+                    "Value": 1.0
+                },
+                "ccY[7,5,2]": {
+                    "Value": 1.0
+                },
+                "ccY[7,6,2]": {
+                    "Value": 1.0
+                },
+                "ccY[7,7,2]": {
+                    "Value": 1.0
+                },
+                "ccY[7,8,2]": {
+                    "Value": 1.0
+                },
+                "ccY[7,9,1]": {
                     "Value": 1.0
                 },
                 "ccY[8,2,1]": {
                     "Value": 1.0
                 },
-                "ccY[9,1,1]": {
+                "ccY[8,3,2]": {
                     "Value": 1.0
                 },
-                "ccY[9,10,1]": {
+                "ccY[8,4,2]": {
                     "Value": 1.0
                 },
-                "ccY[9,2,1]": {
+                "ccY[8,5,2]": {
                     "Value": 1.0
                 },
-                "ccY[9,3,1]": {
+                "ccY[8,6,2]": {
                     "Value": 1.0
                 },
-                "ccY[9,9,1]": {
+                "ccY[8,7,2]": {
+                    "Value": 1.0
+                },
+                "ccY[8,8,1]": {
+                    "Value": 1.0
+                },
+                "ccY[8,9,1]": {
+                    "Value": 1.0
+                },
+                "ccY[9,2,2]": {
+                    "Value": 1.0
+                },
+                "ccY[9,3,2]": {
+                    "Value": 1.0
+                },
+                "ccY[9,4,2]": {
+                    "Value": 1.0
+                },
+                "ccY[9,5,2]": {
+                    "Value": 1.0
+                },
+                "ccY[9,6,2]": {
+                    "Value": 1.0
+                },
+                "ccY[9,7,2]": {
+                    "Value": 1.0
+                },
+                "ccY[9,8,1]": {
+                    "Value": 1.0
+                },
+                "cc[10,2]": {
+                    "Value": 1.0
+                },
+                "cc[10,3]": {
+                    "Value": 1.0
+                },
+                "cc[10,4]": {
+                    "Value": 1.0
+                },
+                "cc[10,5]": {
                     "Value": 1.0
                 },
                 "cc[10,6]": {
                     "Value": 1.0
                 },
-                "cc[2,6]": {
+                "cc[10,7]": {
                     "Value": 1.0
                 },
-                "cc[3,3]": {
+                "cc[10,8]": {
+                    "Value": 1.0
+                },
+                "cc[10,9]": {
                     "Value": 1.0
                 },
                 "cc[3,4]": {
                     "Value": 1.0
                 },
-                "cc[3,5]": {
-                    "Value": 1.0
-                },
-                "cc[3,6]": {
-                    "Value": 1.0
-                },
-                "cc[3,7]": {
-                    "Value": 1.0
-                },
-                "cc[3,8]": {
+                "cc[4,2]": {
                     "Value": 1.0
                 },
                 "cc[4,3]": {
@@ -466,13 +589,10 @@
                 "cc[4,6]": {
                     "Value": 1.0
                 },
-                "cc[4,7]": {
+                "cc[5,1]": {
                     "Value": 1.0
                 },
-                "cc[4,8]": {
-                    "Value": 1.0
-                },
-                "cc[4,9]": {
+                "cc[5,2]": {
                     "Value": 1.0
                 },
                 "cc[5,3]": {
@@ -490,13 +610,7 @@
                 "cc[5,7]": {
                     "Value": 1.0
                 },
-                "cc[5,8]": {
-                    "Value": 1.0
-                },
-                "cc[5,9]": {
-                    "Value": 1.0
-                },
-                "cc[6,10]": {
+                "cc[6,1]": {
                     "Value": 1.0
                 },
                 "cc[6,2]": {
@@ -520,7 +634,10 @@
                 "cc[6,8]": {
                     "Value": 1.0
                 },
-                "cc[6,9]": {
+                "cc[7,1]": {
+                    "Value": 1.0
+                },
+                "cc[7,2]": {
                     "Value": 1.0
                 },
                 "cc[7,3]": {
@@ -544,6 +661,12 @@
                 "cc[7,9]": {
                     "Value": 1.0
                 },
+                "cc[8,1]": {
+                    "Value": 1.0
+                },
+                "cc[8,2]": {
+                    "Value": 1.0
+                },
                 "cc[8,3]": {
                     "Value": 1.0
                 },
@@ -565,6 +688,18 @@
                 "cc[8,9]": {
                     "Value": 1.0
                 },
+                "cc[9,10]": {
+                    "Value": 1.0
+                },
+                "cc[9,1]": {
+                    "Value": 1.0
+                },
+                "cc[9,2]": {
+                    "Value": 1.0
+                },
+                "cc[9,3]": {
+                    "Value": 1.0
+                },
                 "cc[9,4]": {
                     "Value": 1.0
                 },
@@ -580,10 +715,13 @@
                 "cc[9,8]": {
                     "Value": 1.0
                 },
-                "s[S2C,5]": {
+                "cc[9,9]": {
                     "Value": 1.0
                 },
-                "s[S2CPro,8]": {
+                "s[S2CPro,10]": {
+                    "Value": 1.0
+                },
+                "s[S2CPro,9]": {
                     "Value": 1.0
                 }
             }
@@ -594,13 +732,13 @@
             "Error rc": 0,
             "Statistics": {
                 "Branch and bound": {
-                    "Number of bounded subproblems": "121",
-                    "Number of created subproblems": "121"
+                    "Number of bounded subproblems": 0,
+                    "Number of created subproblems": 0
                 }
             },
             "Status": "ok",
-            "Termination condition": "optimal",
-            "Time": 3.7377750873565674
+            "Termination condition": "feasible",
+            "Time": 40.03044581413269
         }
     ]
 }

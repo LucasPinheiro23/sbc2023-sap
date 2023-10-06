@@ -19,13 +19,18 @@ stop_perc = 0.90
 tt0 = time.time()
 
 # Lista de solucoes da FO E
-sol_E = []
+sol_E_opt = []
 # Lista de solucoes da FO C
-sol_C = []
+sol_C_opt = []
 # Lista de epsilons
-sol_eps = []
-# Lista de tempo de solucao
-sol_time = []
+sol_eps_opt = []
+
+# Lista de solucoes da FO E
+sol_E_feas = []
+# Lista de solucoes da FO C
+sol_C_feas = []
+# Lista de epsilons
+sol_eps_feas = []
 
 # Muda diretorio (BUG DO VSCODE)
 # os.chdir("./pyomo")
@@ -66,12 +71,12 @@ for L in range(10, 30, 5):
         #Reduz o epsilon maximo a 90% da cobertura maxima
         eps_MAX = floor(stop_perc * eps_MAX)
 
-        eps_step = floor(eps_MAX/10)
+        eps_step = floor(eps_MAX/3)
 
         eps_MIN = eps_step
 
         #Inicializa variavel de execucao adicional para o ultimo epsilon
-        ad_run = False
+        # ad_run = False
 
         #Executa o solver para variados epsilon, comecando do maximo. Quando encontra muita variacao na FO, para a execucao.
         eps = eps_MIN
@@ -80,15 +85,15 @@ for L in range(10, 30, 5):
         # for eps in range(eps_MIN, eps_MAX, eps_step):
             
             #Se esta na run adicional, epsilon atual deve ser o epsilon maximo. Programa encerramento atualizando o valor de epsilon maximo original.
-            if(ad_run):
-                eps_MAX = eps_bkp
-                eps = eps_MAX
+            # if(ad_run):
+            #     eps_MAX = eps_bkp
+            #     eps = eps_MAX
 
-            #Se o proximo passo ultrapassar o maximo, precisa de uma nova execucao para eps_MAX
-            if((eps + eps_step > eps_MAX) and eps != eps_MAX):
-                eps_bkp = eps_MAX
-                eps_MAX = eps_MAX*1000
-                ad_run = True
+            # #Se o proximo passo ultrapassar o maximo, precisa de uma nova execucao para eps_MAX
+            # if((eps + eps_step > eps_MAX) and eps != eps_MAX):
+            #     eps_bkp = eps_MAX
+            #     eps_MAX = eps_MAX*1000
+            #     ad_run = True
 
             # Zera o tempo decorrido no epsilon
             t0 = time.time()
@@ -124,6 +129,7 @@ for L in range(10, 30, 5):
             # Cria um solver
             opt = SolverFactory(solver, executable=solver_exec)
             opt.options["tmlim"] = 36000
+            # opt.options["tmlim"] = 120
             opt.options["mipgap"] = 0.01
 
             print("Translating instance to solver...\n")
@@ -134,42 +140,28 @@ for L in range(10, 30, 5):
             results.problem.name = instance_filename
             results.write(filename="./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + "-results.json", format="json")
 
-            if results.solver.termination_condition == "maxTimeLimit":
-                print("\n\nSOLVER TIME LIMIT EXCEEDED\n\n")
-                if math.isinf(results.problem.lower_bound) or math.isinf(
-                    results.problem.upper_bound
-                ):
-                    print("\n\nNO SOLUTION FOUND FOR THIS INSTANCE!\n\n")
-                    continue
+            if (results.solver.termination_condition == TerminationCondition.noSolution or results.solver.termination_condition == TerminationCondition.infeasibleOrUnbounded):
+                print("\n\nNO SOLUTION FOUND FOR THIS EPSILON!\n\n")
+                continue
 
             # Pega resultados diretamente
             print("\nResults:\n")
 
-            # PEGAR RESULTADOS:
-            # VALOR DA FO DE ENERGIA
-            # VALOR DA RESTRICAO DE COBERTURA (FO DE COBERTURA)
-            # TEMPO DE EXECUCAO (DO SOLVER)
-            # GAP DE OTIMALIDADE
-            #
-            # Funcao objetivo de Energia (valor otimo)
+            # Resultado da funcao objetivo de Energia
             E_now = value(instance.E)
-            sol_E.append(E_now)
             print("E = " + str(E_now) + " mA")
 
-            # Variavel de decisao da Cobertura (valor otimo)
+            # Resultado da variavel de decisao da Cobertura
             C_now = value(instance.objC)
-            sol_C.append(C_now)
             print("C = " + str(C_now) + " points")
             print("C ~= " + str((C_now/4)*1.6) + " km^2")
 
-            # Valor de epsilon utilizado nessa execucao
-            sol_eps.append(eps)
+            #Dados do epsilon
             print("\nMinimum Epsilon for this instance = " + str(eps_MIN))
             print("Maximum Epsilon for this instance = " + str(eps_MAX))
             print("Current Epsilon = " + str(eps))
             print("\nInstance Maximum Epsilon Preprocessing Time: " + str(ttt) + " s")
 
-            sol_time.append(results.solver.time)
             # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
             print("\nTime in solver (for this epsilon): " + str(results.solver.time) + " s")
             
@@ -178,6 +170,18 @@ for L in range(10, 30, 5):
 
             tt = time.time() - tt0
             print("\n\nTotal elapsed time since execution of first epsilon: " + str(tt) + " s")
+
+            #Se resultado eh otimo (gap = 0.0%)
+            if((results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal)):
+                sol_E_opt.append(E_now)
+                sol_C_opt.append(C_now)
+                sol_eps_opt.append(eps)
+            #Se encontrou solucao porem gap != 0.0%
+            elif((results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.feasible)):
+                sol_E_feas.append(E_now)
+                sol_C_feas.append(C_now)
+                sol_eps_feas.append(eps)
+            
 
             sys.stdout.close()
 
@@ -189,7 +193,7 @@ for L in range(10, 30, 5):
             # Plota todos os espacos disponiveis para alocacao como circulos nao-preenchidos pretos
             # Se estiver alocado, preenche o circulo e colore de acordo com modelo de transceptor ativo
 
-            fig = plt.figure("SAP Optimal Result")
+            fig = plt.figure("SAP Result")
             ax = fig.add_subplot(1, 1, 1)
             ax.axis("equal")
 
@@ -308,23 +312,33 @@ for L in range(10, 30, 5):
             fig = plt.figure("Pareto Frontier")
             ax = fig.add_subplot(1, 1, 1)
             ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
-            # Enabling minor grid lines:
             ax.grid(which = "minor")
             ax.minorticks_on()
-            # ax.set_xticks(np.arange(int(instance.smallest_X),int(instance.biggest_X)+1,1))
-            # ax.set_yticks(np.arange(int(instance.smallest_Y),int(instance.biggest_Y)+1,1))
 
-            # f = sp.interp1d(new_sol_E,new_sol_C,kind='cubic')
-            f = sp.interp1d(sol_C,sol_E)#kind='cubic')
+            ###Fronteira de Pareto
+
+            f = sp.interp1d(sol_C_opt,sol_E_opt)#kind='cubic')
 
             # xnew = np.arange(new_sol_E[0],new_sol_E[-1],0.1)
-            xnew = np.arange(sol_C[0],sol_C[-1],0.1)
+            xnew = np.arange(sol_C_opt[0],sol_C_opt[-1],0.1)
             ynew = f(xnew)
             # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
-            ax.plot(sol_C, sol_E, "b*")
-            ax.plot(xnew, ynew, "b--", alpha = 0.2)
+            
+            ax.plot(sol_C_opt, sol_E_opt, "r*")
+            ax.plot(xnew, ynew, "r--", alpha = 0.2)
 
-            eps_range = np.arange(eps_MIN,eps_END+eps_step,eps_step)
+            ###Solucoes dominadas
+
+            f = sp.interp1d(sol_C_feas,sol_E_feas)#kind='cubic')
+
+            # xnew = np.arange(new_sol_E[0],new_sol_E[-1],0.1)
+            xnew = np.arange(sol_C_feas[0],sol_C_feas[-1],0.1)
+            ynew = f(xnew)
+
+            ax.plot(sol_C_feas, sol_E_feas, "b*")
+            # ax.plot(xnew, ynew, "b--", alpha = 0.2)
+
+            # eps_range = np.arange(eps_MIN,eps_END+eps_step,eps_step)
                 
             # ax.set_xticks(sol_C)
             # ax.set_yticks(sol_E)
@@ -333,6 +347,11 @@ for L in range(10, 30, 5):
             plt.xlabel("C (points)")
             # plt.ylabel("C (points)")
             plt.ylabel("E (mA)")
+
+            red_patch = mpatches.Patch(color="red", label="Non-dominated Solution")
+            blue_patch = mpatches.Patch(color="blue", label="Dominated Solution")
+
+            ax.legend(handles=[red_patch, blue_patch], loc="upper right")
 
             ax.xaxis.set_minor_locator(AutoMinorLocator())
             ax.yaxis.set_minor_locator(AutoMinorLocator())
