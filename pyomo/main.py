@@ -13,7 +13,7 @@ import time
 import sys
 
 #Constante que determina o percentual minimo da cobertura maxima a ser alcancado. Condicao de parada.
-stop_perc = 0.50
+stop_perc = 0.90
 
 # Zera o tempo decorrido total
 tt0 = time.time()
@@ -28,7 +28,7 @@ sol_eps = []
 sol_time = []
 
 # Muda diretorio (BUG DO VSCODE)
-os.chdir("./pyomo")
+# os.chdir("./pyomo")
 
 # Script principal para resolver instancias do SAP
 
@@ -43,8 +43,8 @@ solver = "glpk"
 solver_exec = "glpsol"
 # Caminho das instancias
 
-for L in range(10, 15, 5):
-    for d in range(1, 2):
+for L in range(10, 30, 5):
+    for d in range(1, 10):
         instance_path = "./instances_OL2A_updated/" + str(L) + "x" + str(L) + "/"
         instance_filename = (
             "SAP-inst_" + str(L) + "x" + str(L) + "_d0." + str(d) + ".dat"
@@ -298,62 +298,61 @@ for L in range(10, 15, 5):
 
             eps = eps + eps_step
 
-
-    sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] + "_pareto.txt","w")
-    # sys.stdout = sys.__stdout__
-    
-    try:
-        # Plotando a fronteira de pareto
-        print("Started to plot Pareto Frontier...\n")
-
-        fig = plt.figure("Pareto Frontier")
-        ax = fig.add_subplot(1, 1, 1)
-        ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
-        # Enabling minor grid lines:
-        ax.grid(which = "minor")
-        ax.minorticks_on()
-        # ax.set_xticks(np.arange(int(instance.smallest_X),int(instance.biggest_X)+1,1))
-        # ax.set_yticks(np.arange(int(instance.smallest_Y),int(instance.biggest_Y)+1,1))
-
-        # f = sp.interp1d(new_sol_E,new_sol_C,kind='cubic')
-        f = sp.interp1d(sol_C,sol_E)#kind='cubic')
-
-        # xnew = np.arange(new_sol_E[0],new_sol_E[-1],0.1)
-        xnew = np.arange(sol_C[0],sol_C[-1],0.1)
-        ynew = f(xnew)
-        # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
-        ax.plot(sol_C, sol_E, "b*")
-        ax.plot(xnew, ynew, "b--", alpha = 0.2)
-
-        eps_range = np.arange(eps_MIN,eps_END+eps_step,eps_step)
-            
-        # ax.set_xticks(sol_C)
-        # ax.set_yticks(sol_E)
-
-        # plt.xlabel("E (mA)")
-        plt.xlabel("C (points)")
-        # plt.ylabel("C (points)")
-        plt.ylabel("E (mA)")
-
-        ax.xaxis.set_minor_locator(AutoMinorLocator())
-        ax.yaxis.set_minor_locator(AutoMinorLocator())
-
-        #Clona eixo y
-        # ax2 = ax.twinx()
-
-        #Configura eixo secundario
-        # ax2.plot(sol_C,np.arange(eps_MIN,eps_END+eps_step,eps_step), alpha=0)
-        # ax2.set_yticks(np.arange(eps_MIN,eps_END+eps_step,eps_step))
-        # ax2.get_xaxis().set_visible(False)
-        # ax2.set_ylabel("$\\epsilon$ (points)")
-        # ax2.yaxis.label.set_color('blue')
-        # ax2.tick_params(axis='y', colors='blue')
-
-        # ax2.yaxis.set_minor_locator(AutoMinorLocator())
+        sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] + "_pareto.txt","w")
+        # sys.stdout = sys.__stdout__
         
-        plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] +"_pareto.svg")
-        print("Pareto plot successful!")
-        plt.close()
-    except:
-        logging.exception("AN ERROR OCCURRED WHILE PLOTTING PARETO!")
-        sys.stdout.close()
+        try:
+            # Plotando a fronteira de pareto
+            print("Started to plot Pareto Frontier...\n")
+
+            fig = plt.figure("Pareto Frontier")
+            ax = fig.add_subplot(1, 1, 1)
+            ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
+            # Enabling minor grid lines:
+            ax.grid(which = "minor")
+            ax.minorticks_on()
+            # ax.set_xticks(np.arange(int(instance.smallest_X),int(instance.biggest_X)+1,1))
+            # ax.set_yticks(np.arange(int(instance.smallest_Y),int(instance.biggest_Y)+1,1))
+
+            # f = sp.interp1d(new_sol_E,new_sol_C,kind='cubic')
+            f = sp.interp1d(sol_C,sol_E)#kind='cubic')
+
+            # xnew = np.arange(new_sol_E[0],new_sol_E[-1],0.1)
+            xnew = np.arange(sol_C[0],sol_C[-1],0.1)
+            ynew = f(xnew)
+            # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
+            ax.plot(sol_C, sol_E, "b*")
+            ax.plot(xnew, ynew, "b--", alpha = 0.2)
+
+            eps_range = np.arange(eps_MIN,eps_END+eps_step,eps_step)
+                
+            # ax.set_xticks(sol_C)
+            # ax.set_yticks(sol_E)
+
+            # plt.xlabel("E (mA)")
+            plt.xlabel("C (points)")
+            # plt.ylabel("C (points)")
+            plt.ylabel("E (mA)")
+
+            ax.xaxis.set_minor_locator(AutoMinorLocator())
+            ax.yaxis.set_minor_locator(AutoMinorLocator())
+
+            #Clona eixo y
+            # ax2 = ax.twinx()
+
+            #Configura eixo secundario
+            # ax2.plot(sol_C,np.arange(eps_MIN,eps_END+eps_step,eps_step), alpha=0)
+            # ax2.set_yticks(np.arange(eps_MIN,eps_END+eps_step,eps_step))
+            # ax2.get_xaxis().set_visible(False)
+            # ax2.set_ylabel("$\\epsilon$ (points)")
+            # ax2.yaxis.label.set_color('blue')
+            # ax2.tick_params(axis='y', colors='blue')
+
+            # ax2.yaxis.set_minor_locator(AutoMinorLocator())
+            
+            plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] +"_pareto.svg")
+            print("Pareto plot successful!")
+            plt.close()
+        except:
+            logging.exception("AN ERROR OCCURRED WHILE PLOTTING PARETO!")
+            sys.stdout.close()
