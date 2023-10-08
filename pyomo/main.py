@@ -13,7 +13,7 @@ import time
 import sys
 
 #Constante que determina o percentual minimo da cobertura maxima a ser alcancado. Condicao de parada.
-stop_perc = 0.90
+stop_perc = 0.9
 
 # Zera o tempo decorrido total
 tt0 = time.time()
@@ -49,7 +49,7 @@ solver_exec = "glpsol"
 # Caminho das instancias
 
 for L in range(10, 30, 5):
-    for d in range(1, 10):
+    for d in range(1, 3):
         instance_path = "./instances_OL2A_updated/" + str(L) + "x" + str(L) + "/"
         instance_filename = (
             "SAP-inst_" + str(L) + "x" + str(L) + "_d0." + str(d) + ".dat"
@@ -71,7 +71,7 @@ for L in range(10, 30, 5):
         #Reduz o epsilon maximo a 90% da cobertura maxima
         eps_MAX = floor(stop_perc * eps_MAX)
 
-        eps_step = floor(eps_MAX/3)
+        eps_step = floor(eps_MAX/10)
 
         eps_MIN = eps_step
 
@@ -254,7 +254,7 @@ for L in range(10, 30, 5):
             blue_patch = mpatches.Patch(color="blue", label="S2CPro")
             green_patch = mpatches.Patch(color="green", label="S2C")
 
-            ax.legend(handles=[red_patch, blue_patch, green_patch], loc="upper right")
+            ax.legend(handles=[red_patch, blue_patch, green_patch], loc="upper right", prop={'size':6})
 
             plt.plot(
                 [instance.W[1]*value(instance.scale), instance.W[value(instance.dimW)]*value(instance.scale)],
@@ -301,7 +301,6 @@ for L in range(10, 30, 5):
             # plt.title('Instance: '+str(instance_filename)+'\nScale: 1:'+str(int(instance.scale))+'m\nAlphas: '+str(alpha['E'])+'E, '+str(alpha['C'])+'C, '+str(alpha['M'])+'M  -  Time: '+str(results.solver.user_time)+' s')
             # plt.show()
             plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname +".svg")
-            ax.close()
             plt.close()
 
             eps_END = eps
@@ -357,7 +356,7 @@ for L in range(10, 30, 5):
             red_patch = mpatches.Patch(color="red", label="Non-dominated Solution")
             blue_patch = mpatches.Patch(color="blue", label="Dominated Solution")
 
-            ax.legend(handles=[red_patch, blue_patch], loc="upper left")
+            ax.legend(handles=[red_patch, blue_patch], loc="upper left", prop={'size':6})
 
             ax.xaxis.set_minor_locator(AutoMinorLocator())
             ax.yaxis.set_minor_locator(AutoMinorLocator())
@@ -377,7 +376,7 @@ for L in range(10, 30, 5):
             
             plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] +"_pareto.svg")
             print("Pareto plot successful!")
-            ax.close()
+            plt.clf()
             plt.close()
 
         except:
