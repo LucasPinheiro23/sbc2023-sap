@@ -49,7 +49,7 @@ solver_exec = "glpsol"
 # Caminho das instancias
 
 for L in range(10, 30, 5):
-    for d in range(1, 3):
+    for d in range(1, 10):
         instance_path = "./instances_OL2A_updated/" + str(L) + "x" + str(L) + "/"
         instance_filename = (
             "SAP-inst_" + str(L) + "x" + str(L) + "_d0." + str(d) + ".dat"
