@@ -171,16 +171,21 @@ for L in range(10, 30, 5):
             tt = time.time() - tt0
             print("\n\nTotal elapsed time since execution of first epsilon: " + str(tt) + " s")
 
-            #Se resultado eh otimo (gap = 0.0%)
-            if((results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal)):
+            #Se acabou o tempo limite, verifica se obteve solucao. Se sim, armazena.
+            if((results.solver.status == TerminationCondition.maxTimeLimit)):
+                if((results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.feasible)):
+                    sol_E_feas.append(E_now)
+                    sol_C_feas.append(C_now)
+                    sol_eps_feas.append(eps)
+            #Verifica se encontrou solucao com gap limite definido.
+            elif((results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.feasible)):
                 sol_E_opt.append(E_now)
                 sol_C_opt.append(C_now)
                 sol_eps_opt.append(eps)
-            #Se encontrou solucao porem gap != 0.0%
-            elif((results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.feasible)):
-                sol_E_feas.append(E_now)
-                sol_C_feas.append(C_now)
-                sol_eps_feas.append(eps)
+            elif((results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal)):
+                sol_E_opt.append(E_now)
+                sol_C_opt.append(C_now)
+                sol_eps_opt.append(eps)
             
 
             sys.stdout.close()
@@ -296,6 +301,7 @@ for L in range(10, 30, 5):
             # plt.title('Instance: '+str(instance_filename)+'\nScale: 1:'+str(int(instance.scale))+'m\nAlphas: '+str(alpha['E'])+'E, '+str(alpha['C'])+'C, '+str(alpha['M'])+'M  -  Time: '+str(results.solver.user_time)+' s')
             # plt.show()
             plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname +".svg")
+            ax.close()
             plt.close()
 
             eps_END = eps
@@ -329,11 +335,11 @@ for L in range(10, 30, 5):
 
             ###Solucoes dominadas
 
-            f = sp.interp1d(sol_C_feas,sol_E_feas)#kind='cubic')
+            # f = sp.interp1d(sol_C_feas,sol_E_feas)#kind='cubic')
 
             # xnew = np.arange(new_sol_E[0],new_sol_E[-1],0.1)
-            xnew = np.arange(sol_C_feas[0],sol_C_feas[-1],0.1)
-            ynew = f(xnew)
+            # xnew = np.arange(sol_C_feas[0],sol_C_feas[-1],0.1)
+            # ynew = f(xnew)
 
             ax.plot(sol_C_feas, sol_E_feas, "b*")
             # ax.plot(xnew, ynew, "b--", alpha = 0.2)
@@ -351,7 +357,7 @@ for L in range(10, 30, 5):
             red_patch = mpatches.Patch(color="red", label="Non-dominated Solution")
             blue_patch = mpatches.Patch(color="blue", label="Dominated Solution")
 
-            ax.legend(handles=[red_patch, blue_patch], loc="upper right")
+            ax.legend(handles=[red_patch, blue_patch], loc="upper left")
 
             ax.xaxis.set_minor_locator(AutoMinorLocator())
             ax.yaxis.set_minor_locator(AutoMinorLocator())
@@ -371,7 +377,9 @@ for L in range(10, 30, 5):
             
             plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] +"_pareto.svg")
             print("Pareto plot successful!")
+            ax.close()
             plt.close()
+
         except:
             logging.exception("AN ERROR OCCURRED WHILE PLOTTING PARETO!")
             sys.stdout.close()
