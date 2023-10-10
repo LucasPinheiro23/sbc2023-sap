@@ -13,27 +13,13 @@ import time
 import sys
 
 #Constante que determina o percentual minimo da cobertura maxima a ser alcancado. Condicao de parada.
-stop_perc = 0.9
+stop_perc = 0.99
 
 # Zera o tempo decorrido total
 tt0 = time.time()
 
-# Lista de solucoes da FO E
-sol_E_opt = []
-# Lista de solucoes da FO C
-sol_C_opt = []
-# Lista de epsilons
-sol_eps_opt = []
-
-# Lista de solucoes da FO E
-sol_E_feas = []
-# Lista de solucoes da FO C
-sol_C_feas = []
-# Lista de epsilons
-sol_eps_feas = []
-
 # Muda diretorio (BUG DO VSCODE)
-# os.chdir("./pyomo")
+os.chdir("./pyomo")
 
 # Script principal para resolver instancias do SAP
 
@@ -80,20 +66,22 @@ for L in range(10, 30, 5):
 
         #Executa o solver para variados epsilon, comecando do maximo. Quando encontra muita variacao na FO, para a execucao.
         eps = eps_MIN
+
+        # Lista de solucoes da FO E
+        sol_E_opt = []
+        # Lista de solucoes da FO C
+        sol_C_opt = []
+        # Lista de epsilons
+        sol_eps_opt = []
+
+        # Lista de solucoes da FO E
+        sol_E_feas = []
+        # Lista de solucoes da FO C
+        sol_C_feas = []
+        # Lista de epsilons
+        sol_eps_feas = []
         
         while eps <= eps_MAX:
-        # for eps in range(eps_MIN, eps_MAX, eps_step):
-            
-            #Se esta na run adicional, epsilon atual deve ser o epsilon maximo. Programa encerramento atualizando o valor de epsilon maximo original.
-            # if(ad_run):
-            #     eps_MAX = eps_bkp
-            #     eps = eps_MAX
-
-            # #Se o proximo passo ultrapassar o maximo, precisa de uma nova execucao para eps_MAX
-            # if((eps + eps_step > eps_MAX) and eps != eps_MAX):
-            #     eps_bkp = eps_MAX
-            #     eps_MAX = eps_MAX*1000
-            #     ad_run = True
 
             # Zera o tempo decorrido no epsilon
             t0 = time.time()
@@ -130,7 +118,7 @@ for L in range(10, 30, 5):
             opt = SolverFactory(solver, executable=solver_exec)
             opt.options["tmlim"] = 36000
             # opt.options["tmlim"] = 120
-            opt.options["mipgap"] = 0.01
+            opt.options["mipgap"] = 0.001
 
             print("Translating instance to solver...\n")
             # Resolve a instancia e armazena os resultados em um arquivo JSON
@@ -329,7 +317,7 @@ for L in range(10, 30, 5):
             ynew = f(xnew)
             # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
             
-            ax.plot(sol_C_opt, sol_E_opt, "r*")
+            ax.plot(sol_C_opt, sol_E_opt, "r*", alpha=0.5)
             ax.plot(xnew, ynew, "r--", alpha = 0.2)
 
             ###Solucoes dominadas
@@ -340,7 +328,7 @@ for L in range(10, 30, 5):
             # xnew = np.arange(sol_C_feas[0],sol_C_feas[-1],0.1)
             # ynew = f(xnew)
 
-            ax.plot(sol_C_feas, sol_E_feas, "b*")
+            ax.plot(sol_C_feas, sol_E_feas, "b*", alpha=0.5)
             # ax.plot(xnew, ynew, "b--", alpha = 0.2)
 
             # eps_range = np.arange(eps_MIN,eps_END+eps_step,eps_step)
@@ -376,7 +364,6 @@ for L in range(10, 30, 5):
             
             plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] +"_pareto.svg")
             print("Pareto plot successful!")
-            plt.clf()
             plt.close()
 
         except:
