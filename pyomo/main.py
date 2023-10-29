@@ -13,7 +13,7 @@ import time
 import sys
 
 #Constante que determina o percentual minimo da cobertura maxima a ser alcancado. Condicao de parada.
-stop_perc = 0.99
+stop_perc = 0.98
 
 # Zera o tempo decorrido total
 tt0 = time.time()
@@ -35,7 +35,7 @@ solver_exec = "glpsol"
 # Caminho das instancias
 
 for L in range(10, 30, 5):
-    for d in range(1, 10):
+    for d in range(1, 6):
         instance_path = "./instances_OL2A_updated/" + str(L) + "x" + str(L) + "/"
         instance_filename = (
             "SAP-inst_" + str(L) + "x" + str(L) + "_d0." + str(d) + ".dat"
@@ -57,7 +57,7 @@ for L in range(10, 30, 5):
         #Reduz o epsilon maximo a 90% da cobertura maxima
         eps_MAX = floor(stop_perc * eps_MAX)
 
-        eps_step = floor(eps_MAX/10)
+        eps_step = floor(eps_MAX/L)
 
         eps_MIN = eps_step
 
@@ -68,20 +68,16 @@ for L in range(10, 30, 5):
         eps = eps_MIN
 
         # Lista de solucoes da FO E
-        sol_E_opt = []
+        sol_E = []
         # Lista de solucoes da FO C
-        sol_C_opt = []
+        sol_C = []
         # Lista de epsilons
-        sol_eps_opt = []
-
-        # Lista de solucoes da FO E
-        sol_E_feas = []
-        # Lista de solucoes da FO C
-        sol_C_feas = []
-        # Lista de epsilons
-        sol_eps_feas = []
+        sol_eps = []
         
         while eps <= eps_MAX:
+
+            # Checa se foi encontrada solucao
+            no_sol = 0
 
             # Zera o tempo decorrido no epsilon
             t0 = time.time()
@@ -116,8 +112,7 @@ for L in range(10, 30, 5):
 
             # Cria um solver
             opt = SolverFactory(solver, executable=solver_exec)
-            opt.options["tmlim"] = 36000
-            # opt.options["tmlim"] = 120
+            opt.options["tmlim"] = 28800
             opt.options["mipgap"] = 0.001
 
             print("Translating instance to solver...\n")
@@ -159,22 +154,22 @@ for L in range(10, 30, 5):
             tt = time.time() - tt0
             print("\n\nTotal elapsed time since execution of first epsilon: " + str(tt) + " s")
 
-            #Se acabou o tempo limite, verifica se obteve solucao. Se sim, armazena.
-            if((results.solver.status == TerminationCondition.maxTimeLimit)):
-                if((results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.feasible)):
-                    sol_E_feas.append(E_now)
-                    sol_C_feas.append(C_now)
-                    sol_eps_feas.append(eps)
-            #Verifica se encontrou solucao com gap limite definido.
-            elif((results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.feasible)):
-                sol_E_opt.append(E_now)
-                sol_C_opt.append(C_now)
-                sol_eps_opt.append(eps)
-            elif((results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal)):
-                sol_E_opt.append(E_now)
-                sol_C_opt.append(C_now)
-                sol_eps_opt.append(eps)
-            
+            #Se achou solucao, armazena.
+            if((results.solver.status == SolverStatus.ok) and ((results.solver.termination_condition == TerminationCondition.feasible) or (results.solver.termination_condition == TerminationCondition.optimal))):
+                sol_E.append(E_now)
+                sol_C.append(C_now)
+                sol_eps.append(eps)
+            else:
+                print("\n\nNO SOLUTION FOUND!")
+                no_sol = 1
+
+            print("\n\nUpdated solution vectors:\nsol_E = [", end="")
+            print(",".join(map(str, sol_E)), end="") 
+            print("]\nsol_C = [", end="")
+            print(",".join(map(str, sol_C)), end="")
+            print("]\nsol_eps = [", end="")
+            print(",".join(map(str, sol_eps)), end="")
+            print("]")
 
             sys.stdout.close()
 
@@ -186,111 +181,112 @@ for L in range(10, 30, 5):
             # Plota todos os espacos disponiveis para alocacao como circulos nao-preenchidos pretos
             # Se estiver alocado, preenche o circulo e colore de acordo com modelo de transceptor ativo
 
-            fig = plt.figure("SAP Result")
-            ax = fig.add_subplot(1, 1, 1)
-            ax.axis("equal")
+            if(no_sol == 0):
+                fig = plt.figure("SAP Result")
+                ax = fig.add_subplot(1, 1, 1)
+                ax.axis("equal")
 
-            for i in instance.V:
+                for i in instance.V:
 
-                plt.text(
-                    (instance.X[i]-1 + 0.1)*instance.scale,
-                    (instance.Y[i]-1 + 0.1)*instance.scale,
-                    str(i),
-                    color="k",
-                    fontsize=10,
-                )
-
-                if value(instance.s["S2C", i]) == 1:
-                    ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "go")
-                    ax.add_patch(
-                        plt.Circle(
-                            ((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale),
-                            (instance.RMAX["S2C"]),
-                            color="g",
-                            alpha=0.1,
-                        )
+                    plt.text(
+                        (instance.X[i]-1 + 0.1)*instance.scale,
+                        (instance.Y[i]-1 + 0.1)*instance.scale,
+                        str(i),
+                        color="k",
+                        fontsize=10,
                     )
-                elif value(instance.s["S2CPro", i]) == 1:
-                    ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "bo")
-                    ax.add_patch(
-                        plt.Circle(
-                            ((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale),
-                            (instance.RMAX["S2CPro"]),
-                            color="b",
-                            alpha=0.1,
+
+                    if value(instance.s["S2C", i]) == 1:
+                        ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "go")
+                        ax.add_patch(
+                            plt.Circle(
+                                ((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale),
+                                (instance.RMAX["S2C"]),
+                                color="g",
+                                alpha=0.1,
+                            )
                         )
-                    )
-                elif value(instance.s["S3", i]) == 1:
-                    ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "ro")
-                    ax.add_patch(
-                        plt.Circle(
-                            ((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale),
-                            (instance.RMAX["S3"]),
-                            color="r",
-                            alpha=0.1,
+                    elif value(instance.s["S2CPro", i]) == 1:
+                        ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "bo")
+                        ax.add_patch(
+                            plt.Circle(
+                                ((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale),
+                                (instance.RMAX["S2CPro"]),
+                                color="b",
+                                alpha=0.1,
+                            )
                         )
-                    )
-                else:
-                    ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "ko", fillstyle="none")
-
-            ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
-
-            ax.set_xticks(np.arange(0,instance.W[value(instance.dimW)]*value(instance.scale)+value(instance.scale),step=value(instance.scale)))
-            ax.set_yticks(np.arange(0,instance.H[value(instance.dimH)]*value(instance.scale)+value(instance.scale),step=value(instance.scale)))
-
-            red_patch = mpatches.Patch(color="red", label="S3Pro")
-            blue_patch = mpatches.Patch(color="blue", label="S2CPro")
-            green_patch = mpatches.Patch(color="green", label="S2C")
-
-            ax.legend(handles=[red_patch, blue_patch, green_patch], loc="upper right", prop={'size':6})
-
-            plt.plot(
-                [instance.W[1]*value(instance.scale), instance.W[value(instance.dimW)]*value(instance.scale)],
-                [instance.H[1]*value(instance.scale), instance.H[1]*value(instance.scale)],
-                color="k",
-            )
-            plt.plot(
-                [instance.W[value(instance.dimW)]*value(instance.scale), instance.W[value(instance.dimW)]*value(instance.scale)],
-                [instance.H[1]*value(instance.scale), instance.H[value(instance.dimH)]*value(instance.scale)],
-                color="k",
-            )
-            plt.plot(
-                [instance.W[1]*value(instance.scale), instance.W[1]*value(instance.scale)],
-                [instance.H[1]*value(instance.scale), instance.H[value(instance.dimH)]*value(instance.scale)],
-                color="k",
-            )
-            plt.plot(
-                [instance.W[1]*value(instance.scale), instance.W[value(instance.dimW)]*value(instance.scale)],
-                [instance.H[value(instance.dimH)]*value(instance.scale), instance.H[value(instance.dimH)]*value(instance.scale)],
-                color="k",
-            )
-
-            for i in instance.KW:
-                for j in instance.KH:
-                    if value(instance.cc[i, j]):
-                        plt.plot(
-                            instance.W[i]*value(instance.scale),
-                            instance.H[j]*value(instance.scale),
-                            marker="x",
-                            color="r",
-                            alpha=0.3,
+                    elif value(instance.s["S3", i]) == 1:
+                        ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "ro")
+                        ax.add_patch(
+                            plt.Circle(
+                                ((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale),
+                                (instance.RMAX["S3"]),
+                                color="r",
+                                alpha=0.1,
+                            )
                         )
                     else:
-                        plt.plot(
-                            instance.W[i]*value(instance.scale),
-                            instance.H[j]*value(instance.scale),
-                            marker="x",
-                            color="k",
-                            alpha=0.3,
-                        )
+                        ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "ko", fillstyle="none")
 
-            plt.xlabel("X Coordinates (km)")
-            plt.ylabel("Y Coordinates (km)")
-            # plt.title('Instance: '+str(instance_filename)+'\nScale: 1:'+str(int(instance.scale))+'m\nAlphas: '+str(alpha['E'])+'E, '+str(alpha['C'])+'C, '+str(alpha['M'])+'M  -  Time: '+str(results.solver.user_time)+' s')
-            # plt.show()
-            plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname +".svg")
-            plt.close()
+                ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
 
+                ax.set_xticks(np.arange(0,instance.W[value(instance.dimW)]*value(instance.scale)+value(instance.scale),step=value(instance.scale)))
+                ax.set_yticks(np.arange(0,instance.H[value(instance.dimH)]*value(instance.scale)+value(instance.scale),step=value(instance.scale)))
+
+                red_patch = mpatches.Patch(color="red", label="S3Pro")
+                blue_patch = mpatches.Patch(color="blue", label="S2CPro")
+                green_patch = mpatches.Patch(color="green", label="S2C")
+
+                ax.legend(handles=[red_patch, blue_patch, green_patch], loc="upper right", prop={'size':6})
+
+                plt.plot(
+                    [instance.W[1]*value(instance.scale), instance.W[value(instance.dimW)]*value(instance.scale)],
+                    [instance.H[1]*value(instance.scale), instance.H[1]*value(instance.scale)],
+                    color="k",
+                )
+                plt.plot(
+                    [instance.W[value(instance.dimW)]*value(instance.scale), instance.W[value(instance.dimW)]*value(instance.scale)],
+                    [instance.H[1]*value(instance.scale), instance.H[value(instance.dimH)]*value(instance.scale)],
+                    color="k",
+                )
+                plt.plot(
+                    [instance.W[1]*value(instance.scale), instance.W[1]*value(instance.scale)],
+                    [instance.H[1]*value(instance.scale), instance.H[value(instance.dimH)]*value(instance.scale)],
+                    color="k",
+                )
+                plt.plot(
+                    [instance.W[1]*value(instance.scale), instance.W[value(instance.dimW)]*value(instance.scale)],
+                    [instance.H[value(instance.dimH)]*value(instance.scale), instance.H[value(instance.dimH)]*value(instance.scale)],
+                    color="k",
+                )
+
+                for i in instance.KW:
+                    for j in instance.KH:
+                        if value(instance.cc[i, j]):
+                            plt.plot(
+                                instance.W[i]*value(instance.scale),
+                                instance.H[j]*value(instance.scale),
+                                marker="x",
+                                color="r",
+                                alpha=0.3,
+                            )
+                        else:
+                            plt.plot(
+                                instance.W[i]*value(instance.scale),
+                                instance.H[j]*value(instance.scale),
+                                marker="x",
+                                color="k",
+                                alpha=0.3,
+                            )
+
+                plt.xlabel("X Coordinates (km)")
+                plt.ylabel("Y Coordinates (km)")
+                # plt.title('Instance: '+str(instance_filename)+'\nScale: 1:'+str(int(instance.scale))+'m\nAlphas: '+str(alpha['E'])+'E, '+str(alpha['C'])+'C, '+str(alpha['M'])+'M  -  Time: '+str(results.solver.user_time)+' s')
+                # plt.show()
+                plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname +".svg")
+                plt.close()
+            
             eps_END = eps
 
             eps = eps + eps_step
@@ -310,15 +306,15 @@ for L in range(10, 30, 5):
 
             ###Fronteira de Pareto
 
-            f = sp.interp1d(sol_C_opt,sol_E_opt)#kind='cubic')
+            f = sp.interp1d(sol_C,sol_E)#kind='cubic')
 
             # xnew = np.arange(new_sol_E[0],new_sol_E[-1],0.1)
-            xnew = np.arange(sol_C_opt[0],sol_C_opt[-1],0.1)
+            xnew = np.arange(sol_C[0],sol_C[-1],0.1)
             ynew = f(xnew)
             # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
             
-            ax.plot(sol_C_opt, sol_E_opt, "r*", alpha=0.5)
-            ax.plot(xnew, ynew, "r--", alpha = 0.2)
+            ax.plot(sol_C, sol_E, "b*", alpha=0.5)
+            ax.plot(xnew, ynew, "b--", alpha = 0.2)
 
             ###Solucoes dominadas
 
@@ -328,7 +324,6 @@ for L in range(10, 30, 5):
             # xnew = np.arange(sol_C_feas[0],sol_C_feas[-1],0.1)
             # ynew = f(xnew)
 
-            ax.plot(sol_C_feas, sol_E_feas, "b*", alpha=0.5)
             # ax.plot(xnew, ynew, "b--", alpha = 0.2)
 
             # eps_range = np.arange(eps_MIN,eps_END+eps_step,eps_step)
@@ -340,11 +335,6 @@ for L in range(10, 30, 5):
             plt.xlabel("C (points)")
             # plt.ylabel("C (points)")
             plt.ylabel("E (mA)")
-
-            red_patch = mpatches.Patch(color="red", label="Non-dominated Solution")
-            blue_patch = mpatches.Patch(color="blue", label="Dominated Solution")
-
-            ax.legend(handles=[red_patch, blue_patch], loc="upper left", prop={'size':6})
 
             ax.xaxis.set_minor_locator(AutoMinorLocator())
             ax.yaxis.set_minor_locator(AutoMinorLocator())
