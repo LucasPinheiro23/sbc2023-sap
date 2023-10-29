@@ -19,7 +19,7 @@ stop_perc = 0.98
 tt0 = time.time()
 
 # Muda diretorio (BUG DO VSCODE)
-os.chdir("./pyomo")
+# os.chdir("./pyomo")
 
 # Script principal para resolver instancias do SAP
 
