@@ -1,0 +1,80 @@
+Translating instance to solver...
+
+GLPSOL--GLPK LP/MIP Solver 5.0
+Parameter(s) specified in the command line:
+ --tmlim 28800 --mipgap 0.001 --write /tmp/tmpj0gwn0rt.glpk.raw --wglp /tmp/tmpaeojy34m.glpk.glp
+ --cpxlp /tmp/tmplf8fvuht.pyomo.lp
+Reading problem data from '/tmp/tmplf8fvuht.pyomo.lp'...
+/tmp/tmplf8fvuht.pyomo.lp:495603: warning: lower bound of variable 'x2' redefined
+/tmp/tmplf8fvuht.pyomo.lp:495603: warning: upper bound of variable 'x2' redefined
+85346 rows, 41622 columns, 197770 non-zeros
+41622 integer variables, 41580 of which are binary
+537183 lines were read
+Writing problem data to '/tmp/tmpaeojy34m.glpk.glp'...
+387348 lines were written
+GLPK Integer Optimizer 5.0
+85346 rows, 41622 columns, 197770 non-zeros
+41622 integer variables, 41580 of which are binary
+Preprocessing...
+218 hidden packing inequaliti(es) were detected
+14378 hidden covering inequaliti(es) were detected
+98 constraint coefficient(s) were reduced
+54725 rows, 21966 columns, 138337 non-zeros
+21966 integer variables, 21925 of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  6.000e+01  ratio =  6.000e+01
+GM: min|aij| =  3.680e-01  max|aij| =  2.718e+00  ratio =  7.386e+00
+EQ: min|aij| =  1.708e-01  max|aij| =  1.000e+00  ratio =  5.856e+00
+2N: min|aij| =  1.250e-01  max|aij| =  1.438e+00  ratio =  1.150e+01
+Constructing initial basis...
+Size of triangular part is 54725
+Solving LP relaxation...
+GLPK Simplex Optimizer 5.0
+54725 rows, 21966 columns, 138337 non-zeros
+      0: obj =   0.000000000e+00 inf =   4.481e+01 (103)
+Perturbing LP to avoid stalling [276]...
+   1849: obj =   6.324960740e+00 inf =   7.927e-09 (0) 3
+Removing LP perturbation [4235]...
+*  4235: obj =   6.117820000e-01 inf =   0.000e+00 (0) 9
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
+Long-step dual simplex will be used
++  4235: mip =     not found yet >=              -inf        (1; 0)
++  5974: mip =     not found yet >=   6.117820000e-01        (17; 2)
++  8580: mip =     not found yet >=   6.117820000e-01        (37; 4)
++  8696: mip =     not found yet >=   6.117820000e-01        (42; 4)
++  9618: mip =     not found yet >=   6.117820000e-01        (54; 6)
++ 10351: mip =     not found yet >=   6.117820000e-01        (86; 9)
++ 11127: >>>>>   1.223564000e+00 >=   6.117820000e-01  50.0% (101; 12)
++ 11447: >>>>>   9.176730000e-01 >=   6.117820000e-01  33.3% (71; 75)
++ 11631: >>>>>   6.117820000e-01 >=   6.117820000e-01   0.0% (8; 217)
++ 11631: mip =   6.117820000e-01 >=     tree is empty   0.0% (0; 253)
+INTEGER OPTIMAL SOLUTION FOUND
+Time used:   36.3 secs
+Memory used: 93.5 Mb (98063422 bytes)
+Writing MIP solution to '/tmp/tmpj0gwn0rt.glpk.raw'...
+126977 lines were written
+
+Results:
+
+E = 0.611782 mA
+C = 12.0 points
+C ~= 4.800000000000001 km^2
+
+Minimum Epsilon for this instance = 9
+Maximum Epsilon for this instance = 96
+Current Epsilon = 9
+
+Instance Maximum Epsilon Preprocessing Time: 0.00454401969909668 s
+
+Time in solver (for this epsilon): 36.6802978515625 s
+Elapsed time (for this epsilon): 39.45040488243103 s
+
+
+Total elapsed time since execution of first epsilon: 120358.19080352783 s
+
+
+Updated solution vectors:
+sol_E = [0.611782]
+sol_C = [12.0]
+sol_eps = [9]

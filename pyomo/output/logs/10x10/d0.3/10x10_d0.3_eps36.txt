@@ -1,0 +1,93 @@
+Translating instance to solver...
+
+GLPSOL--GLPK LP/MIP Solver 5.0
+Parameter(s) specified in the command line:
+ --tmlim 28800 --mipgap 0.001 --write /tmp/tmpog_j9z2b.glpk.raw --wglp /tmp/tmp97_l6a97.glpk.glp
+ --cpxlp /tmp/tmp9nhc8ha6.pyomo.lp
+Reading problem data from '/tmp/tmp9nhc8ha6.pyomo.lp'...
+/tmp/tmp9nhc8ha6.pyomo.lp:295034: warning: lower bound of variable 'x2' redefined
+/tmp/tmp9nhc8ha6.pyomo.lp:295034: warning: upper bound of variable 'x2' redefined
+50636 rows, 25892 columns, 117101 non-zeros
+25892 integer variables, 25860 of which are binary
+320894 lines were read
+Writing problem data to '/tmp/tmp97_l6a97.glpk.glp'...
+228513 lines were written
+GLPK Integer Optimizer 5.0
+50636 rows, 25892 columns, 117101 non-zeros
+25892 integer variables, 25860 of which are binary
+Preprocessing...
+190 hidden packing inequaliti(es) were detected
+8110 hidden covering inequaliti(es) were detected
+100 constraint coefficient(s) were reduced
+29998 rows, 12201 columns, 75659 non-zeros
+12201 integer variables, 12170 of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  3.100e+01  ratio =  3.100e+01
+GM: min|aij| =  4.238e-01  max|aij| =  2.360e+00  ratio =  5.568e+00
+EQ: min|aij| =  2.226e-01  max|aij| =  1.000e+00  ratio =  4.492e+00
+2N: min|aij| =  2.500e-01  max|aij| =  1.438e+00  ratio =  5.750e+00
+Constructing initial basis...
+Size of triangular part is 29998
+Solving LP relaxation...
+GLPK Simplex Optimizer 5.0
+29998 rows, 12201 columns, 75659 non-zeros
+      0: obj =   0.000000000e+00 inf =   7.162e+01 (105)
+Perturbing LP to avoid stalling [200]...
+   1009: obj =   4.920332200e+00 inf =   8.882e-16 (0) 2
+Removing LP perturbation [2036]...
+*  2036: obj =   8.249398947e-01 inf =   1.695e-16 (0) 6
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
+Long-step dual simplex will be used
++  2036: mip =     not found yet >=              -inf        (1; 0)
++  2923: mip =     not found yet >=   8.422698049e-01        (63; 2)
++  5156: mip =     not found yet >=   8.480320000e-01        (103; 3)
++  6500: mip =     not found yet >=   8.500172941e-01        (152; 4)
++  8982: mip =     not found yet >=   8.796391429e-01        (179; 6)
++ 10374: mip =     not found yet >=   8.959925263e-01        (217; 7)
++ 11867: mip =     not found yet >=   9.036738919e-01        (256; 8)
++ 12927: mip =     not found yet >=   1.002143446e+00        (293; 10)
++ 13822: mip =     not found yet >=   1.008840824e+00        (337; 11)
++ 15025: mip =     not found yet >=   1.038097789e+00        (372; 14)
++ 16150: mip =     not found yet >=   1.041327455e+00        (424; 17)
++ 16988: mip =     not found yet >=   1.041327455e+00        (469; 19)
+Time used: 60.2 secs.  Memory used: 49.5 Mb.
++ 18657: mip =     not found yet >=   1.041327455e+00        (521; 22)
++ 19961: mip =     not found yet >=   1.041327455e+00        (565; 24)
++ 22544: mip =     not found yet >=   1.043866316e+00        (597; 27)
++ 23692: mip =     not found yet >=   1.048546706e+00        (627; 29)
++ 25196: mip =     not found yet >=   1.052474061e+00        (657; 32)
++ 26668: mip =     not found yet >=   1.055693000e+00        (705; 34)
++ 28321: mip =     not found yet >=   1.061782000e+00        (798; 41)
++ 29686: mip =     not found yet >=   1.061782000e+00        (782; 237)
++ 29921: >>>>>   1.061782000e+00 >=   1.061782000e+00 < 0.1% (806; 240)
++ 29921: mip =   1.061782000e+00 >=     tree is empty   0.0% (0; 1911)
+INTEGER OPTIMAL SOLUTION FOUND
+Time used:   98.3 secs
+Memory used: 60.0 Mb (62934795 bytes)
+Writing MIP solution to '/tmp/tmpog_j9z2b.glpk.raw'...
+76537 lines were written
+
+Results:
+
+E = 1.061782 mA
+C = 47.0 points
+C ~= 18.8 km^2
+
+Minimum Epsilon for this instance = 9
+Maximum Epsilon for this instance = 98
+Current Epsilon = 36
+
+Instance Maximum Epsilon Preprocessing Time: 0.003406524658203125 s
+
+Time in solver (for this epsilon): 98.52479720115662 s
+Elapsed time (for this epsilon): 100.12839674949646 s
+
+
+Total elapsed time since execution of first epsilon: 35409.76236009598 s
+
+
+Updated solution vectors:
+sol_E = [0.611782,1.061782,1.061782,1.061782]
+sol_C = [12.0,33.0,27.0,47.0]
+sol_eps = [9,18,27,36]
