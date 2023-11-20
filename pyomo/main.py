@@ -13,7 +13,8 @@ import time
 import sys
 
 #Constante que determina o percentual minimo da cobertura maxima a ser alcancado. Condicao de parada.
-stop_perc = 0.98
+# stop_perc = 0.98
+stop_perc
 
 # Zera o tempo decorrido total
 tt0 = time.time()
@@ -112,38 +113,13 @@ for L in range(10, 30, 5):
 
             # Cria um solver
             opt = SolverFactory(solver, executable=solver_exec)
-            opt.options["tmlim"] = 28800
+            # opt.options["tmlim"] = 28800
+            opt.options["tmlim"] = 10
             opt.options["mipgap"] = 0.001
 
             print("Translating instance to solver...\n")
             # Resolve a instancia e armazena os resultados em um arquivo JSON
             results = opt.solve(instance, tee=True)
-
-            instance.solutions.store_to(results)
-            results.problem.name = instance_filename
-            results.write(filename="./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + "-results.json", format="json")
-
-            if (results.solver.termination_condition == TerminationCondition.noSolution or results.solver.termination_condition == TerminationCondition.infeasibleOrUnbounded):
-                print("\n\nNO SOLUTION FOUND FOR THIS EPSILON!\n\n")
-                continue
-
-            # Pega resultados diretamente
-            print("\nResults:\n")
-
-            # Resultado da funcao objetivo de Energia
-            E_now = value(instance.E)
-            print("E = " + str(E_now) + " mA")
-
-            # Resultado da variavel de decisao da Cobertura
-            C_now = value(instance.objC)
-            print("C = " + str(C_now) + " points")
-            print("C ~= " + str((C_now/4)*1.6) + " km^2")
-
-            #Dados do epsilon
-            print("\nMinimum Epsilon for this instance = " + str(eps_MIN))
-            print("Maximum Epsilon for this instance = " + str(eps_MAX))
-            print("Current Epsilon = " + str(eps))
-            print("\nInstance Maximum Epsilon Preprocessing Time: " + str(ttt) + " s")
 
             # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
             print("\nTime in solver (for this epsilon): " + str(results.solver.time) + " s")
@@ -154,22 +130,46 @@ for L in range(10, 30, 5):
             tt = time.time() - tt0
             print("\n\nTotal elapsed time since execution of first epsilon: " + str(tt) + " s")
 
+            instance.solutions.store_to(results)
+            results.problem.name = instance_filename
+            results.write(filename="./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + "-results.json", format="json")
+
             #Se achou solucao, armazena.
             if((results.solver.status == SolverStatus.ok) and ((results.solver.termination_condition == TerminationCondition.feasible) or (results.solver.termination_condition == TerminationCondition.optimal))):
+                
+                # Pega resultados diretamente
+                print("\nResults:\n")
+
+                # Resultado da funcao objetivo de Energia
+                E_now = value(instance.E)
+                print("E = " + str(E_now) + " mA")
+
+                # Resultado da variavel de decisao da Cobertura
+                C_now = value(instance.objC)
+                print("C = " + str(C_now) + " points")
+                print("C ~= " + str((C_now/4)*1.6) + " km^2")
+
+                #Dados do epsilon
+                print("\nMinimum Epsilon for this instance = " + str(eps_MIN))
+                print("Maximum Epsilon for this instance = " + str(eps_MAX))
+                print("\nCurrent Epsilon = " + str(eps))
+                print("\n\nInstance Epsilon Preprocessing Time: " + str(ttt) + " s")
+
                 sol_E.append(E_now)
                 sol_C.append(C_now)
                 sol_eps.append(eps)
-            else:
-                print("\n\nNO SOLUTION FOUND!")
-                no_sol = 1
 
-            print("\n\nUpdated solution vectors:\nsol_E = [", end="")
-            print(",".join(map(str, sol_E)), end="") 
-            print("]\nsol_C = [", end="")
-            print(",".join(map(str, sol_C)), end="")
-            print("]\nsol_eps = [", end="")
-            print(",".join(map(str, sol_eps)), end="")
-            print("]")
+                print("\n\nUpdated solution vectors:\nsol_E = [", end="")
+                print(",".join(map(str, sol_E)), end="")
+                print("]\nsol_C = [", end="")
+                print(",".join(map(str, sol_C)), end="")
+                print("]\nsol_eps = [", end="")
+                print(",".join(map(str, sol_eps)), end="")
+                print("]")
+                
+            else:
+                print("\n\nNO SOLUTION FOUND FOR THIS INSTANCE!")
+                no_sol = 1
 
             sys.stdout.close()
 
@@ -291,14 +291,14 @@ for L in range(10, 30, 5):
 
             eps = eps + eps_step
 
-        sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] + "_pareto.txt","w")
+        sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] + "_objfunccomp.txt","w")
         # sys.stdout = sys.__stdout__
         
         try:
             # Plotando a fronteira de pareto
-            print("Started to plot Pareto Frontier...\n")
+            print("Started plotting Objective Function Comparison Graph...\n")
 
-            fig = plt.figure("Pareto Frontier")
+            fig = plt.figure("Obj Function Comparison")
             ax = fig.add_subplot(1, 1, 1)
             ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
             ax.grid(which = "minor")
@@ -352,10 +352,10 @@ for L in range(10, 30, 5):
 
             # ax2.yaxis.set_minor_locator(AutoMinorLocator())
             
-            plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] +"_pareto.svg")
-            print("Pareto plot successful!")
+            plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] +"_objfunccomp.svg")
+            print("Objective Function Comparison plot successful!")
             plt.close()
 
         except:
-            logging.exception("AN ERROR OCCURRED WHILE PLOTTING PARETO!")
+            logging.exception("AN ERROR OCCURRED WHILE PLOTTING OBJ FUNC COMP GRAPH!")
             sys.stdout.close()
