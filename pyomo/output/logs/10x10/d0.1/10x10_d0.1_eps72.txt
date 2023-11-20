@@ -1,0 +1,76 @@
+Translating instance to solver...
+
+GLPSOL: GLPK LP/MIP Solver, v4.65
+Parameter(s) specified in the command line:
+ --tmlim 10 --mipgap 0.001 --write C:\Users\LUCASP~1\AppData\Local\Temp\tmprjvmz58l.glpk.raw
+ --wglp C:\Users\LUCASP~1\AppData\Local\Temp\tmpbehg4wl8.glpk.glp --cpxlp
+ C:\Users\LUCASP~1\AppData\Local\Temp\tmplz7nbbqq.pyomo.lp
+Reading problem data from 'C:\Users\LUCASP~1\AppData\Local\Temp\tmplz7nbbqq.pyomo.lp'...
+C:\Users\LUCASP~1\AppData\Local\Temp\tmplz7nbbqq.pyomo.lp:29094: warning: lower bound of variable 'x1' redefined
+C:\Users\LUCASP~1\AppData\Local\Temp\tmplz7nbbqq.pyomo.lp:29094: warning: upper bound of variable 'x1' redefined
+4617 rows, 3173 columns, 12029 non-zeros
+3172 integer variables, 3160 of which are binary
+32254 lines were read
+Writing problem data to 'C:\Users\LUCASP~1\AppData\Local\Temp\tmpbehg4wl8.glpk.glp'...
+22153 lines were written
+GLPK Integer Optimizer, v4.65
+4617 rows, 3173 columns, 12029 non-zeros
+3172 integer variables, 3160 of which are binary
+Preprocessing...
+116 hidden packing inequaliti(es) were detected
+476 hidden covering inequaliti(es) were detected
+85 constraint coefficient(s) were reduced
+2365 rows, 1338 columns, 6375 non-zeros
+1338 integer variables, 1327 of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  1.100e+01  ratio =  1.100e+01
+GM: min|aij| =  5.491e-01  max|aij| =  1.821e+00  ratio =  3.317e+00
+EQ: min|aij| =  3.503e-01  max|aij| =  1.000e+00  ratio =  2.855e+00
+2N: min|aij| =  2.500e-01  max|aij| =  1.375e+00  ratio =  5.500e+00
+Constructing initial basis...
+Size of triangular part is 2365
+Solving LP relaxation...
+GLPK Simplex Optimizer, v4.65
+2365 rows, 1338 columns, 6375 non-zeros
+      0: obj =   0.000000000e+00 inf =   1.073e+02 (101)
+    346: obj =   2.321600333e+00 inf =   8.327e-17 (0) 2
+*   730: obj =   1.464054727e+00 inf =   1.416e-15 (0) 2
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
+Long-step dual simplex will be used
++   730: mip =     not found yet >=              -inf        (1; 0)
++  2080: >>>>>   2.267673000e+00 >=   1.490007806e+00  34.3% (40; 1)
++  4856: mip =   2.267673000e+00 >=   1.629508690e+00  28.1% (100; 29)
++  6024: mip =   2.267673000e+00 >=   1.655761238e+00  27.0% (118; 33)
+TIME LIMIT EXCEEDED; SEARCH TERMINATED
+Time used:   10.3 secs
+Memory used: 5.3 Mb (5589834 bytes)
+Writing MIP solution to 'C:\Users\LUCASP~1\AppData\Local\Temp\tmprjvmz58l.glpk.raw'...
+7799 lines were written
+
+Time in solver (for this epsilon): 10.775728702545166 s
+Elapsed time (for this epsilon): 12.09846043586731 s
+
+
+Total elapsed time since execution of first epsilon: 73.16810989379883 s
+
+Results:
+
+E = 2.267673 mA
+C = 78.0 points
+C ~= 31.200000000000003 km^2
+
+Minimum Epsilon for this instance = 9
+Maximum Epsilon for this instance = 96
+
+Current Epsilon = 72
+
+
+Instance Epsilon Preprocessing Time: 0.004996538162231445 s
+
+
+Updated solution vectors:
+sol_E = [-0.611782,1.817673,-1.061782,-1.061782,-1.061782,2.735346,-1.511782,2.267673]
+sol_C = [12.0,62.0,36.0,36.0,49.0,62.0,68.0,78.0]
+sol_eps = [9,18,27,36,45,54,63,72]
+sol_gap = [0.0,61.2,0.0,0.0,0.0,61.2,0.0,27.0]
