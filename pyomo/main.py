@@ -11,6 +11,7 @@ import logging
 import os
 import time
 import sys
+import re
 
 #Constante que determina o percentual minimo da cobertura maxima a ser alcancado. Condicao de parada.
 # stop_perc = 0.98
@@ -143,7 +144,8 @@ for L in range(10, 30, 5):
                     line = fb.readline().decode()
 
                 gap_split = line.find("%")
-                gap = float(line[gap_split-5:gap_split].replace(" ",""))
+                # gap = float(line[gap_split-5:gap_split].replace(" ",""))
+                gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-5:gap_split]))
 
                 # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
                 print("\nTime in solver (for this epsilon): " + str(results.solver.time) + " s")
