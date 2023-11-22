@@ -216,7 +216,7 @@ def generate_model(epsC):
     # Conjunto de nos incluindo 0
     model.V0 = RangeSet(0, model.n)
     # Conjunto de modelos/tipos de transceptor
-    model.S = Set(initialize=["S2C", "S2CPro", "S3"], doc="Modelos")
+    model.S = Set(initialize=["S2C", "S2CPro"], doc="Modelos")
     # Conjunto unitario (constante)
     model.UNIT = RangeSet(0, 0)
 
@@ -330,7 +330,7 @@ def preproc_C_max(model):
     for i in model.V:
         for j in model.KW:
             for k in model.KH:
-                if value(model.DK[i, j, k]) <= value(model.RMAX["S3"]):
+                if value(model.DK[i, j, k]) <= value(model.RMAX["S2CPro"]):
                     x[j - 1][k - 1] = 1
 
     sum_x = 0

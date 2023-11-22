@@ -2,7 +2,7 @@
 from efficient_sap_sbc_abstract_model import *
 from pyomo.environ import *
 from pyomo.common import timing
-from matplotlib.ticker import AutoMinorLocator
+from matplotlib.ticker import (MultipleLocator, AutoMinorLocator)
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import scipy.interpolate as sp
@@ -14,13 +14,13 @@ import sys
 
 #Constante que determina o percentual minimo da cobertura maxima a ser alcancado. Condicao de parada.
 # stop_perc = 0.98
-stop_perc
+stop_perc = 1
 
 # Zera o tempo decorrido total
 tt0 = time.time()
 
 # Muda diretorio (BUG DO VSCODE)
-# os.chdir("./pyomo")
+os.chdir("./pyomo")
 
 # Script principal para resolver instancias do SAP
 
@@ -74,6 +74,8 @@ for L in range(10, 30, 5):
         sol_C = []
         # Lista de epsilons
         sol_eps = []
+        # Lista de gaps
+        sol_gap = []
         
         while eps <= eps_MAX:
 
@@ -113,22 +115,16 @@ for L in range(10, 30, 5):
 
             # Cria um solver
             opt = SolverFactory(solver, executable=solver_exec)
-            # opt.options["tmlim"] = 28800
-            opt.options["tmlim"] = 10
+            opt.options["tmlim"] = 28800
+            # opt.options["tmlim"] = 20
             opt.options["mipgap"] = 0.001
 
             print("Translating instance to solver...\n")
             # Resolve a instancia e armazena os resultados em um arquivo JSON
             results = opt.solve(instance, tee=True)
-
-            # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
-            print("\nTime in solver (for this epsilon): " + str(results.solver.time) + " s")
             
             t = time.time() - t0
-            print("Elapsed time (for this epsilon): " + str(t) + " s")
-
             tt = time.time() - tt0
-            print("\n\nTotal elapsed time since execution of first epsilon: " + str(tt) + " s")
 
             instance.solutions.store_to(results)
             results.problem.name = instance_filename
@@ -137,12 +133,33 @@ for L in range(10, 30, 5):
             #Se achou solucao, armazena.
             if((results.solver.status == SolverStatus.ok) and ((results.solver.termination_condition == TerminationCondition.feasible) or (results.solver.termination_condition == TerminationCondition.optimal))):
                 
+                with open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt", 'rb') as fb:
+                    try:  # catch OSError in case of a one line file 
+                        fb.seek(-2, os.SEEK_END)
+                        while fb.read(1) != b'+':
+                            fb.seek(-2, os.SEEK_CUR)
+                    except OSError:
+                        fb.seek(0)
+                    line = fb.readline().decode()
+
+                gap_split = line.find("%")
+                gap = float(line[gap_split-5:gap_split].replace(" ",""))
+
+                # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
+                print("\nTime in solver (for this epsilon): " + str(results.solver.time) + " s")
+                print("Elapsed time (for this epsilon): " + str(t) + " s")
+                print("\n\nTotal elapsed time since execution of first epsilon: " + str(tt) + " s")
+
                 # Pega resultados diretamente
                 print("\nResults:\n")
 
                 # Resultado da funcao objetivo de Energia
-                E_now = value(instance.E)
-                print("E = " + str(E_now) + " mA")
+                if(results.solver.termination_condition == TerminationCondition.optimal):
+                    E_now = (-1)*value(instance.E)
+                    print("E = " + str((-1)*E_now) + " mA")
+                else:
+                    E_now = value(instance.E)
+                    print("E = " + str(E_now) + " mA")
 
                 # Resultado da variavel de decisao da Cobertura
                 C_now = value(instance.objC)
@@ -158,6 +175,7 @@ for L in range(10, 30, 5):
                 sol_E.append(E_now)
                 sol_C.append(C_now)
                 sol_eps.append(eps)
+                sol_gap.append(gap)
 
                 print("\n\nUpdated solution vectors:\nsol_E = [", end="")
                 print(",".join(map(str, sol_E)), end="")
@@ -165,9 +183,15 @@ for L in range(10, 30, 5):
                 print(",".join(map(str, sol_C)), end="")
                 print("]\nsol_eps = [", end="")
                 print(",".join(map(str, sol_eps)), end="")
+                print("]\nsol_gap = [", end="")
+                print(",".join(map(str, sol_gap)), end="")
                 print("]")
                 
             else:
+                # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
+                print("\nTime in solver (for this epsilon): " + str(results.solver.time) + " s")
+                print("Elapsed time (for this epsilon): " + str(t) + " s")
+                print("\n\nTotal elapsed time since execution of first epsilon: " + str(tt) + " s")
                 print("\n\nNO SOLUTION FOUND FOR THIS INSTANCE!")
                 no_sol = 1
 
@@ -216,29 +240,34 @@ for L in range(10, 30, 5):
                                 alpha=0.1,
                             )
                         )
-                    elif value(instance.s["S3", i]) == 1:
-                        ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "ro")
-                        ax.add_patch(
-                            plt.Circle(
-                                ((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale),
-                                (instance.RMAX["S3"]),
-                                color="r",
-                                alpha=0.1,
-                            )
-                        )
+                    # elif value(instance.s["S3", i]) == 1:
+                    #     ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "ro")
+                    #     ax.add_patch(
+                    #         plt.Circle(
+                    #             ((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale),
+                    #             (instance.RMAX["S3"]),
+                    #             color="r",
+                    #             alpha=0.1,
+                    #         )
+                    #     )
                     else:
                         ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "ko", fillstyle="none")
 
-                ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
+                ax.grid(linestyle="--", which="minor", linewidth=0.5, alpha=0.5)
+                ax.grid(linestyle="-", which="major", linewidth=0.5, alpha=0.5)
+                ax.minorticks_on()
+                ax.xaxis.set_minor_locator(MultipleLocator(value(instance.scale)))
+                ax.yaxis.set_minor_locator(MultipleLocator(value(instance.scale)))
 
-                ax.set_xticks(np.arange(0,instance.W[value(instance.dimW)]*value(instance.scale)+value(instance.scale),step=value(instance.scale)))
-                ax.set_yticks(np.arange(0,instance.H[value(instance.dimH)]*value(instance.scale)+value(instance.scale),step=value(instance.scale)))
+                ax.set_xticks(np.arange(0,instance.W[value(instance.dimW)]*value(instance.scale)+value(instance.scale),step=value(instance.scale*2)))
+                ax.set_yticks(np.arange(0,instance.H[value(instance.dimH)]*value(instance.scale)+value(instance.scale),step=value(instance.scale*2)))
 
-                red_patch = mpatches.Patch(color="red", label="S3Pro")
+
+                # red_patch = mpatches.Patch(color="red", label="S3Pro")
                 blue_patch = mpatches.Patch(color="blue", label="S2CPro")
                 green_patch = mpatches.Patch(color="green", label="S2C")
 
-                ax.legend(handles=[red_patch, blue_patch, green_patch], loc="upper right", prop={'size':6})
+                ax.legend(handles=[blue_patch, green_patch], loc="upper right", prop={'size':6})
 
                 plt.plot(
                     [instance.W[1]*value(instance.scale), instance.W[value(instance.dimW)]*value(instance.scale)],
@@ -294,68 +323,131 @@ for L in range(10, 30, 5):
         sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] + "_objfunccomp.txt","w")
         # sys.stdout = sys.__stdout__
         
-        try:
-            # Plotando a fronteira de pareto
-            print("Started plotting Objective Function Comparison Graph...\n")
+        if(len(sol_E) > 0 and len(sol_C) > 0 and len(sol_eps) > 0):
+            try:
 
-            fig = plt.figure("Obj Function Comparison")
-            ax = fig.add_subplot(1, 1, 1)
-            ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
-            ax.grid(which = "minor")
-            ax.minorticks_on()
+                sol_E_opt = []
+                sol_C_opt = []
+                eps_opt = []
+                gap_opt = []
 
-            ###Fronteira de Pareto
+                sol_E_feas = []
+                sol_C_feas = []
+                eps_feas = []
+                gap_feas = []
 
-            f = sp.interp1d(sol_C,sol_E)#kind='cubic')
+                for i in range(0,len(sol_E)):
+                    if sol_E[i] < 0:
+                        sol_E_opt.append(sol_E[i])
+                        sol_E[i] = sol_E[i] * (-1)
+                        sol_C_opt.append(sol_C[i])
+                        eps_opt.append(sol_eps[i])
+                        gap_opt.append(sol_gap[i])
+                    else:
+                        sol_E_feas.append(sol_E[i])
+                        sol_C_feas.append(sol_C[i])
+                        eps_feas.append(sol_eps[i])
+                        gap_feas.append(sol_gap[i])
 
-            # xnew = np.arange(new_sol_E[0],new_sol_E[-1],0.1)
-            xnew = np.arange(sol_C[0],sol_C[-1],0.1)
-            ynew = f(xnew)
-            # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
-            
-            ax.plot(sol_C, sol_E, "b*", alpha=0.5)
-            ax.plot(xnew, ynew, "b--", alpha = 0.2)
+                sol_E_opt = [i * (-1) for i in sol_E_opt]
 
-            ###Solucoes dominadas
+                # Plotando a fronteira de pareto
+                print("Started plotting Objective Function Comparison Graph...\n")
 
-            # f = sp.interp1d(sol_C_feas,sol_E_feas)#kind='cubic')
+                fig = plt.figure("Obj Function Comparison")
+                ax = fig.add_subplot(1, 1, 1)
+                ax.grid(linestyle="--", which="minor", linewidth=0.5, alpha=0.5)
+                ax.grid(linestyle="-", which="major", linewidth=0.5, alpha=0.5)
+                ax.minorticks_on()
 
-            # xnew = np.arange(new_sol_E[0],new_sol_E[-1],0.1)
-            # xnew = np.arange(sol_C_feas[0],sol_C_feas[-1],0.1)
-            # ynew = f(xnew)
+                ### Resultados (valores subotimos)
 
-            # ax.plot(xnew, ynew, "b--", alpha = 0.2)
+                # f = sp.interp1d(sol_C,sol_E)#kind='cubic')
 
-            # eps_range = np.arange(eps_MIN,eps_END+eps_step,eps_step)
+                # xnew = np.arange(new_sol_E[0],new_sol_E[-1],0.1)
+                # xnew = np.arange(sol_C[0],sol_C[-1],0.1)
+                # ynew = f(xnew)
+                # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
                 
-            # ax.set_xticks(sol_C)
-            # ax.set_yticks(sol_E)
+                ax.plot(sol_C_feas, sol_E_feas, "b*", alpha=0.5)
+                # ax.plot(xnew, ynew, "b--", alpha = 0.2)
 
-            # plt.xlabel("E (mA)")
-            plt.xlabel("C (points)")
-            # plt.ylabel("C (points)")
-            plt.ylabel("E (mA)")
+                ### Resultados (valores otimos)
 
-            ax.xaxis.set_minor_locator(AutoMinorLocator())
-            ax.yaxis.set_minor_locator(AutoMinorLocator())
+                # f = sp.interp1d(sol_C_opt,sol_E_opt)#kind='cubic')
 
-            #Clona eixo y
-            # ax2 = ax.twinx()
+                # xnew = np.arange(new_sol_E[0],new_sol_E[-1],0.1)
+                # xnew = np.arange(sol_C_opt[0],sol_C_opt[-1],0.1)
+                # ynew = f(xnew)
+                # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
+                
+                ax.plot(sol_C_opt, sol_E_opt, "r*", alpha=0.5)
+                # ax.plot(xnew, ynew, "r--", alpha = 0.2)
 
-            #Configura eixo secundario
-            # ax2.plot(sol_C,np.arange(eps_MIN,eps_END+eps_step,eps_step), alpha=0)
-            # ax2.set_yticks(np.arange(eps_MIN,eps_END+eps_step,eps_step))
-            # ax2.get_xaxis().set_visible(False)
-            # ax2.set_ylabel("$\\epsilon$ (points)")
-            # ax2.yaxis.label.set_color('blue')
-            # ax2.tick_params(axis='y', colors='blue')
+                ax.spines['top'].set_alpha(0.25)
+                ax.spines['right'].set_alpha(0.25)
+                ax.spines['bottom'].set_alpha(0.25)
+                ax.spines['left'].set_alpha(0.25)
 
-            # ax2.yaxis.set_minor_locator(AutoMinorLocator())
-            
-            plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] +"_objfunccomp.svg")
-            print("Objective Function Comparison plot successful!")
-            plt.close()
+                # ax.spines['top'].set_visible(False)
+                # ax.spines['right'].set_visible(False)
+                # ax.spines['bottom'].set_visible(False)
+                # ax.spines['left'].set_visible(False)
 
-        except:
-            logging.exception("AN ERROR OCCURRED WHILE PLOTTING OBJ FUNC COMP GRAPH!")
+                offset = 0.05
+                for i in range(0,len(sol_E_feas)):
+                    if i == 0:
+                        repeat = 0
+                    elif ((sol_C_feas[i] == sol_C_feas[i-1]) or (sol_C_feas[i] - sol_C_feas[i-1] <= 12)) and sol_E_feas[i] == sol_E_feas[i-1]:
+                        repeat = repeat + offset
+                    else:
+                        repeat = 0
+                    plt.text(
+                        sol_C_feas[i],
+                        offset+sol_E_feas[i]+repeat,
+                        # "$\epsilon$ |Gap(%)\n"+str(eps_feas[i])+"|"+str(gap_feas[i]),
+                        str(eps_feas[i])+"|"+str(gap_feas[i])+"%",
+                        color="k",
+                        fontsize=6,
+                        # weight="bold",
+                        style="italic"
+                    )
+
+                for i in range(0,len(sol_E_opt)):
+                    if i == 0:
+                        repeat = 0
+                    elif ((sol_C_opt[i] == sol_C_opt[i-1]) or (sol_C_opt[i] - sol_C_opt[i-1] <= 12)) and sol_E_opt[i] == sol_E_opt[i-1]:
+                        repeat = repeat + offset
+                    else:
+                        repeat = 0
+                    plt.text(
+                        sol_C_opt[i],
+                        offset+sol_E_opt[i]+repeat,
+                        # "$\epsilon$  |Gap(%)\n"+str(eps_opt[i])+"|"+str(gap_opt[i]),
+                        str(eps_opt[i])+"|"+str(gap_opt[i])+"%",
+                        color="k",
+                        fontsize=6,
+                        # weight="bold",
+                        style="italic"
+                    )
+                
+
+                plt.xlabel("C (points)")
+                
+                plt.ylabel("E (mA)")
+
+                ax.xaxis.set_minor_locator(AutoMinorLocator())
+                ax.yaxis.set_minor_locator(AutoMinorLocator())
+
+
+                plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] +"_objfunccomp.svg")
+                print("Objective Function Comparison plot successful!")
+                plt.close()
+                sys.stdout.close()
+
+            except:
+                logging.exception("AN ERROR OCCURRED WHILE PLOTTING OBJ FUNC COMP GRAPH!")
+                sys.stdout.close()
+        else:
+            print("ERROR: NO SOLUTION VECTOR FOR THIS INSTANCE, CAN'T PLOT OBJ FUNC COMP GRAPH!")
             sys.stdout.close()
