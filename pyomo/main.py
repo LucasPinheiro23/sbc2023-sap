@@ -115,8 +115,8 @@ for L in range(10, 30, 5):
 
             # Cria um solver
             opt = SolverFactory(solver, executable=solver_exec)
-            # opt.options["tmlim"] = 28800
-            opt.options["tmlim"] = 10
+            opt.options["tmlim"] = 28800
+            # opt.options["tmlim"] = 20
             opt.options["mipgap"] = 0.001
 
             print("Translating instance to solver...\n")
@@ -326,35 +326,38 @@ for L in range(10, 30, 5):
         if(len(sol_E) > 0 and len(sol_C) > 0 and len(sol_eps) > 0):
             try:
 
-                sol_E_opt = sol_E
-                sol_C_opt = sol_C
+                sol_E_opt = []
+                sol_C_opt = []
+                eps_opt = []
+                gap_opt = []
 
-                sol_E_iter = sol_E
-                sol_E_opt_iter = sol_E_opt
+                sol_E_feas = []
+                sol_C_feas = []
+                eps_feas = []
+                gap_feas = []
 
-                for i in range(0,len(sol_E_iter)-1):
-                    if sol_E_iter[i] < 0:
-                        del sol_E[i]
-                        del sol_C[i]
-                
-                del sol_E_iter
+                for i in range(0,len(sol_E)):
+                    if sol_E[i] < 0:
+                        sol_E_opt.append(sol_E[i])
+                        sol_E[i] = sol_E[i] * (-1)
+                        sol_C_opt.append(sol_C[i])
+                        eps_opt.append(sol_eps[i])
+                        gap_opt.append(sol_gap[i])
+                    else:
+                        sol_E_feas.append(sol_E[i])
+                        sol_C_feas.append(sol_C[i])
+                        eps_feas.append(sol_eps[i])
+                        gap_feas.append(sol_gap[i])
 
-                for i in range(0,len(sol_E_opt_iter)-1):
-                    if sol_E_opt_iter[i] >= 0:
-                        del sol_E_opt[i]
-                        del sol_C_opt[i]
-
-                del sol_E_opt_iter
-                
-                sol_E_opt = sol_E_opt * (-1)
+                sol_E_opt = [i * (-1) for i in sol_E_opt]
 
                 # Plotando a fronteira de pareto
                 print("Started plotting Objective Function Comparison Graph...\n")
 
                 fig = plt.figure("Obj Function Comparison")
                 ax = fig.add_subplot(1, 1, 1)
-                ax.grid(linestyle="--", linewidth=0.5, alpha=0.5)
-                ax.grid(which = "minor")
+                ax.grid(linestyle="--", which="minor", linewidth=0.5, alpha=0.5)
+                ax.grid(linestyle="-", which="major", linewidth=0.5, alpha=0.5)
                 ax.minorticks_on()
 
                 ### Resultados (valores subotimos)
@@ -366,7 +369,7 @@ for L in range(10, 30, 5):
                 # ynew = f(xnew)
                 # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
                 
-                ax.plot(sol_C, sol_E, "b*", alpha=0.5)
+                ax.plot(sol_C_feas, sol_E_feas, "b*", alpha=0.5)
                 # ax.plot(xnew, ynew, "b--", alpha = 0.2)
 
                 ### Resultados (valores otimos)
@@ -381,6 +384,53 @@ for L in range(10, 30, 5):
                 ax.plot(sol_C_opt, sol_E_opt, "r*", alpha=0.5)
                 # ax.plot(xnew, ynew, "r--", alpha = 0.2)
 
+                ax.spines['top'].set_alpha(0.25)
+                ax.spines['right'].set_alpha(0.25)
+                ax.spines['bottom'].set_alpha(0.25)
+                ax.spines['left'].set_alpha(0.25)
+
+                # ax.spines['top'].set_visible(False)
+                # ax.spines['right'].set_visible(False)
+                # ax.spines['bottom'].set_visible(False)
+                # ax.spines['left'].set_visible(False)
+
+                offset = 0.05
+                for i in range(0,len(sol_E_feas)):
+                    if i == 0:
+                        repeat = 0
+                    elif ((sol_C_feas[i] == sol_C_feas[i-1]) or (sol_C_feas[i] - sol_C_feas[i-1] <= 12)) and sol_E_feas[i] == sol_E_feas[i-1]:
+                        repeat = repeat + offset
+                    else:
+                        repeat = 0
+                    plt.text(
+                        sol_C_feas[i],
+                        offset+sol_E_feas[i]+repeat,
+                        # "$\epsilon$ |Gap(%)\n"+str(eps_feas[i])+"|"+str(gap_feas[i]),
+                        str(eps_feas[i])+"|"+str(gap_feas[i])+"%",
+                        color="k",
+                        fontsize=6,
+                        # weight="bold",
+                        style="italic"
+                    )
+
+                for i in range(0,len(sol_E_opt)):
+                    if i == 0:
+                        repeat = 0
+                    elif ((sol_C_opt[i] == sol_C_opt[i-1]) or (sol_C_opt[i] - sol_C_opt[i-1] <= 12)) and sol_E_opt[i] == sol_E_opt[i-1]:
+                        repeat = repeat + offset
+                    else:
+                        repeat = 0
+                    plt.text(
+                        sol_C_opt[i],
+                        offset+sol_E_opt[i]+repeat,
+                        # "$\epsilon$  |Gap(%)\n"+str(eps_opt[i])+"|"+str(gap_opt[i]),
+                        str(eps_opt[i])+"|"+str(gap_opt[i])+"%",
+                        color="k",
+                        fontsize=6,
+                        # weight="bold",
+                        style="italic"
+                    )
+                
 
                 plt.xlabel("C (points)")
                 
@@ -390,7 +440,6 @@ for L in range(10, 30, 5):
                 ax.yaxis.set_minor_locator(AutoMinorLocator())
 
 
-                
                 plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] +"_objfunccomp.svg")
                 print("Objective Function Comparison plot successful!")
                 plt.close()
