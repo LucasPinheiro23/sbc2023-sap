@@ -13,7 +13,7 @@ import time
 import sys
 import re
 
-#Constante que determina o percentual minimo da cobertura maxima a ser alcancado. Condicao de parada.
+#Constante que determina o percentual minimo de cobertura a ser alcancado. Condicao de parada.
 # stop_perc = 0.98
 stop_perc = 1
 
@@ -371,7 +371,7 @@ for L in range(10, 30, 5):
                 # ynew = f(xnew)
                 # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
                 
-                ax.plot(sol_C_feas, sol_E_feas, "b*", alpha=0.5)
+                ax.plot(sol_C_feas, sol_E_feas, "r*", alpha=0.5)
                 # ax.plot(xnew, ynew, "b--", alpha = 0.2)
 
                 ### Resultados (valores otimos)
@@ -383,7 +383,7 @@ for L in range(10, 30, 5):
                 # ynew = f(xnew)
                 # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
                 
-                ax.plot(sol_C_opt, sol_E_opt, "r*", alpha=0.5)
+                ax.plot(sol_C_opt, sol_E_opt, "b*", alpha=0.5)
                 # ax.plot(xnew, ynew, "r--", alpha = 0.2)
 
                 ax.spines['top'].set_alpha(0.25)
