@@ -14,7 +14,7 @@ M = 100000
 
 # Distancia entre pares de posicoes fixas (D)
 def init_D(model, i, j):
-    return math.sqrt(
+    return model.scale * math.sqrt(
         pow((model.X[i] - model.X[j]), 2)
         + pow((model.Y[i] - model.Y[j]), 2)
     )
