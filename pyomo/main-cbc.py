@@ -138,12 +138,13 @@ for L in range(10, 30, 5):
                 with open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt", 'rb') as fb:
                     try:  # catch OSError in case of a one line file 
                         fb.seek(-2, os.SEEK_END)
-                        while fb.read(1) != b'+':
+                        while fb.read(1) != b'p':
                             fb.seek(-2, os.SEEK_CUR)
                     except OSError:
                         fb.seek(0)
                     line = fb.readline().decode()
 
+                print(line)
                 gap_split = line.find("Gap:")
                 # gap = float(line[gap_split-5:gap_split].replace(" ",""))
                 gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-5:gap_split]))
