@@ -1,0 +1,128 @@
+Translating instance to solver...
+
+GLPSOL--GLPK LP/MIP Solver 5.0
+Parameter(s) specified in the command line:
+ --tmlim 28800 --mipgap 0.0 --write /tmp/tmpo1tmqrzk.glpk.raw --wglp /tmp/tmpu2zvuo4_.glpk.glp
+ --cpxlp /tmp/tmpa6kllyws.pyomo.lp
+Reading problem data from '/tmp/tmpa6kllyws.pyomo.lp'...
+/tmp/tmpa6kllyws.pyomo.lp:131696: warning: lower bound of variable 'x2' redefined
+/tmp/tmpa6kllyws.pyomo.lp:131696: warning: upper bound of variable 'x2' redefined
+20953 rows, 14603 columns, 54155 non-zeros
+14603 integer variables, 14579 of which are binary
+146275 lines were read
+Writing problem data to '/tmp/tmpu2zvuo4_.glpk.glp'...
+99256 lines were written
+GLPK Integer Optimizer 5.0
+20953 rows, 14603 columns, 54155 non-zeros
+14603 integer variables, 14579 of which are binary
+Preprocessing...
+216 hidden packing inequaliti(es) were detected
+2064 hidden covering inequaliti(es) were detected
+155 constraint coefficient(s) were reduced
+8668 rows, 4206 columns, 22493 non-zeros
+4206 integer variables, 4183 of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  2.300e+01  ratio =  2.300e+01
+GM: min|aij| =  5.956e-01  max|aij| =  1.679e+00  ratio =  2.819e+00
+EQ: min|aij| =  3.556e-01  max|aij| =  1.000e+00  ratio =  2.812e+00
+2N: min|aij| =  2.500e-01  max|aij| =  1.625e+00  ratio =  6.500e+00
+Constructing initial basis...
+Size of triangular part is 8667
+Solving LP relaxation...
+GLPK Simplex Optimizer 5.0
+8668 rows, 4206 columns, 22493 non-zeros
+      0: obj =   0.000000000e+00 inf =   1.244e+02 (177)
+    597: obj =   5.444182500e+00 inf =   0.000e+00 (0) 4
+*  1460: obj =   1.156518842e+00 inf =   7.098e-14 (0) 5
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
+Long-step dual simplex will be used
++  1460: mip =     not found yet >=              -inf        (1; 0)
++  5052: mip =     not found yet >=   1.167664353e+00        (192; 4)
++  9296: mip =     not found yet >=   1.174282000e+00        (336; 10)
++ 12859: mip =     not found yet >=   1.177911032e+00        (450; 14)
++ 15619: mip =     not found yet >=   1.184509273e+00        (625; 18)
++ 20359: >>>>>   1.511782000e+00 >=   1.195115333e+00  20.9% (764; 25)
++ 26784: mip =   1.511782000e+00 >=   1.215729368e+00  19.6% (203; 1285)
++ 34729: mip =   1.511782000e+00 >=   1.237868957e+00  18.1% (226; 1322)
++ 39729: mip =   1.511782000e+00 >=   1.251255684e+00  17.2% (281; 1341)
++ 45462: mip =   1.511782000e+00 >=   1.251255684e+00  17.2% (323; 1356)
++ 51188: mip =   1.511782000e+00 >=   1.261782000e+00  16.5% (370; 1377)
++ 58928: mip =   1.511782000e+00 >=   1.266327455e+00  16.2% (417; 1409)
++ 65316: mip =   1.511782000e+00 >=   1.274939895e+00  15.7% (456; 1442)
+Time used: 60.0 secs.  Memory used: 30.8 Mb.
++ 71998: mip =   1.511782000e+00 >=   1.286782000e+00  14.9% (496; 1476)
++ 75911: mip =   1.511782000e+00 >=   1.297496286e+00  14.2% (524; 1489)
++ 83043: mip =   1.511782000e+00 >=   1.310211067e+00  13.3% (545; 1524)
++ 90255: mip =   1.511782000e+00 >=   1.322308316e+00  12.5% (566; 1571)
++ 97460: mip =   1.511782000e+00 >=   1.333685111e+00  11.8% (582; 1625)
++103029: mip =   1.511782000e+00 >=   1.333685111e+00  11.8% (637; 1652)
++108786: mip =   1.511782000e+00 >=   1.333685111e+00  11.8% (699; 1680)
++113446: mip =   1.511782000e+00 >=   1.333685111e+00  11.8% (757; 1699)
++119140: mip =   1.511782000e+00 >=   1.333685111e+00  11.8% (812; 1720)
++124535: mip =   1.511782000e+00 >=   1.333685111e+00  11.8% (865; 1742)
++131226: mip =   1.511782000e+00 >=   1.333685111e+00  11.8% (905; 1772)
++137990: mip =   1.511782000e+00 >=   1.333685111e+00  11.8% (954; 1798)
+Time used: 120.0 secs.  Memory used: 44.5 Mb.
++143307: mip =   1.511782000e+00 >=   1.333685111e+00  11.8% (1008; 1821)
++148890: mip =   1.511782000e+00 >=   1.334150421e+00  11.7% (1054; 1846)
++156987: mip =   1.511782000e+00 >=   1.341202412e+00  11.3% (1065; 1907)
++165042: mip =   1.511782000e+00 >=   1.349679412e+00  10.7% (1094; 1974)
++170198: mip =   1.511782000e+00 >=   1.354373391e+00  10.4% (1119; 2005)
++176111: mip =   1.511782000e+00 >=   1.358739179e+00  10.1% (1139; 2045)
++182615: mip =   1.511782000e+00 >=   1.367673000e+00   9.5% (1135; 2129)
++190326: mip =   1.511782000e+00 >=   1.367673000e+00   9.5% (1136; 2223)
++198546: mip =   1.511782000e+00 >=   1.367673000e+00   9.5% (1124; 2315)
++205260: mip =   1.511782000e+00 >=   1.367673000e+00   9.5% (1127; 2379)
++212408: mip =   1.511782000e+00 >=   1.367673000e+00   9.5% (1139; 2456)
++218888: mip =   1.511782000e+00 >=   1.367673000e+00   9.5% (1145; 2514)
+Time used: 180.0 secs.  Memory used: 55.3 Mb.
++225776: mip =   1.511782000e+00 >=   1.367673000e+00   9.5% (1155; 2581)
++232315: mip =   1.511782000e+00 >=   1.374282000e+00   9.1% (1131; 2669)
++239450: mip =   1.511782000e+00 >=   1.388065733e+00   8.2% (1115; 2780)
++245625: mip =   1.511782000e+00 >=   1.399872053e+00   7.4% (1071; 2888)
++252012: mip =   1.511782000e+00 >=   1.406722915e+00   6.9% (1018; 3049)
++258386: mip =   1.511782000e+00 >=   1.414733154e+00   6.4% (977; 3199)
++264392: mip =   1.511782000e+00 >=   1.423923000e+00   5.8% (908; 3350)
++270458: mip =   1.511782000e+00 >=   1.435648778e+00   5.0% (831; 3589)
++276066: mip =   1.511782000e+00 >=   1.435648778e+00   5.0% (849; 3635)
++280673: mip =   1.511782000e+00 >=   1.439662619e+00   4.8% (824; 3766)
++285387: mip =   1.511782000e+00 >=   1.445645216e+00   4.4% (784; 3950)
+Time used: 240.0 secs.  Memory used: 57.7 Mb.
++291095: mip =   1.511782000e+00 >=   1.457202073e+00   3.6% (691; 4229)
++298944: mip =   1.511782000e+00 >=   1.469636667e+00   2.8% (525; 4723)
++306715: mip =   1.511782000e+00 >=   1.485000000e+00   1.8% (309; 5450)
++311490: mip =   1.511782000e+00 >=   1.508853462e+00   0.2% (22; 6817)
++311628: mip =   1.511782000e+00 >=     tree is empty   0.0% (0; 7061)
+INTEGER OPTIMAL SOLUTION FOUND
+Time used:   255.8 secs
+Memory used: 60.0 Mb (62871656 bytes)
+Writing MIP solution to '/tmp/tmpo1tmqrzk.glpk.raw'...
+35565 lines were written
+
+Time in solver (for this epsilon): 255.87957048416138 s
+Elapsed time (for this epsilon): 256.57518219947815 s
+
+
+Total elapsed time since execution of first epsilon: 278062.31808924675 s
+
+Results:
+
+E = 1.511782 mA
+C = 66.0 points
+C ~= 26.400000000000002 km^2
+
+Minimum Epsilon for this instance = 11
+Maximum Epsilon for this instance = 172
+
+Current Epsilon = 66
+
+
+Instance Epsilon Preprocessing Time: 0.00529789924621582 s
+
+
+Updated solution vectors:
+sol_E = [-0.611782,-1.061782,-1.061782,-1.061782,-1.367673,-1.511782]
+sol_C = [14.0,30.0,33.0,44.0,58.0,66.0]
+sol_eps = [11,22,33,44,55,66]
+sol_gap = [0.0,0.0,0.0,0.0,0.0,0.0]

@@ -36,8 +36,12 @@ solver = "glpk"
 solver_exec = "glpsol"
 # Caminho das instancias
 
-for L in range(10, 30, 5):
+for L in range(20, 30, 5):
     for d in range(1, 6):
+
+        if L == 20 and d == 1:
+            continue
+
         instance_path = "./instances_OL2A_updated/" + str(L) + "x" + str(L) + "/"
         instance_filename = (
             "SAP-inst_" + str(L) + "x" + str(L) + "_d0." + str(d) + ".dat"
@@ -66,7 +70,7 @@ for L in range(10, 30, 5):
         #Inicializa variavel de execucao adicional para o ultimo epsilon
         # ad_run = False
 
-        #Executa o solver para variados epsilon, comecando do maximo. Quando encontra muita variacao na FO, para a execucao.
+        #Executa o solver para variados epsilon, comecando do minimo.
         eps = eps_MIN
 
         # Lista de solucoes da FO E
@@ -77,7 +81,14 @@ for L in range(10, 30, 5):
         sol_eps = []
         # Lista de gaps
         sol_gap = []
-        
+
+        if L == 20 and d == 2:
+            eps = 40
+            sol_E = []
+            sol_C = []
+            sol_eps = []
+            sol_gap = []
+
         while eps <= eps_MAX:
 
             # Checa se foi encontrada solucao

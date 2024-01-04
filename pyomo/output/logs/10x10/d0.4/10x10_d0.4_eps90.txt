@@ -1,0 +1,97 @@
+Translating instance to solver...
+
+GLPSOL--GLPK LP/MIP Solver 5.0
+Parameter(s) specified in the command line:
+ --tmlim 28800 --mipgap 0.0 --write /tmp/tmpokjf50_6.glpk.raw --wglp /tmp/tmpfmtrwzzz.glpk.glp
+ --cpxlp /tmp/tmpdmurrz54.pyomo.lp
+Reading problem data from '/tmp/tmpdmurrz54.pyomo.lp'...
+/tmp/tmpdmurrz54.pyomo.lp:241407: warning: lower bound of variable 'x2' redefined
+/tmp/tmpdmurrz54.pyomo.lp:241407: warning: upper bound of variable 'x2' redefined
+40946 rows, 21382 columns, 97054 non-zeros
+21382 integer variables, 21340 of which are binary
+262747 lines were read
+Writing problem data to '/tmp/tmpfmtrwzzz.glpk.glp'...
+187648 lines were written
+GLPK Integer Optimizer 5.0
+40946 rows, 21382 columns, 97054 non-zeros
+21382 integer variables, 21340 of which are binary
+Preprocessing...
+178 hidden packing inequaliti(es) were detected
+6418 hidden covering inequaliti(es) were detected
+96 constraint coefficient(s) were reduced
+25073 rows, 10378 columns, 63777 non-zeros
+10378 integer variables, 10337 of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  4.100e+01  ratio =  4.100e+01
+GM: min|aij| =  4.093e-01  max|aij| =  2.443e+00  ratio =  5.969e+00
+EQ: min|aij| =  2.064e-01  max|aij| =  1.000e+00  ratio =  4.845e+00
+2N: min|aij| =  1.250e-01  max|aij| =  1.438e+00  ratio =  1.150e+01
+Constructing initial basis...
+Size of triangular part is 25073
+Solving LP relaxation...
+GLPK Simplex Optimizer 5.0
+25073 rows, 10378 columns, 63777 non-zeros
+      0: obj =   0.000000000e+00 inf =   7.631e+01 (103)
+Perturbing LP to avoid stalling [200]...
+    898: obj =   3.680404393e+00 inf =   7.078e-14 (0) 3
+Removing LP perturbation [1856]...
+*  1856: obj =   2.116494800e+00 inf =   1.732e-13 (0) 5
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
+Long-step dual simplex will be used
++  1856: mip =     not found yet >=              -inf        (1; 0)
++  5540: mip =     not found yet >=   2.123564000e+00        (20; 0)
++  6730: mip =     not found yet >=   2.123564000e+00        (64; 0)
++  9725: mip =     not found yet >=   2.125943437e+00        (91; 1)
++ 12436: mip =     not found yet >=   2.152963875e+00        (122; 2)
++ 13898: mip =     not found yet >=   2.152963875e+00        (147; 2)
++ 15936: mip =     not found yet >=   2.158797674e+00        (179; 3)
++ 20489: mip =     not found yet >=   2.161800375e+00        (223; 4)
++ 24117: mip =     not found yet >=   2.166327455e+00        (246; 6)
++ 28891: mip =     not found yet >=   2.177673000e+00        (285; 8)
++ 32595: mip =     not found yet >=   2.185854818e+00        (317; 9)
++ 36043: mip =     not found yet >=   2.192673000e+00        (348; 10)
+Time used: 60.2 secs.  Memory used: 41.8 Mb.
++ 38450: mip =     not found yet >=   2.200036750e+00        (378; 11)
++ 42478: mip =     not found yet >=   2.206495396e+00        (406; 13)
++ 44895: mip =     not found yet >=   2.208634278e+00        (428; 14)
++ 45886: mip =     not found yet >=   2.208634278e+00        (459; 14)
++ 48849: mip =     not found yet >=   2.211423000e+00        (480; 15)
++ 50033: mip =     not found yet >=   2.211423000e+00        (497; 15)
++ 51329: mip =     not found yet >=   2.211423000e+00        (522; 15)
++ 54097: mip =     not found yet >=   2.217673000e+00        (561; 17)
++ 58451: mip =     not found yet >=   2.219636667e+00        (585; 18)
++ 59384: >>>>>   2.267673000e+00 >=   2.219636667e+00   2.1% (601; 19)
++ 62930: mip =   2.267673000e+00 >=     tree is empty   0.0% (0; 1255)
+INTEGER OPTIMAL SOLUTION FOUND
+Time used:   109.5 secs
+Memory used: 53.9 Mb (56550666 bytes)
+Writing MIP solution to '/tmp/tmpokjf50_6.glpk.raw'...
+62337 lines were written
+
+Time in solver (for this epsilon): 109.60786247253418 s
+Elapsed time (for this epsilon): 110.75853681564331 s
+
+
+Total elapsed time since execution of first epsilon: 79146.24390602112 s
+
+Results:
+
+E = 2.267673 mA
+C = 91.0 points
+C ~= 36.4 km^2
+
+Minimum Epsilon for this instance = 9
+Maximum Epsilon for this instance = 98
+
+Current Epsilon = 90
+
+
+Instance Epsilon Preprocessing Time: 0.004303455352783203 s
+
+
+Updated solution vectors:
+sol_E = [-0.611782,-0.9176730000000001,-1.061782,-1.061782,-1.061782,-1.061782,-1.511782,-1.511782,2.123564,-2.267673]
+sol_C = [14.0,19.0,30.0,37.0,45.0,54.0,64.0,72.0,81.0,91.0]
+sol_eps = [9,18,27,36,45,54,63,72,81,90]
+sol_gap = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,8.5,0.0]
