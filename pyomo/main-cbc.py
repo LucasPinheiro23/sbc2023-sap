@@ -132,25 +132,28 @@ for L in range(10, 30, 5):
             results.write(filename="./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + "-results.json", format="json")
 
             #Se achou solucao, armazena.
-            
+
             ###
             #INSERIR IF AQUI PARA CASO NAO ENCONTRE SOLUCAO!!!
             ###
 
-            # if((results.solver.status == SolverStatus.ok) and ((results.solver.termination_condition == TerminationCondition.feasible) or (results.solver.termination_condition == TerminationCondition.optimal))):
+            if not results.solver.termination_condition == TerminationCondition.optimal:
                 
-            with open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt", 'rb') as fb:
-                try:  # catch OSError in case of a one line file 
-                    fb.seek(-2, os.SEEK_END)
-                    while fb.read(1) != b'+':
-                        fb.seek(-2, os.SEEK_CUR)
-                except OSError:
-                    fb.seek(0)
-                line = fb.readline().decode()
+                with open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt", 'rb') as fb:
+                    try:  # catch OSError in case of a one line file 
+                        fb.seek(-2, os.SEEK_END)
+                        while fb.read(1) != b'+':
+                            fb.seek(-2, os.SEEK_CUR)
+                    except OSError:
+                        fb.seek(0)
+                    line = fb.readline().decode()
 
-            gap_split = line.find("Gap:")
-            # gap = float(line[gap_split-5:gap_split].replace(" ",""))
-            gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-5:gap_split]))
+                gap_split = line.find("Gap:")
+                # gap = float(line[gap_split-5:gap_split].replace(" ",""))
+                gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-5:gap_split]))
+                
+            else:
+                gap = 0.0
 
             # Pega resultados diretamente
             print("\nResults:\n")
