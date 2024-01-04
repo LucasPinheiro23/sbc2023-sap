@@ -164,7 +164,7 @@ for L in range(10, 30, 5):
             if not (results.solver.termination_condition == TerminationCondition.intermediateNonInteger):
                 
                 # Resultado da funcao objetivo de Energia, verifica se eh otimo
-                if(results.solver.termination_condition == TerminationCondition.optimal)
+                if(results.solver.termination_condition == TerminationCondition.optimal):
                     E_now = (-1)*value(instance.E)
                     print("E = " + str((-1)*E_now) + " mA")
                 else:
