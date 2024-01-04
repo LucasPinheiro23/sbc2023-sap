@@ -1,76 +1,47 @@
+WARNING: Failed to create solver with name '_cbc_shell': Failed to set
+    executable for solver cbc. File with name=cbc either does not exist or it
+    is not executable. To skip this validation, call set_executable with
+    validate=False.
+Traceback (most recent call last):
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\opt\base\solvers.py", line 153, in __call__
+    opt = self._cls[_name](**kwds)
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\solvers\plugins\solvers\CBCplugin.py", line 86, in __init__
+    super(CBCSHELL, self).__init__(**kwds)
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\opt\solver\shellcmd.py", line 56, in __init__
+    self.set_executable(name=executable, validate=validate)
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\opt\solver\shellcmd.py", line 104, in set_executable
+    raise ValueError(
+ValueError: Failed to set executable for solver cbc. File with name=cbc either does not exist or it is not executable. To skip this validation, call set_executable with validate=False.
+WARNING: Failed to create solver with name 'cbc': Attempting to use an
+    unavailable solver.
+
+    The SolverFactory was unable to create the solver "_cbc_shell" and
+    returned an UnknownSolver object.  This error is raised at the point where
+    the UnknownSolver object was used as if it were valid (by calling method
+    "set_problem_format").
+
+    The original solver was created with the following parameters:
+    	executable: cbc type: _cbc_shell _args: () options: {}
+Traceback (most recent call last):
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\opt\base\solvers.py", line 153, in __call__
+    opt = self._cls[_name](**kwds)
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\solvers\plugins\solvers\CBCplugin.py", line 46, in __new__
+    opt.set_problem_format(ProblemFormat.cpxlp)
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\opt\base\solvers.py", line 120, in __getattr__
+    self._solver_error(attr)
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\opt\base\solvers.py", line 123, in _solver_error
+    raise RuntimeError("""Attempting to use an unavailable solver.
+RuntimeError: Attempting to use an unavailable solver.
+
+The SolverFactory was unable to create the solver "_cbc_shell"
+and returned an UnknownSolver object.  This error is raised at the point
+where the UnknownSolver object was used as if it were valid (by calling
+method "set_problem_format").
+
+The original solver was created with the following parameters:
+	executable: cbc
+	type: _cbc_shell
+	_args: ()
+	options: {}
 Translating instance to solver...
 
-GLPSOL--GLPK LP/MIP Solver 5.0
-Parameter(s) specified in the command line:
- --tmlim 28800 --mipgap 0.0 --write /tmp/tmpvt9_nlul.glpk.raw --wglp /tmp/tmpbmh2i0sw.glpk.glp
- --cpxlp /tmp/tmpjlwnd3v_.pyomo.lp
-Reading problem data from '/tmp/tmpjlwnd3v_.pyomo.lp'...
-/tmp/tmpjlwnd3v_.pyomo.lp:29139: warning: lower bound of variable 'x2' redefined
-/tmp/tmpjlwnd3v_.pyomo.lp:29139: warning: upper bound of variable 'x2' redefined
-4616 rows, 3172 columns, 12076 non-zeros
-3172 integer variables, 3160 of which are binary
-32299 lines were read
-Writing problem data to '/tmp/tmpbmh2i0sw.glpk.glp'...
-22212 lines were written
-GLPK Integer Optimizer 5.0
-4616 rows, 3172 columns, 12076 non-zeros
-3172 integer variables, 3160 of which are binary
-Preprocessing...
-116 hidden packing inequaliti(es) were detected
-476 hidden covering inequaliti(es) were detected
-85 constraint coefficient(s) were reduced
-2397 rows, 1354 columns, 6471 non-zeros
-1354 integer variables, 1343 of which are binary
-Scaling...
- A: min|aij| =  1.000e+00  max|aij| =  1.100e+01  ratio =  1.100e+01
-GM: min|aij| =  5.491e-01  max|aij| =  1.821e+00  ratio =  3.317e+00
-EQ: min|aij| =  3.503e-01  max|aij| =  1.000e+00  ratio =  2.855e+00
-2N: min|aij| =  2.500e-01  max|aij| =  1.375e+00  ratio =  5.500e+00
-Constructing initial basis...
-Size of triangular part is 2397
-Solving LP relaxation...
-GLPK Simplex Optimizer 5.0
-2397 rows, 1354 columns, 6471 non-zeros
-      0: obj =   0.000000000e+00 inf =   7.575e+01 (101)
-Perturbing LP to avoid stalling [200]...
-    336: obj =   3.329455000e+00 inf =   0.000e+00 (0) 2
-Removing LP perturbation [624]...
-*   624: obj =   6.117820000e-01 inf =   0.000e+00 (0) 2
-OPTIMAL LP SOLUTION FOUND
-Integer optimization begins...
-Long-step dual simplex will be used
-+   624: mip =     not found yet >=              -inf        (1; 0)
-+   899: >>>>>   6.117820000e-01 >=   6.117820000e-01 < 0.1% (17; 1)
-+   899: mip =   6.117820000e-01 >=     tree is empty   0.0% (0; 35)
-INTEGER OPTIMAL SOLUTION FOUND
-Time used:   0.1 secs
-Memory used: 4.6 Mb (4815792 bytes)
-Writing MIP solution to '/tmp/tmpvt9_nlul.glpk.raw'...
-7797 lines were written
-
-Time in solver (for this epsilon): 0.13192129135131836 s
-Elapsed time (for this epsilon): 0.27324533462524414 s
-
-
-Total elapsed time since execution of first epsilon: 0.3216257095336914 s
-
-Results:
-
-E = 0.611782 mA
-C = 12.0 points
-C ~= 4.800000000000001 km^2
-
-Minimum Epsilon for this instance = 9
-Maximum Epsilon for this instance = 96
-
-Current Epsilon = 9
-
-
-Instance Epsilon Preprocessing Time: 0.0010874271392822266 s
-
-
-Updated solution vectors:
-sol_E = [-0.611782]
-sol_C = [12.0]
-sol_eps = [9]
-sol_gap = [0.0]

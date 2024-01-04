@@ -131,13 +131,9 @@ for L in range(10, 30, 5):
             results.problem.name = instance_filename
             results.write(filename="./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + "-results.json", format="json")
 
-            #Se achou solucao, armazena.
-
-            ###
-            #INSERIR IF AQUI PARA CASO NAO ENCONTRE SOLUCAO!!!
-            ###
-
-            if not results.solver.termination_condition == TerminationCondition.optimal:
+            
+            #Se nao otima, e encontrou solucao, guarda o gap. Senao, o gap eh zero, pois encontrou solucao otima ou nao ha solucao.
+            if not (results.solver.termination_condition == TerminationCondition.optimal) and not (results.solver.termination_condition == TerminationCondition.intermediateNonInteger):
                 
                 with open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt", 'rb') as fb:
                     try:  # catch OSError in case of a one line file 
@@ -151,25 +147,9 @@ for L in range(10, 30, 5):
                 gap_split = line.find("Gap:")
                 # gap = float(line[gap_split-5:gap_split].replace(" ",""))
                 gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-5:gap_split]))
-                
+
             else:
                 gap = 0.0
-
-            # Pega resultados diretamente
-            print("\nResults:\n")
-
-            # Resultado da funcao objetivo de Energia
-            if(results.solver.termination_condition == TerminationCondition.optimal):
-                E_now = (-1)*value(instance.E)
-                print("E = " + str((-1)*E_now) + " mA")
-            else:
-                E_now = value(instance.E)
-                print("E = " + str(E_now) + " mA")
-
-            # Resultado da variavel de decisao da Cobertura
-            C_now = value(instance.objC)
-            print("C = " + str(C_now) + " points")
-            print("C ~= " + str((C_now/4)*1.6) + " km^2")
 
             #Dados do epsilon
             print("\nMinimum Epsilon for this instance = " + str(eps_MIN))
@@ -177,21 +157,42 @@ for L in range(10, 30, 5):
             print("\nCurrent Epsilon = " + str(eps))
             print("\n\nInstance Epsilon Preprocessing Time: " + str(ttt) + " s")
 
-            sol_E.append(E_now)
-            sol_C.append(C_now)
-            sol_eps.append(eps)
-            sol_gap.append(gap)
+            # Pega resultados diretamente
+            print("\nResults:\n")
 
-            print("\n\nUpdated solution vectors:\nsol_E = [", end="")
-            print(",".join(map(str, sol_E)), end="")
-            print("]\nsol_C = [", end="")
-            print(",".join(map(str, sol_C)), end="")
-            print("]\nsol_eps = [", end="")
-            print(",".join(map(str, sol_eps)), end="")
-            print("]\nsol_gap = [", end="")
-            print(",".join(map(str, sol_gap)), end="")
-            print("]")
+            #Se encontrou resultados
+            if not (results.solver.termination_condition == TerminationCondition.intermediateNonInteger):
+                
+                # Resultado da funcao objetivo de Energia, verifica se eh otimo
+                if(results.solver.termination_condition == TerminationCondition.optimal)
+                    E_now = (-1)*value(instance.E)
+                    print("E = " + str((-1)*E_now) + " mA")
+                else:
+                    E_now = value(instance.E)
+                    print("E = " + str(E_now) + " mA")
 
+                # Resultado da variavel de decisao da Cobertura
+                C_now = value(instance.objC)
+                print("C = " + str(C_now) + " points")
+                print("C ~= " + str((C_now/4)*1.6) + " km^2")
+
+                sol_E.append(E_now)
+                sol_C.append(C_now)
+                sol_eps.append(eps)
+                sol_gap.append(gap)
+
+                print("\n\nUpdated solution vectors:\nsol_E = [", end="")
+                print(",".join(map(str, sol_E)), end="")
+                print("]\nsol_C = [", end="")
+                print(",".join(map(str, sol_C)), end="")
+                print("]\nsol_eps = [", end="")
+                print(",".join(map(str, sol_eps)), end="")
+                print("]\nsol_gap = [", end="")
+                print(",".join(map(str, sol_gap)), end="")
+                print("]")
+            else:
+                print("NO SOLUTION FOUND FOR THIS INSTANCE!")
+                no_sol = 1
 
             sys.stdout.close()
 
