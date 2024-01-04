@@ -117,7 +117,7 @@ for L in range(10, 30, 5):
 
             # Cria um solver
             opt = SolverFactory(solver, executable=solver_exec)
-            opt.options["seconds"] = 5
+            opt.options["seconds"] = 28800
             opt.options["ratio"] = 0.0
 
             print("Translating instance to solver...\n")
