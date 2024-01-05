@@ -196,6 +196,8 @@ for L in range(10, 30, 5):
 
             sys.stdout.close()
 
+            sys.stdout = sys.__stdout__
+
             # -----------------------------------------------------------#
 
             ## POS-PROCESSAMENTO
@@ -325,6 +327,7 @@ for L in range(10, 30, 5):
 
             eps = eps + eps_step
 
+        sys.stdout.close()
         sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] + "_objfunccomp.txt","w")
         # sys.stdout = sys.__stdout__
         
