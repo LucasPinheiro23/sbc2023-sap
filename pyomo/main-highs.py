@@ -210,8 +210,6 @@ for L in range(10, 30, 5):
                 ax.axis("equal")
 
                 for i in instance.V:
-                    
-                    print("V: " + str(i))
 
                     plt.text(
                         (instance.X[i]-1 + 0.1)*instance.scale,
