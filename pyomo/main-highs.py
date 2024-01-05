@@ -263,7 +263,6 @@ for L in range(10, 30, 5):
                     else:
                         ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "ko", fillstyle="none")
 
-                print("\n")
                 ax.grid(linestyle="--", which="minor", linewidth=0.5, alpha=0.5)
                 ax.grid(linestyle="-", which="major", linewidth=0.5, alpha=0.5)
                 ax.minorticks_on()
