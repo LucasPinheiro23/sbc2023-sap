@@ -225,9 +225,19 @@ for L in range(10, 30, 5):
                         fontsize=10,
                     )
 
-                    print("S2C["+str(i)+"] = " + str(value(instance.s["S2C", i])))
-                    print("S2CPro["+str(i)+"] = " + str(value(instance.s["S2CPro", i])))
-                    if value(instance.s["S2C", i]) == 1:
+                    print("S2C["+str(i)+"] = " + str(round(value(instance.s["S2C", i]))))
+                    print("S2CPro["+str(i)+"] = " + str(round(value(instance.s["S2CPro", i]))))
+                    r1 = round(value(instance.s["S2C", i]))
+                    r2 = round(value(instance.s["S2CPro", i]))
+                    if r1 >= 1:
+                        r1 = 1
+                    else:
+                        r1 = 0
+                    if r2 >= 1:
+                        r2 = 1
+                    else:
+                        r2 = 0
+                    if r1 == 1:
                         ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "go")
                         ax.add_patch(
                             plt.Circle(
@@ -238,7 +248,7 @@ for L in range(10, 30, 5):
                             )
                         )
                     
-                    elif value(instance.s["S2CPro", i]) == 1:
+                    elif r2 == 1:
                         ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "bo")
                         ax.add_patch(
                             plt.Circle(
@@ -301,7 +311,12 @@ for L in range(10, 30, 5):
 
                 for i in instance.KW:
                     for j in instance.KH:
-                        if value(instance.cc[i, j]):
+                        r3 = round(value(instance.cc[i, j]))
+                        if r3 >= 1:
+                            r3 = 1
+                        else:
+                            r3 = 0
+                        if r3 == 1:
                             plt.plot(
                                 instance.W[i]*value(instance.scale),
                                 instance.H[j]*value(instance.scale),
