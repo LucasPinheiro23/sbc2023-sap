@@ -196,8 +196,6 @@ for L in range(10, 30, 5):
 
             sys.stdout.close()
 
-            sys.stdout = sys.__stdout__
-
             # -----------------------------------------------------------#
 
             ## POS-PROCESSAMENTO
@@ -211,8 +209,6 @@ for L in range(10, 30, 5):
                 ax = fig.add_subplot(1, 1, 1)
                 ax.axis("equal")
 
-                print("eps: " + str(eps))
-
                 for i in instance.V:
                     
                     print("V: " + str(i))
@@ -225,8 +221,6 @@ for L in range(10, 30, 5):
                         fontsize=10,
                     )
 
-                    print("S2C["+str(i)+"] = " + str(round(value(instance.s["S2C", i]))))
-                    print("S2CPro["+str(i)+"] = " + str(round(value(instance.s["S2CPro", i]))))
                     r1 = round(value(instance.s["S2C", i]))
                     r2 = round(value(instance.s["S2CPro", i]))
                     if r1 >= 1:
@@ -344,7 +338,7 @@ for L in range(10, 30, 5):
 
             eps = eps + eps_step
 
-        sys.stdout.close()
+        
         sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] + "_objfunccomp.txt","w")
         # sys.stdout = sys.__stdout__
         
