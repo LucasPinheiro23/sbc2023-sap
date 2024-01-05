@@ -210,6 +210,8 @@ for L in range(10, 30, 5):
                 ax.axis("equal")
 
                 for i in instance.V:
+                    
+                    print("V: " + str(i))
 
                     plt.text(
                         (instance.X[i]-1 + 0.1)*instance.scale,
@@ -219,6 +221,8 @@ for L in range(10, 30, 5):
                         fontsize=10,
                     )
 
+                    print("S2C["+str(i)+"] = " + str(value(instance.s["S2C", i])))
+                    print("S2CPro["+str(i)+"] = " + str(value(instance.s["S2CPro", i])))
                     if value(instance.s["S2C", i]) == 1:
                         ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "go")
                         ax.add_patch(
@@ -229,6 +233,7 @@ for L in range(10, 30, 5):
                                 alpha=0.1,
                             )
                         )
+                    
                     elif value(instance.s["S2CPro", i]) == 1:
                         ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "bo")
                         ax.add_patch(
@@ -252,6 +257,7 @@ for L in range(10, 30, 5):
                     else:
                         ax.plot((instance.X[i]-1)*instance.scale, (instance.Y[i]-1)*instance.scale, "ko", fillstyle="none")
 
+                print("\n")
                 ax.grid(linestyle="--", which="minor", linewidth=0.5, alpha=0.5)
                 ax.grid(linestyle="-", which="major", linewidth=0.5, alpha=0.5)
                 ax.minorticks_on()
