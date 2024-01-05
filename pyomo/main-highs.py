@@ -211,6 +211,8 @@ for L in range(10, 30, 5):
                 ax = fig.add_subplot(1, 1, 1)
                 ax.axis("equal")
 
+                print("eps: " + str(eps))
+
                 for i in instance.V:
                     
                     print("V: " + str(i))
