@@ -395,7 +395,7 @@ for L in range(10, 30, 5):
                 # xnew = np.arange(sol_I[0],sol_I[-1],0.1)
                 xnew = np.arange(sol_C[0],sol_C[-1],0.1)
                 ynew = f(xnew)
-                ax.plot(xnew, ynew, "k--", alpha=0.5)
+                ax.plot(xnew, ynew, "k:", alpha=0.3)
                 
                 ax.plot(sol_C_opt, sol_I_opt, "b*", alpha=0.5)
                 # ax.plot(xnew, ynew, "r--", alpha = 0.2)
