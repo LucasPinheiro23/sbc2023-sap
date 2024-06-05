@@ -410,7 +410,7 @@ for L in range(10, 30, 5):
                 # ax.spines['bottom'].set_visible(False)
                 # ax.spines['left'].set_visible(False)
 
-                offset = 0.05
+                offset = 0.10
                 for i in range(0,len(sol_I_feas)):
                     if i == 0:
                         repeat = 0
