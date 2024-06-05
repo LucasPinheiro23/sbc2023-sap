@@ -30,17 +30,17 @@ logging.getLogger("pyomo.core").setLevel(logging.ERROR)
 
 # Solver a ser utilizado
 # solver = 'cplex'
-solver = "glpk"
+# solver = "glpk"
+solver = "gurobi_direct"
+
 # Executavel do solver
 # solver_exec = 'cplex'
-solver_exec = "glpsol"
+# solver_exec = "glpsol"
+
 # Caminho das instancias
 
-for L in range(20, 30, 5):
-    for d in range(1, 6):
-
-        if L == 20 and d == 1:
-            continue
+for L in range(10, 30, 5):
+    for d in range(1, 10):
 
         instance_path = "./instances_OL2A_updated/" + str(L) + "x" + str(L) + "/"
         instance_filename = (
@@ -126,7 +126,7 @@ for L in range(20, 30, 5):
             ## ------
 
             # Cria um solver
-            opt = SolverFactory(solver, executable=solver_exec)
+            opt = SolverFactory(solver)#, executable=solver_exec)
             opt.options["tmlim"] = 28800
             # opt.options["tmlim"] = 20
             opt.options["mipgap"] = 0.0
@@ -145,18 +145,18 @@ for L in range(20, 30, 5):
             #Se achou solucao, armazena.
             if((results.solver.status == SolverStatus.ok) and ((results.solver.termination_condition == TerminationCondition.feasible) or (results.solver.termination_condition == TerminationCondition.optimal))):
                 
-                with open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt", 'rb') as fb:
-                    try:  # catch OSError in case of a one line file 
-                        fb.seek(-2, os.SEEK_END)
-                        while fb.read(1) != b'+':
-                            fb.seek(-2, os.SEEK_CUR)
-                    except OSError:
-                        fb.seek(0)
-                    line = fb.readline().decode()
+                # with open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt", 'rb') as fb:
+                #     try:  # catch OSError in case of a one line file 
+                #         fb.seek(-2, os.SEEK_END)
+                #         while fb.read(1) != b'+':
+                #             fb.seek(-2, os.SEEK_CUR)
+                #     except OSError:
+                #         fb.seek(0)
+                #     line = fb.readline().decode()
 
-                gap_split = line.find("%")
-                # gap = float(line[gap_split-5:gap_split].replace(" ",""))
-                gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-5:gap_split]))
+                # gap_split = line.find("%")
+                # # gap = float(line[gap_split-5:gap_split].replace(" ",""))
+                # gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-5:gap_split]))
 
                 # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
                 print("\nTime in solver (for this epsilon): " + str(results.solver.time) + " s")
@@ -188,7 +188,7 @@ for L in range(20, 30, 5):
                 sol_E.append(E_now)
                 sol_C.append(C_now)
                 sol_eps.append(eps)
-                sol_gap.append(gap)
+                sol_gap.append(0.0)
 
                 print("\n\nUpdated solution vectors:\nsol_E = [", end="")
                 print(",".join(map(str, sol_E)), end="")
@@ -447,7 +447,7 @@ for L in range(20, 30, 5):
 
                 plt.xlabel("C (points)")
                 
-                plt.ylabel("E (mA)")
+                plt.ylabel("I (mA)")
 
                 ax.xaxis.set_minor_locator(AutoMinorLocator())
                 ax.yaxis.set_minor_locator(AutoMinorLocator())
