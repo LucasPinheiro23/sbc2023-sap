@@ -127,9 +127,9 @@ for L in range(10, 30, 5):
 
             # Cria um solver
             opt = SolverFactory(solver)#, executable=solver_exec)
-            opt.options["tmlim"] = 28800
+            # opt.options["tmlim"] = 28800
             # opt.options["tmlim"] = 20
-            opt.options["mipgap"] = 0.0
+            # opt.options["mipgap"] = 0.0
 
             print("Translating instance to solver...\n")
             # Resolve a instancia e armazena os resultados em um arquivo JSON
