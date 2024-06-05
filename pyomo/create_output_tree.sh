@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ${pwd##*/} == "pyomo" ]; then
+if [ "${pwd##*/}" == "pyomo" ]; then
 
     mkdir output
     cd output
