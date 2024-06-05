@@ -74,7 +74,7 @@ for L in range(10, 30, 5):
         eps = eps_MIN
 
         # Lista de solucoes da FO E
-        sol_E = []
+        sol_I = []
         # Lista de solucoes da FO C
         sol_C = []
         # Lista de epsilons
@@ -84,7 +84,7 @@ for L in range(10, 30, 5):
 
         if L == 20 and d == 2:
             eps = 40
-            sol_E = []
+            sol_I = []
             sol_C = []
             sol_eps = []
             sol_gap = []
@@ -159,9 +159,9 @@ for L in range(10, 30, 5):
                 # gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-5:gap_split]))
 
                 # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
-                print("\nTime in solver (for this epsilon): " + str(results.solver.wallclock_time) + " s")
-                print("Elapsed time (for this epsilon): " + str(t) + " s")
-                print("\n\nTotal elapsed time since execution of first epsilon: " + str(tt) + " s")
+                print("\nSolver Wallclock Time (for this epsilon): " + str(results.solver.wallclock_time) + " s")
+                print("Python wallclock Time (for this epsilon): " + str(t) + " s")
+                print("\n\nTotal Elapsed Time (since program call): " + str(tt) + " s")
 
                 # Pega resultados diretamente
                 print("\nResults:\n")
@@ -169,10 +169,10 @@ for L in range(10, 30, 5):
                 # Resultado da funcao objetivo de Energia
                 if(results.solver.termination_condition == TerminationCondition.optimal):
                     E_now = (-1)*value(instance.E)
-                    print("E = " + str((-1)*E_now) + " mA")
+                    print("I = " + str((-1)*E_now) + " mA")
                 else:
                     E_now = value(instance.E)
-                    print("E = " + str(E_now) + " mA")
+                    print("I = " + str(E_now) + " mA")
 
                 # Resultado da variavel de decisao da Cobertura
                 C_now = value(instance.objC)
@@ -183,15 +183,15 @@ for L in range(10, 30, 5):
                 print("\nMinimum Epsilon for this instance = " + str(eps_MIN))
                 print("Maximum Epsilon for this instance = " + str(eps_MAX))
                 print("\nCurrent Epsilon = " + str(eps))
-                print("\n\nInstance Epsilon Preprocessing Time: " + str(ttt) + " s")
+                print("\n\nPreprocessing Time (for this epsilon): " + str(ttt) + " s")
 
-                sol_E.append(E_now)
+                sol_I.append(E_now)
                 sol_C.append(C_now)
                 sol_eps.append(eps)
                 sol_gap.append(results.solution.gap)
 
-                print("\n\nUpdated solution vectors:\nsol_E = [", end="")
-                print(",".join(map(str, sol_E)), end="")
+                print("\n\nUpdated solution vectors:\nsol_I = [", end="")
+                print(",".join(map(str, sol_I)), end="")
                 print("]\nsol_C = [", end="")
                 print(",".join(map(str, sol_C)), end="")
                 print("]\nsol_eps = [", end="")
@@ -202,9 +202,9 @@ for L in range(10, 30, 5):
                 
             else:
                 # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
-                print("\nTime in solver (for this epsilon): " + str(results.solver.time) + " s")
-                print("Elapsed time (for this epsilon): " + str(t) + " s")
-                print("\n\nTotal elapsed time since execution of first epsilon: " + str(tt) + " s")
+                print("\nSolver Wallclock Time (for this epsilon): " + str(results.solver.time) + " s")
+                print("Python wallclock Time (for this epsilon): " + str(t) + " s")
+                print("\n\nTotal Elapsed Time (since program call): " + str(tt) + " s")
                 print("\n\nNO SOLUTION FOUND FOR THIS INSTANCE!")
                 no_sol = 1
 
@@ -336,33 +336,33 @@ for L in range(10, 30, 5):
         sys.stdout = open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + instance_filename[:-4] + "_objfunccomp.txt","w")
         # sys.stdout = sys.__stdout__
         
-        if(len(sol_E) > 0 and len(sol_C) > 0 and len(sol_eps) > 0):
+        if(len(sol_I) > 0 and len(sol_C) > 0 and len(sol_eps) > 0):
             try:
 
-                sol_E_opt = []
+                sol_I_opt = []
                 sol_C_opt = []
                 eps_opt = []
                 gap_opt = []
 
-                sol_E_feas = []
+                sol_I_feas = []
                 sol_C_feas = []
                 eps_feas = []
                 gap_feas = []
 
-                for i in range(0,len(sol_E)):
-                    if sol_E[i] < 0:
-                        sol_E_opt.append(sol_E[i])
-                        sol_E[i] = sol_E[i] * (-1)
+                for i in range(0,len(sol_I)):
+                    if sol_I[i] < 0:
+                        sol_I_opt.append(sol_I[i])
+                        sol_I[i] = sol_I[i] * (-1)
                         sol_C_opt.append(sol_C[i])
                         eps_opt.append(sol_eps[i])
                         gap_opt.append(sol_gap[i])
                     else:
-                        sol_E_feas.append(sol_E[i])
+                        sol_I_feas.append(sol_I[i])
                         sol_C_feas.append(sol_C[i])
                         eps_feas.append(sol_eps[i])
                         gap_feas.append(sol_gap[i])
 
-                sol_E_opt = [i * (-1) for i in sol_E_opt]
+                sol_I_opt = [i * (-1) for i in sol_I_opt]
 
                 # Plotando a fronteira de pareto
                 print("Started plotting Objective Function Comparison Graph...\n")
@@ -382,19 +382,19 @@ for L in range(10, 30, 5):
                 # ynew = f(xnew)
                 # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
                 
-                ax.plot(sol_C_feas, sol_E_feas, "r*", alpha=0.5)
+                ax.plot(sol_C_feas, sol_I_feas, "r*", alpha=0.5)
                 # ax.plot(xnew, ynew, "b--", alpha = 0.2)
 
                 ### Resultados (valores otimos)
 
-                # f = sp.interp1d(sol_C_opt,sol_E_opt)#kind='cubic')
+                f = sp.interp1d(sol_C,sol_I)#kind='cubic')
 
-                # xnew = np.arange(new_sol_E[0],new_sol_E[-1],0.1)
-                # xnew = np.arange(sol_C_opt[0],sol_C_opt[-1],0.1)
-                # ynew = f(xnew)
-                # ax.plot(sol_E, sol_C, "y*", xnew, ynew, "b--")
+                # xnew = np.arange(sol_I[0],sol_I[-1],0.1)
+                xnew = np.arange(sol_C[0],sol_C[-1],0.1)
+                ynew = f(xnew)
+                ax.plot(xnew, ynew, "k--", alpha=0.5)
                 
-                ax.plot(sol_C_opt, sol_E_opt, "b*", alpha=0.5)
+                ax.plot(sol_C_opt, sol_I_opt, "b*", alpha=0.5)
                 # ax.plot(xnew, ynew, "r--", alpha = 0.2)
 
                 ax.spines['top'].set_alpha(0.25)
@@ -408,16 +408,17 @@ for L in range(10, 30, 5):
                 # ax.spines['left'].set_visible(False)
 
                 offset = 0.05
-                for i in range(0,len(sol_E_feas)):
+                for i in range(0,len(sol_I_feas)):
                     if i == 0:
                         repeat = 0
-                    elif ((sol_C_feas[i] == sol_C_feas[i-1]) or (sol_C_feas[i] - sol_C_feas[i-1] <= 12)) and sol_E_feas[i] == sol_E_feas[i-1]:
+                    elif ((sol_C_feas[i] == sol_C_feas[i-1]) or (sol_C_feas[i] - sol_C_feas[i-1] <= 12)) and sol_I_feas[i] == sol_I_feas[i-1]:
                         repeat = repeat + offset
                     else:
                         repeat = 0
+                    
                     plt.text(
                         sol_C_feas[i],
-                        offset+sol_E_feas[i]+repeat,
+                        offset+sol_I_feas[i]+repeat,
                         # "$\epsilon$ |Gap(%)\n"+str(eps_feas[i])+"|"+str(gap_feas[i]),
                         str(eps_feas[i])+"|"+str(gap_feas[i])+"%",
                         color="k",
@@ -426,18 +427,18 @@ for L in range(10, 30, 5):
                         style="italic"
                     )
 
-                for i in range(0,len(sol_E_opt)):
+                for i in range(0,len(sol_I_opt)):
                     if i == 0:
                         repeat = 0
-                    elif ((sol_C_opt[i] == sol_C_opt[i-1]) or (sol_C_opt[i] - sol_C_opt[i-1] <= 12)) and sol_E_opt[i] == sol_E_opt[i-1]:
+                    elif ((sol_C_opt[i] == sol_C_opt[i-1]) or (sol_C_opt[i] - sol_C_opt[i-1] <= 12)) and sol_I_opt[i] == sol_I_opt[i-1]:
                         repeat = repeat + offset
                     else:
                         repeat = 0
                     plt.text(
                         sol_C_opt[i],
-                        offset+sol_E_opt[i]+repeat,
+                        offset+sol_I_opt[i]+repeat,
                         # "$\epsilon$  |Gap(%)\n"+str(eps_opt[i])+"|"+str(gap_opt[i]),
-                        str(eps_opt[i])+"|"+str(gap_opt[i])+"%",
+                        str(eps_opt[i]),
                         color="k",
                         fontsize=6,
                         # weight="bold",
