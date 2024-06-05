@@ -413,7 +413,7 @@ for L in range(10, 30, 5):
                 offset = 0.10
                 for i in range(0,len(sol_I_feas)):
                     if i == 0:
-                        repeat = 0
+                        repeat = (-1)*offset
                     elif ((sol_C_feas[i] == sol_C_feas[i-1]) or (sol_C_feas[i] - sol_C_feas[i-1] <= 12)) and sol_I_feas[i] == sol_I_feas[i-1]:
                         repeat = repeat + offset
                     else:
