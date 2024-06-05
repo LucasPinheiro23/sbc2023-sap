@@ -159,7 +159,7 @@ for L in range(10, 30, 5):
                 # gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-5:gap_split]))
 
                 # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
-                print("\nTime in solver (for this epsilon): " + str(results.solver.time) + " s")
+                print("\nTime in solver (for this epsilon): " + str(results.solver.wallclock_time) + " s")
                 print("Elapsed time (for this epsilon): " + str(t) + " s")
                 print("\n\nTotal elapsed time since execution of first epsilon: " + str(tt) + " s")
 
@@ -188,7 +188,7 @@ for L in range(10, 30, 5):
                 sol_E.append(E_now)
                 sol_C.append(C_now)
                 sol_eps.append(eps)
-                sol_gap.append(0.0)
+                sol_gap.append(results.solution.gap)
 
                 print("\n\nUpdated solution vectors:\nsol_E = [", end="")
                 print(",".join(map(str, sol_E)), end="")
