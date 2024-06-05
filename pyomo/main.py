@@ -188,7 +188,10 @@ for L in range(10, 30, 5):
                 sol_I.append(E_now)
                 sol_C.append(C_now)
                 sol_eps.append(eps)
-                sol_gap.append(results.solution.gap)
+                if(results.solution.gap < 0):
+                    sol_gap.append(0.0)
+                else:
+                    sol_gap.append(results.solution.gap)
 
                 print("\n\nUpdated solution vectors:\nsol_I = [", end="")
                 print(",".join(map(str, sol_I)), end="")
