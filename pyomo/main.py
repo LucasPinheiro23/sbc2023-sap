@@ -119,7 +119,7 @@ for L in range(10, 30, 5):
             ## ------
 
             # Cria um solver
-            opt = SolverFactory(solver) #, executable=solver_exec)
+            opt = SolverFactory(solver, manage_env=True) #, executable=solver_exec)
             opt.options["TimeLimit"] = 43200 #12h
             opt.options["mipgap"] = 0.01
 
