@@ -1,0 +1,102 @@
+Translating instance to solver...
+
+Set parameter TimeLimit to value 28800
+Gurobi Optimizer version 11.0.2 build v11.0.2rc0 (linux64 - "Ubuntu 22.04.4 LTS")
+
+CPU model: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz, instruction set [SSE2|AVX|AVX2|AVX512]
+Thread count: 28 physical cores, 56 logical processors, using up to 28 threads
+
+Academic license 2463511 - for non-commercial use only - registered to lu___@cefet-rj.br
+Optimize a model with 12725 rows, 7643 columns and 31653 nonzeros
+Model fingerprint: 0x4a7420db
+Variable types: 1 continuous, 7642 integer (7620 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+05]
+  Objective range  [3e-01, 8e-01]
+  Bounds range     [1e+00, 2e+01]
+  RHS range        [1e+00, 1e+02]
+Presolve removed 10796 rows and 6822 columns
+Presolve time: 0.13s
+Presolved: 1929 rows, 821 columns, 5146 nonzeros
+Variable types: 0 continuous, 821 integer (800 binary)
+Found heuristic solution: objective 14.3619290
+
+Root relaxation: objective 3.238028e+00, 222 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    3.23803    0   34   14.36193    3.23803  77.5%     -    0s
+H    0     0                       6.0471280    3.23803  46.5%     -    0s
+     0     0    3.43142    0   70    6.04713    3.43142  43.3%     -    0s
+     0     0    3.47356    0   68    6.04713    3.47356  42.6%     -    0s
+     0     0    3.55702    0  114    6.04713    3.55702  41.2%     -    0s
+     0     0    3.58142    0  122    6.04713    3.58142  40.8%     -    0s
+     0     0    3.63535    0  136    6.04713    3.63535  39.9%     -    0s
+     0     0    3.63535    0  128    6.04713    3.63535  39.9%     -    0s
+H    0     0                       4.8412370    3.63535  24.9%     -    0s
+     0     0    3.63535    0   31    4.84124    3.63535  24.9%     -    0s
+     0     0    3.63535    0   71    4.84124    3.63535  24.9%     -    0s
+H    0     0                       4.3912370    3.63535  17.2%     -    0s
+     0     0    3.63535    0  100    4.39124    3.63535  17.2%     -    0s
+     0     0    3.63535    0  238    4.39124    3.63535  17.2%     -    0s
+     0     0    3.63535    0  236    4.39124    3.63535  17.2%     -    0s
+     0     0    3.63535    0  429    4.39124    3.63535  17.2%     -    0s
+     0     0    3.63535    0  383    4.39124    3.63535  17.2%     -    0s
+     0     0    3.66448    0  159    4.39124    3.66448  16.6%     -    0s
+     0     0    3.66650    0  186    4.39124    3.66650  16.5%     -    0s
+     0     0    3.67510    0  334    4.39124    3.67510  16.3%     -    0s
+     0     0    3.67779    0  305    4.39124    3.67779  16.2%     -    0s
+     0     0    3.77946    0  182    4.39124    3.77946  13.9%     -    0s
+     0     0    3.77946    0  149    4.39124    3.77946  13.9%     -    0s
+     0     2    3.77946    0  148    4.39124    3.77946  13.9%     -    1s
+*  239   159              12       4.0853460    3.77946  7.49%  92.2    1s
+
+Cutting planes:
+  Learned: 109
+  Gomory: 4
+  Cover: 1
+  Implied bound: 98
+  Clique: 4
+  MIR: 95
+  StrongCG: 1
+  GUB cover: 1
+  Zero half: 7
+  RLT: 62
+  Relax-and-lift: 10
+  BQP: 49
+
+Explored 544 nodes (34733 simplex iterations) in 1.64 seconds (1.00 work units)
+Thread count was 28 (of 56 available processors)
+
+Solution count 5: 4.08535 4.39124 4.84124 ... 14.3619
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 4.085346000000e+00, best bound 4.085346000000e+00, gap 0.0000%
+
+Solver Wallclock Time (for this epsilon): 1.64528489112854 s
+Python wallclock Time (for this epsilon): 2.568476438522339 s
+
+
+Total Elapsed Time (since program call): 34.3149688243866 s
+
+Results:
+
+I = 4.085346 mA
+C = 100.0 points
+C ~= 40.0 km^2
+
+Minimum Epsilon for this instance = 10
+Maximum Epsilon for this instance = 100
+
+Current Epsilon = 100
+
+
+Preprocessing Time (for this epsilon): 0.003402233123779297 s
+
+
+Updated solution vectors:
+sol_I = [-0.611782,-1.061782,-1.061782,-1.061782,-1.061782,-1.511782,-1.511782,-2.267673,-2.573564,-4.085346]
+sol_C = [14.0,48.0,48.0,49.0,50.0,73.0,70.0,87.0,91.0,100.0]
+sol_eps = [10,20,30,40,50,60,70,80,90,100]
+sol_gap = [0.0,0.0,0.0,0.0,0.0,0.0,1.6578947303891312e-07,0.0,0.0,8.881784197001252e-16]

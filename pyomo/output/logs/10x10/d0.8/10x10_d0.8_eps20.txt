@@ -1,0 +1,79 @@
+Translating instance to solver...
+
+Set parameter TimeLimit to value 28800
+Gurobi Optimizer version 11.0.2 build v11.0.2rc0 (linux64 - "Ubuntu 22.04.4 LTS")
+
+CPU model: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz, instruction set [SSE2|AVX|AVX2|AVX512]
+Thread count: 28 physical cores, 56 logical processors, using up to 28 threads
+
+Academic license 2463511 - for non-commercial use only - registered to lu___@cefet-rj.br
+Optimize a model with 145385 rows, 68063 columns and 326945 nonzeros
+Model fingerprint: 0x646f4848
+Variable types: 1 continuous, 68062 integer (67980 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+05]
+  Objective range  [3e-01, 8e-01]
+  Bounds range     [1e+00, 8e+01]
+  RHS range        [1e+00, 8e+01]
+Presolve removed 123619 rows and 58773 columns
+Presolve time: 3.33s
+Presolved: 21766 rows, 9290 columns, 64998 nonzeros
+Variable types: 0 continuous, 9290 integer (9209 binary)
+
+Root relaxation: objective 1.223564e+00, 1055 iterations, 0.09 seconds (0.11 work units)
+Total elapsed time = 5.08s (DegenMoves)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    1.22356    0   37          -    1.22356      -     -    5s
+     0     0    1.22356    0   57          -    1.22356      -     -    6s
+     0     0    1.22356    0   60          -    1.22356      -     -    6s
+H    0     0                       2.4471280    1.22356  50.0%     -    7s
+     0     0    1.22356    0   17    2.44713    1.22356  50.0%     -    7s
+H    0     0                       1.6735640    1.22356  26.9%     -    8s
+H    0     0                       1.2235640    1.22356  0.00%     -    8s
+     0     0    1.22356    0   56    1.22356    1.22356  0.00%     -    8s
+
+Cutting planes:
+  Learned: 10
+  Implied bound: 34
+  MIR: 39
+  Zero half: 2
+  RLT: 4
+  Relax-and-lift: 11
+
+Explored 1 nodes (22848 simplex iterations) in 8.72 seconds (7.54 work units)
+Thread count was 28 (of 56 available processors)
+
+Solution count 3: 1.22356 1.67356 2.44713 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.223564000000e+00, best bound 1.223564000000e+00, gap 0.0000%
+
+Solver Wallclock Time (for this epsilon): 8.73174786567688 s
+Python wallclock Time (for this epsilon): 19.1706805229187 s
+
+
+Total Elapsed Time (since program call): 1622.9513173103333 s
+
+Results:
+
+I = 1.223564 mA
+C = 20.0 points
+C ~= 8.0 km^2
+
+Minimum Epsilon for this instance = 10
+Maximum Epsilon for this instance = 100
+
+Current Epsilon = 20
+
+
+Preprocessing Time (for this epsilon): 0.013067007064819336 s
+
+
+Updated solution vectors:
+sol_I = [-1.223564,-1.223564]
+sol_C = [10.0,20.0]
+sol_eps = [10,20]
+sol_gap = [0.0,0.0]

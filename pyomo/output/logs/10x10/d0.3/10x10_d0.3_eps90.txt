@@ -1,0 +1,111 @@
+Translating instance to solver...
+
+Set parameter TimeLimit to value 28800
+Gurobi Optimizer version 11.0.2 build v11.0.2rc0 (linux64 - "Ubuntu 22.04.4 LTS")
+
+CPU model: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz, instruction set [SSE2|AVX|AVX2|AVX512]
+Thread count: 28 physical cores, 56 logical processors, using up to 28 threads
+
+Academic license 2463511 - for non-commercial use only - registered to lu___@cefet-rj.br
+Optimize a model with 24835 rows, 13713 columns and 58929 nonzeros
+Model fingerprint: 0xf3f764aa
+Variable types: 1 continuous, 13712 integer (13680 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+05]
+  Objective range  [3e-01, 8e-01]
+  Bounds range     [1e+00, 3e+01]
+  RHS range        [1e+00, 9e+01]
+Presolve removed 21476 rows and 12274 columns
+Presolve time: 0.28s
+Presolved: 3359 rows, 1439 columns, 10983 nonzeros
+Variable types: 0 continuous, 1439 integer (1408 binary)
+
+Root relaxation: objective 2.155173e+00, 905 iterations, 0.02 seconds (0.02 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    2.15517    0   58          -    2.15517      -     -    0s
+H    0     0                       4.0853460    2.15517  47.2%     -    0s
+     0     0    2.17160    0  103    4.08535    2.17160  46.8%     -    0s
+     0     0    2.19208    0   94    4.08535    2.19208  46.3%     -    0s
+     0     0    2.19267    0  122    4.08535    2.19267  46.3%     -    0s
+     0     0    2.20758    0   98    4.08535    2.20758  46.0%     -    0s
+     0     0    2.21338    0  185    4.08535    2.21338  45.8%     -    0s
+     0     0    2.21463    0  161    4.08535    2.21463  45.8%     -    0s
+     0     0    2.22007    0  237    4.08535    2.22007  45.7%     -    0s
+     0     0    2.22135    0  140    4.08535    2.22135  45.6%     -    0s
+     0     0    2.22476    0  167    4.08535    2.22476  45.5%     -    0s
+     0     0    2.22529    0  166    4.08535    2.22529  45.5%     -    0s
+     0     0    2.23184    0  209    4.08535    2.23184  45.4%     -    1s
+H    0     0                       3.7794550    2.23207  40.9%     -    1s
+     0     0    2.23369    0  224    3.77946    2.23369  40.9%     -    1s
+H    0     0                       3.3294550    2.24629  32.5%     -    1s
+H    0     0                       3.0235640    2.26189  25.2%     -    1s
+     0     0    2.26189    0  294    3.02356    2.26189  25.2%     -    1s
+H    0     0                       2.5735640    2.26767  11.9%     -    1s
+     0     0    2.26767    0  300    2.57356    2.26767  11.9%     -    1s
+     0     0    2.26767    0  320    2.57356    2.26767  11.9%     -    1s
+     0     0    2.26767    0  314    2.57356    2.26767  11.9%     -    1s
+     0     0    2.26767    0   41    2.57356    2.26767  11.9%     -    1s
+     0     0    2.26767    0   70    2.57356    2.26767  11.9%     -    1s
+     0     0    2.26767    0   80    2.57356    2.26767  11.9%     -    1s
+     0     0    2.26767    0   91    2.57356    2.26767  11.9%     -    1s
+     0     0    2.26767    0  118    2.57356    2.26767  11.9%     -    1s
+     0     0    2.26767    0   95    2.57356    2.26767  11.9%     -    1s
+     0     0    2.26767    0   82    2.57356    2.26767  11.9%     -    2s
+     0     0    2.26767    0  116    2.57356    2.26767  11.9%     -    2s
+     0     0    2.26767    0   47    2.57356    2.26767  11.9%     -    2s
+     0     0    2.26767    0   87    2.57356    2.26767  11.9%     -    2s
+     0     0    2.27109    0  192    2.57356    2.27109  11.8%     -    2s
+     0     0    2.28083    0  234    2.57356    2.28083  11.4%     -    2s
+     0     0    2.28741    0  264    2.57356    2.28741  11.1%     -    2s
+     0     0    2.29806    0  294    2.57356    2.29806  10.7%     -    2s
+     0     0    2.29806    0  289    2.57356    2.29806  10.7%     -    2s
+     0     2    2.29806    0  282    2.57356    2.29806  10.7%     -    3s
+
+Cutting planes:
+  Learned: 106
+  Gomory: 1
+  Implied bound: 72
+  Clique: 14
+  MIR: 49
+  Zero half: 3
+  RLT: 112
+  Relax-and-lift: 47
+  BQP: 66
+
+Explored 574 nodes (55482 simplex iterations) in 4.19 seconds (3.15 work units)
+Thread count was 28 (of 56 available processors)
+
+Solution count 5: 2.57356 3.02356 3.32946 ... 4.08535
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.573564000000e+00, best bound 2.573564000000e+00, gap 0.0000%
+
+Solver Wallclock Time (for this epsilon): 4.1930670738220215 s
+Python wallclock Time (for this epsilon): 6.025403261184692 s
+
+
+Total Elapsed Time (since program call): 73.99195909500122 s
+
+Results:
+
+I = 2.5735639999999997 mA
+C = 90.0 points
+C ~= 36.0 km^2
+
+Minimum Epsilon for this instance = 10
+Maximum Epsilon for this instance = 100
+
+Current Epsilon = 90
+
+
+Preprocessing Time (for this epsilon): 0.005191802978515625 s
+
+
+Updated solution vectors:
+sol_I = [-0.611782,-1.061782,-1.061782,-1.061782,-1.061782,-1.511782,-1.511782,-2.267673,-2.5735639999999997]
+sol_C = [12.0,28.0,47.0,47.0,52.0,70.0,70.0,80.0,90.0]
+sol_eps = [10,20,30,40,50,60,70,80,90]
+sol_gap = [0.0,0.0,0.0,0.0,7.10526315561566e-08,0.0,0.0,0.0,0.0]

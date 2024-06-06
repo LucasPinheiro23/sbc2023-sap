@@ -1,0 +1,103 @@
+Translating instance to solver...
+
+Set parameter TimeLimit to value 28800
+Gurobi Optimizer version 11.0.2 build v11.0.2rc0 (linux64 - "Ubuntu 22.04.4 LTS")
+
+CPU model: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz, instruction set [SSE2|AVX|AVX2|AVX512]
+Thread count: 28 physical cores, 56 logical processors, using up to 28 threads
+
+Academic license 2463511 - for non-commercial use only - registered to lu___@cefet-rj.br
+Optimize a model with 145385 rows, 68063 columns and 326945 nonzeros
+Model fingerprint: 0x7cce1ec4
+Variable types: 1 continuous, 68062 integer (67980 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+05]
+  Objective range  [3e-01, 8e-01]
+  Bounds range     [1e+00, 8e+01]
+  RHS range        [1e+00, 8e+01]
+Presolve removed 123619 rows and 58773 columns
+Presolve time: 3.45s
+Presolved: 21766 rows, 9290 columns, 64998 nonzeros
+Variable types: 0 continuous, 9290 integer (9209 binary)
+
+Root relaxation: objective 1.268564e+00, 2002 iterations, 0.20 seconds (0.23 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    1.26856    0   76          -    1.26856      -     -    5s
+H    0     0                       5.0030190    1.26856  74.6%     -    6s
+     0     0    1.52945    0   60    5.00302    1.52945  69.4%     -    6s
+H    0     0                       1.6735640    1.52945  8.61%     -   10s
+     0     0    1.52945    0   96    1.67356    1.52945  8.61%     -   10s
+     0     0    1.52945    0   80    1.67356    1.52945  8.61%     -   10s
+     0     0    1.52945    0   71    1.67356    1.52945  8.61%     -   11s
+     0     0    1.52945    0   89    1.67356    1.52945  8.61%     -   12s
+     0     0    1.52945    0  102    1.67356    1.52945  8.61%     -   13s
+     0     0    1.52945    0   83    1.67356    1.52945  8.61%     -   14s
+     0     0    1.52945    0   71    1.67356    1.52945  8.61%     -   14s
+     0     0    1.52945    0   48    1.67356    1.52945  8.61%     -   15s
+     0     0    1.52945    0  102    1.67356    1.52945  8.61%     -   15s
+     0     0    1.52945    0   67    1.67356    1.52945  8.61%     -   16s
+     0     0    1.52945    0   76    1.67356    1.52945  8.61%     -   16s
+     0     0    1.52945    0   53    1.67356    1.52945  8.61%     -   16s
+     0     0    1.52945    0   47    1.67356    1.52945  8.61%     -   17s
+     0     2    1.52945    0   47    1.67356    1.52945  8.61%     -   17s
+    30    42    1.52945    5   83    1.67356    1.52945  8.61%   780   20s
+   170   134    1.52945    9   84    1.67356    1.52945  8.61%   642   25s
+  1097   446    1.52945   20   79    1.67356    1.52945  8.61%   227   30s
+H 1302   446                       1.6735637    1.52945  8.61%   226   30s
+  1345   456    1.52945   23  111    1.67356    1.52945  8.61%   221   45s
+  1374   482 infeasible   24         1.67356    1.52945  8.61%   233   52s
+H 1408   482                       1.6735636    1.52945  8.61%   230   52s
+  2750   722    1.52945   16  134    1.67356    1.52945  8.61%   215   55s
+  4873   602     cutoff   16         1.67356    1.52945  8.61%   254   60s
+
+Cutting planes:
+  Learned: 229
+  Gomory: 3
+  Lift-and-project: 2
+  Cover: 1
+  Implied bound: 924
+  MIR: 149
+  StrongCG: 1
+  Inf proof: 62
+  Zero half: 24
+  RLT: 38
+  Relax-and-lift: 94
+
+Explored 6597 nodes (1695409 simplex iterations) in 64.34 seconds (51.38 work units)
+Thread count was 28 (of 56 available processors)
+
+Solution count 4: 1.67356 1.67356 1.67356 5.00302 
+
+Optimal solution found (tolerance 1.00e-04)
+Warning: max integrality violation (1.6020e-05) exceeds tolerance
+Best objective 1.673563594981e+00, best bound 1.673563594981e+00, gap 0.0000%
+
+Solver Wallclock Time (for this epsilon): 64.35021996498108 s
+Python wallclock Time (for this epsilon): 75.18512344360352 s
+
+
+Total Elapsed Time (since program call): 1845.5781028270721 s
+
+Results:
+
+I = 1.6735635949810057 mA
+C = 56.9999839800992 points
+C ~= 22.799993592039684 km^2
+
+Minimum Epsilon for this instance = 10
+Maximum Epsilon for this instance = 100
+
+Current Epsilon = 40
+
+
+Preprocessing Time (for this epsilon): 0.013067007064819336 s
+
+
+Updated solution vectors:
+sol_I = [-1.223564,-1.223564,-1.6735639999999998,-1.6735635949810057]
+sol_C = [10.0,20.0,52.0,56.9999839800992]
+sol_eps = [10,20,30,40]
+sol_gap = [0.0,0.0,0.0,0.0]
