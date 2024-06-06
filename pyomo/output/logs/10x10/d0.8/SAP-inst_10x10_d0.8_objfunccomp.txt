@@ -1,3 +1,0 @@
-Started plotting Objective Function Comparison Graph...
-
-Objective Function Comparison plot successful!

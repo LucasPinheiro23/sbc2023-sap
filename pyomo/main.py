@@ -82,13 +82,6 @@ for L in range(10, 30, 5):
         # Lista de gaps
         sol_gap = []
 
-        if L == 20 and d == 2:
-            eps = 40
-            sol_I = []
-            sol_C = []
-            sol_eps = []
-            sol_gap = []
-
         while eps <= eps_MAX:
 
             # Checa se foi encontrada solucao
@@ -126,10 +119,10 @@ for L in range(10, 30, 5):
             ## ------
 
             # Cria um solver
-            opt = SolverFactory(solver)#, executable=solver_exec)
-            opt.options["TimeLimit"] = 28800
-            # opt.options["tmlim"] = 20
-            # opt.options["mipgap"] = 0.0
+            opt = SolverFactory(solver) #, executable=solver_exec)
+            #opt.options["TimeLimit"] = 43200 #12h
+            opt.options["TimeLimit"] = 1
+            opt.options["mipgap"] = 0.01
 
             print("Translating instance to solver...\n")
             # Resolve a instancia e armazena os resultados em um arquivo JSON
@@ -138,13 +131,15 @@ for L in range(10, 30, 5):
             t = time.time() - t0
             tt = time.time() - tt0
 
-            instance.solutions.store_to(results)
+            #instance.solutions.store_to(results)
             results.problem.name = instance_filename
             results.write(filename="./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + "-results.json", format="json")
 
             #Se achou solucao, armazena.
-            if((results.solver.status == SolverStatus.ok) and ((results.solver.termination_condition == TerminationCondition.feasible) or (results.solver.termination_condition == TerminationCondition.optimal))):
+            #if((results.solver.status == SolverStatus.ok) and ((results.solver.termination_condition == TerminationCondition.feasible) or (results.solver.termination_condition == TerminationCondition.optimal))):
+            if(results.problem.number_of_solutions > 0):
                 
+                instance.solutions.store_to(results)
                 # with open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt", 'rb') as fb:
                 #     try:  # catch OSError in case of a one line file 
                 #         fb.seek(-2, os.SEEK_END)
@@ -191,7 +186,7 @@ for L in range(10, 30, 5):
                 if(results.solution.gap < 0):
                     sol_gap.append(0.0)
                 else:
-                    sol_gap.append(results.solution.gap)
+                    sol_gap.append(round(results.solution.gap,2))
 
                 print("\n\nUpdated solution vectors:\nsol_I = [", end="")
                 print(",".join(map(str, sol_I)), end="")
