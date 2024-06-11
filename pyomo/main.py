@@ -153,9 +153,9 @@ for L in range(10, 30, 5):
                 gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-6:gap_split]))
 
                 # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
-                print("\nSolver Wallclock Time (for this epsilon): " + str(results.solver.wallclock_time) + " s")
+                print("\nSolver wallclock Time (for this epsilon): " + str(results.solver.wallclock_time) + " s")
                 print("Python wallclock Time (for this epsilon): " + str(t) + " s")
-                print("\n\nTotal Elapsed Time (since program call): " + str(tt) + " s")
+                print("\n\nTotal elapsed Time (since program call): " + str(tt) + " s")
 
                 # Pega resultados diretamente
                 print("\nResults:\n")
