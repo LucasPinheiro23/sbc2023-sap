@@ -153,12 +153,12 @@ for L in range(10, 30, 5):
                 gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-6:gap_split]))
 
                 # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
-                print("---\nSolver wallclock Time (for this epsilon): " + str(results.solver.wallclock_time) + " s")
-                print("Python wallclock Time (for this epsilon): " + str(t) + " s")
-                print("\n---\nTotal elapsed Time (since program call): " + str(tt) + " s")
+                print("----------\nSolver wallclock time (for this epsilon): " + str(results.solver.wallclock_time) + " s")
+                print("Python wallclock time (for this epsilon): " + str(t) + " s")
+                print("\nTotal elapsed Time (since program call): " + str(tt) + " s")
 
                 # Pega resultados diretamente
-                print("\n---\nResults:\n")
+                print("--------\nResults:\n")
 
                 # Resultado da funcao objetivo de Energia
                 if(results.solver.termination_condition == TerminationCondition.optimal):
@@ -176,7 +176,7 @@ for L in range(10, 30, 5):
                 #Dados do epsilon
                 print("\nMinimum Epsilon for this instance = " + str(eps_MIN))
                 print("Maximum Epsilon for this instance = " + str(eps_MAX))
-                print("\nCurrent Epsilon = " + str(eps))
+                print("Current Epsilon = " + str(eps))
                 # print("\n\nPreprocessing Time (for this epsilon): " + str(ttt) + " s")
 
                 sol_I.append(E_now)
