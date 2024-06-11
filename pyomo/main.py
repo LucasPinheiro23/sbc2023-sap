@@ -184,7 +184,7 @@ for L in range(10, 30, 5):
                 sol_eps.append(eps)
                 sol_gap.append(round(gap,2))
 
-                print("\n\nUpdated solution vectors:\nsol_I = [", end="")
+                print("\n\nUpdated solution vectors (negative I is just optimal indicative):\nsol_I = [", end="")
                 print(",".join(map(str, sol_I)), end="")
                 print("]\nsol_C = [", end="")
                 print(",".join(map(str, sol_C)), end="")
@@ -345,7 +345,8 @@ for L in range(10, 30, 5):
 
                 for i in range(0,len(sol_I)):
                     if sol_I[i] < 0:
-                        sol_I_opt.append((-1)*sol_I[i])
+                        sol_I[i] = sol_I[i] * (-1)
+                        sol_I_opt.append(sol_I[i])
                         sol_C_opt.append(sol_C[i])
                         eps_opt.append(sol_eps[i])
                         gap_opt.append(sol_gap[i])
