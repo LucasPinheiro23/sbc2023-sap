@@ -153,12 +153,12 @@ for L in range(10, 30, 5):
                 gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-6:gap_split]))
 
                 # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
-                print("\nSolver wallclock Time (for this epsilon): " + str(results.solver.wallclock_time) + " s")
+                print("---\nSolver wallclock Time (for this epsilon): " + str(results.solver.wallclock_time) + " s")
                 print("Python wallclock Time (for this epsilon): " + str(t) + " s")
-                print("\n\nTotal elapsed Time (since program call): " + str(tt) + " s")
+                print("\n---\nTotal elapsed Time (since program call): " + str(tt) + " s")
 
                 # Pega resultados diretamente
-                print("\nResults:\n")
+                print("\n---\nResults:\n")
 
                 # Resultado da funcao objetivo de Energia
                 if(results.solver.termination_condition == TerminationCondition.optimal):
@@ -184,7 +184,7 @@ for L in range(10, 30, 5):
                 sol_eps.append(eps)
                 sol_gap.append(round(gap,2))
 
-                print("\n\nUpdated solution vectors (negative I is just optimal indicative):\nsol_I = [", end="")
+                print("\nUpdated solution vectors (negative I is just optimal indicative):\nsol_I = [", end="")
                 print(",".join(map(str, sol_I)), end="")
                 print("]\nsol_C = [", end="")
                 print(",".join(map(str, sol_C)), end="")
