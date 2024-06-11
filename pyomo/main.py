@@ -142,7 +142,7 @@ for L in range(10, 30, 5):
                 with open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt", 'rb') as fb:
                     try:  # catch OSError in case of a one line file 
                         fb.seek(-2, os.SEEK_END)
-                        while fb.read(1) != b'%':
+                        while fb.read(1) != b'+':
                             fb.seek(-2, os.SEEK_CUR)
                     except OSError:
                         fb.seek(0)
