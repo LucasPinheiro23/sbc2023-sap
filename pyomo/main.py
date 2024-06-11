@@ -139,14 +139,14 @@ for L in range(10, 30, 5):
             if(results.problem.number_of_solutions > 0):
                 
                 instance.solutions.store_to(results)
-                with open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt", 'rb') as fb:
+                with open('filename.txt', 'rb') as f:
                     try:  # catch OSError in case of a one line file 
-                        fb.seek(-1, os.SEEK_END)
-                        while fb.read(1) != b'%':
-                            fb.seek(-1, os.SEEK_CUR)
+                        f.seek(-2, os.SEEK_END)
+                        while f.read(1) != b'\n':
+                            f.seek(-2, os.SEEK_CUR)
                     except OSError:
-                        fb.seek(0)
-                    line = fb.readline().decode()
+                        f.seek(0)
+                    line = f.readline().decode()
 
                 gap_split = line.find("%")
                 gap = line[gap_split-6:gap_split].replace(" ","")
