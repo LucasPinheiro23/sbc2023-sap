@@ -139,18 +139,18 @@ for L in range(10, 30, 5):
             if(results.problem.number_of_solutions > 0):
                 
                 instance.solutions.store_to(results)
-                # with open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt", 'rb') as fb:
-                #     try:  # catch OSError in case of a one line file 
-                #         fb.seek(-2, os.SEEK_END)
-                #         while fb.read(1) != b'+':
-                #             fb.seek(-2, os.SEEK_CUR)
-                #     except OSError:
-                #         fb.seek(0)
-                #     line = fb.readline().decode()
+                with open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt", 'rb') as fb:
+                    try:  # catch OSError in case of a one line file 
+                        fb.seek(-2, os.SEEK_END)
+                        while fb.read(1) != b'%':
+                            fb.seek(-2, os.SEEK_CUR)
+                    except OSError:
+                        fb.seek(0)
+                    line = fb.readline().decode()
 
-                # gap_split = line.find("%")
-                # # gap = float(line[gap_split-5:gap_split].replace(" ",""))
-                # gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-5:gap_split]))
+                gap_split = line.find("%")
+                gap = float(line[gap_split-6:gap_split].replace(" ",""))
+                gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-6:gap_split]))
 
                 # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
                 print("\nSolver Wallclock Time (for this epsilon): " + str(results.solver.wallclock_time) + " s")
@@ -170,22 +170,19 @@ for L in range(10, 30, 5):
 
                 # Resultado da variavel de decisao da Cobertura
                 C_now = value(instance.objC)
-                print("C = " + str(C_now) + " points")
-                print("C ~= " + str((C_now/4)*1.6) + " km^2")
+                print("C = " + str(C_now) + " pts")
+                # print("C ~= " + str((C_now/4)*1.6) + " km^2")
 
                 #Dados do epsilon
                 print("\nMinimum Epsilon for this instance = " + str(eps_MIN))
                 print("Maximum Epsilon for this instance = " + str(eps_MAX))
                 print("\nCurrent Epsilon = " + str(eps))
-                print("\n\nPreprocessing Time (for this epsilon): " + str(ttt) + " s")
+                # print("\n\nPreprocessing Time (for this epsilon): " + str(ttt) + " s")
 
                 sol_I.append(E_now)
                 sol_C.append(C_now)
                 sol_eps.append(eps)
-                if(results.solution.gap < 0):
-                    sol_gap.append(0.0)
-                else:
-                    sol_gap.append(round(results.solution.gap,2))
+                sol_gap.append(round(gap,2))
 
                 print("\n\nUpdated solution vectors:\nsol_I = [", end="")
                 print(",".join(map(str, sol_I)), end="")
@@ -319,8 +316,8 @@ for L in range(10, 30, 5):
                                 alpha=0.3,
                             )
 
-                plt.xlabel("X Coordinates (km)")
-                plt.ylabel("Y Coordinates (km)")
+                plt.xlabel("X (km)")
+                plt.ylabel("Y (km)")
                 # plt.title('Instance: '+str(instance_filename)+'\nScale: 1:'+str(int(instance.scale))+'m\nAlphas: '+str(alpha['E'])+'E, '+str(alpha['C'])+'C, '+str(alpha['M'])+'M  -  Time: '+str(results.solver.user_time)+' s')
                 # plt.show()
                 plt.savefig("./output/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname +".svg")
@@ -349,7 +346,6 @@ for L in range(10, 30, 5):
                 for i in range(0,len(sol_I)):
                     if sol_I[i] < 0:
                         sol_I_opt.append(sol_I[i])
-                        sol_I[i] = sol_I[i] * (-1)
                         sol_C_opt.append(sol_C[i])
                         eps_opt.append(sol_eps[i])
                         gap_opt.append(sol_gap[i])
