@@ -141,15 +141,15 @@ for L in range(10, 30, 5):
                 instance.solutions.store_to(results)
                 with open("./output/logs/" + str(L) + "x" + str(L) + "/d0." + str(d) + "/" + figname + ".txt", 'rb') as fb:
                     try:  # catch OSError in case of a one line file 
-                        fb.seek(-2, os.SEEK_END)
-                        while fb.read(1) != b'+':
-                            fb.seek(-2, os.SEEK_CUR)
+                        fb.seek(-1, os.SEEK_END)
+                        while fb.read(1) != b'%':
+                            fb.seek(-1, os.SEEK_CUR)
                     except OSError:
                         fb.seek(0)
                     line = fb.readline().decode()
 
                 gap_split = line.find("%")
-                gap = float(line[gap_split-6:gap_split].replace(" ",""))
+                gap = line[gap_split-6:gap_split].replace(" ","")
                 gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-6:gap_split]))
 
                 # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
