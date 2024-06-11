@@ -345,7 +345,7 @@ for L in range(10, 30, 5):
 
                 for i in range(0,len(sol_I)):
                     if sol_I[i] < 0:
-                        sol_I_opt.append(sol_I[i])
+                        sol_I_opt.append((-1)*sol_I[i])
                         sol_C_opt.append(sol_C[i])
                         eps_opt.append(sol_eps[i])
                         gap_opt.append(sol_gap[i])
@@ -354,8 +354,6 @@ for L in range(10, 30, 5):
                         sol_C_feas.append(sol_C[i])
                         eps_feas.append(sol_eps[i])
                         gap_feas.append(sol_gap[i])
-
-                sol_I_opt = [i * (-1) for i in sol_I_opt]
 
                 # Plotando a fronteira de pareto
                 print("Started plotting Objective Function Comparison Graph...\n")
