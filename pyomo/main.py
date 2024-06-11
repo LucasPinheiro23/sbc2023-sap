@@ -40,7 +40,7 @@ solver = "gurobi_direct"
 # Caminho das instancias
 
 for L in range(10, 30, 5):
-    for d in range(1, 10):
+    for d in range(1, 6):
 
         instance_path = "./instances_OL2A_updated/" + str(L) + "x" + str(L) + "/"
         instance_filename = (
@@ -121,7 +121,7 @@ for L in range(10, 30, 5):
             # Cria um solver
             opt = SolverFactory(solver, manage_env=True) #, executable=solver_exec)
             opt.options["TimeLimit"] = 43200 #12h
-            opt.options["mipgap"] = 0.01
+            opt.options["mipgap"] = 0.001
 
             print("Translating instance to solver...\n")
             # Resolve a instancia e armazena os resultados em um arquivo JSON
