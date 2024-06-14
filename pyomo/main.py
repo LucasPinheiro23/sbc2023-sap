@@ -149,8 +149,8 @@ for L in range(10, 30, 5):
                     line = fb.readline().decode()
 
                 gap_split = line.find("%")
-                gap = line[gap_split-6:gap_split].replace(" ","")
-                gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-6:gap_split]))
+                #gap = line[gap_split-7:gap_split].replace(" ","")
+                gap = float(re.sub("[<>=:$%!@ ()\/;,]","",line[gap_split-7:gap_split]))
 
                 # Tempo de execucao total (incluido tempo de traducao do modelo do pyomo para o solver)
                 print("----------\nSolver wallclock time (for this epsilon): " + str(results.solver.wallclock_time) + " s")
@@ -438,7 +438,7 @@ for L in range(10, 30, 5):
                     )
                 
 
-                plt.xlabel("C (points)")
+                plt.xlabel("C (pts)")
                 
                 plt.ylabel("I (mA)")
 
