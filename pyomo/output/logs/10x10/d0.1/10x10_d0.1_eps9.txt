@@ -1,0 +1,47 @@
+WARNING: Failed to create solver with name '_cbc_shell': Failed to set
+    executable for solver cbc. File with name=cbc either does not exist or it
+    is not executable. To skip this validation, call set_executable with
+    validate=False.
+Traceback (most recent call last):
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\opt\base\solvers.py", line 153, in __call__
+    opt = self._cls[_name](**kwds)
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\solvers\plugins\solvers\CBCplugin.py", line 86, in __init__
+    super(CBCSHELL, self).__init__(**kwds)
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\opt\solver\shellcmd.py", line 56, in __init__
+    self.set_executable(name=executable, validate=validate)
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\opt\solver\shellcmd.py", line 104, in set_executable
+    raise ValueError(
+ValueError: Failed to set executable for solver cbc. File with name=cbc either does not exist or it is not executable. To skip this validation, call set_executable with validate=False.
+WARNING: Failed to create solver with name 'cbc': Attempting to use an
+    unavailable solver.
+
+    The SolverFactory was unable to create the solver "_cbc_shell" and
+    returned an UnknownSolver object.  This error is raised at the point where
+    the UnknownSolver object was used as if it were valid (by calling method
+    "set_problem_format").
+
+    The original solver was created with the following parameters:
+    	executable: cbc type: _cbc_shell _args: () options: {}
+Traceback (most recent call last):
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\opt\base\solvers.py", line 153, in __call__
+    opt = self._cls[_name](**kwds)
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\solvers\plugins\solvers\CBCplugin.py", line 46, in __new__
+    opt.set_problem_format(ProblemFormat.cpxlp)
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\opt\base\solvers.py", line 120, in __getattr__
+    self._solver_error(attr)
+  File "C:\Users\Lucas Pinheiro\AppData\Local\Programs\Python\Python39\lib\site-packages\pyomo\opt\base\solvers.py", line 123, in _solver_error
+    raise RuntimeError("""Attempting to use an unavailable solver.
+RuntimeError: Attempting to use an unavailable solver.
+
+The SolverFactory was unable to create the solver "_cbc_shell"
+and returned an UnknownSolver object.  This error is raised at the point
+where the UnknownSolver object was used as if it were valid (by calling
+method "set_problem_format").
+
+The original solver was created with the following parameters:
+	executable: cbc
+	type: _cbc_shell
+	_args: ()
+	options: {}
+Translating instance to solver...
+

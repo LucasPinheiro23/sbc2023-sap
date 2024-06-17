@@ -1,0 +1,93 @@
+Translating instance to solver...
+
+GLPSOL--GLPK LP/MIP Solver 5.0
+Parameter(s) specified in the command line:
+ --tmlim 28800 --mipgap 0.0 --write /tmp/tmp3hg9svp1.glpk.raw --wglp /tmp/tmp8w09_z1p.glpk.glp
+ --cpxlp /tmp/tmpylicmqqb.pyomo.lp
+Reading problem data from '/tmp/tmpylicmqqb.pyomo.lp'...
+/tmp/tmpylicmqqb.pyomo.lp:241407: warning: lower bound of variable 'x2' redefined
+/tmp/tmpylicmqqb.pyomo.lp:241407: warning: upper bound of variable 'x2' redefined
+40946 rows, 21382 columns, 97054 non-zeros
+21382 integer variables, 21340 of which are binary
+262747 lines were read
+Writing problem data to '/tmp/tmp8w09_z1p.glpk.glp'...
+187648 lines were written
+GLPK Integer Optimizer 5.0
+40946 rows, 21382 columns, 97054 non-zeros
+21382 integer variables, 21340 of which are binary
+Preprocessing...
+178 hidden packing inequaliti(es) were detected
+6418 hidden covering inequaliti(es) were detected
+96 constraint coefficient(s) were reduced
+25073 rows, 10378 columns, 63777 non-zeros
+10378 integer variables, 10337 of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  4.100e+01  ratio =  4.100e+01
+GM: min|aij| =  4.093e-01  max|aij| =  2.443e+00  ratio =  5.969e+00
+EQ: min|aij| =  2.064e-01  max|aij| =  1.000e+00  ratio =  4.845e+00
+2N: min|aij| =  1.250e-01  max|aij| =  1.438e+00  ratio =  1.150e+01
+Constructing initial basis...
+Size of triangular part is 25073
+Solving LP relaxation...
+GLPK Simplex Optimizer 5.0
+25073 rows, 10378 columns, 63777 non-zeros
+      0: obj =   0.000000000e+00 inf =   6.731e+01 (103)
+Perturbing LP to avoid stalling [200]...
+    887: obj =   3.817181425e+00 inf =   2.109e-15 (0) 2
+Removing LP perturbation [2338]...
+*  2338: obj =   1.019214432e+00 inf =   4.037e-16 (0) 7
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
+Long-step dual simplex will be used
++  2338: mip =     not found yet >=              -inf        (1; 0)
++  6341: mip =     not found yet >=   1.027166615e+00        (25; 1)
++  9057: mip =     not found yet >=   1.027166615e+00        (86; 2)
++ 12259: mip =     not found yet >=   1.030960082e+00        (122; 3)
++ 13540: mip =     not found yet >=   1.038097789e+00        (193; 4)
++ 16315: mip =     not found yet >=   1.038097789e+00        (231; 5)
++ 19738: mip =     not found yet >=   1.038097789e+00        (269; 7)
++ 23115: mip =     not found yet >=   1.039282000e+00        (311; 9)
++ 26203: >>>>>   2.591237000e+00 >=   1.044474308e+00  59.7% (349; 10)
++ 30870: mip =   2.591237000e+00 >=   1.061782000e+00  59.0% (286; 176)
++ 34455: mip =   2.591237000e+00 >=   1.061782000e+00  59.0% (327; 179)
++ 35837: mip =   2.591237000e+00 >=   1.061782000e+00  59.0% (384; 180)
++ 38109: mip =   2.591237000e+00 >=   1.061782000e+00  59.0% (420; 183)
+Time used: 60.4 secs.  Memory used: 47.1 Mb.
++ 42112: mip =   2.591237000e+00 >=   1.061782000e+00  59.0% (476; 185)
++ 45690: mip =   2.591237000e+00 >=   1.061782000e+00  59.0% (540; 187)
++ 48692: >>>>>   1.511782000e+00 >=   1.061782000e+00  29.8% (586; 190)
++ 52796: mip =   1.511782000e+00 >=   1.061782000e+00  29.8% (365; 714)
++ 54461: >>>>>   1.061782000e+00 >=   1.061782000e+00 < 0.1% (371; 718)
++ 54461: mip =   1.061782000e+00 >=     tree is empty   0.0% (0; 1523)
+INTEGER OPTIMAL SOLUTION FOUND
+Time used:   84.4 secs
+Memory used: 56.6 Mb (59348380 bytes)
+Writing MIP solution to '/tmp/tmp3hg9svp1.glpk.raw'...
+62337 lines were written
+
+Time in solver (for this epsilon): 84.59855318069458 s
+Elapsed time (for this epsilon): 85.48782277107239 s
+
+
+Total elapsed time since execution of first epsilon: 45411.23684287071 s
+
+Results:
+
+E = 1.061782 mA
+C = 54.0 points
+C ~= 21.6 km^2
+
+Minimum Epsilon for this instance = 9
+Maximum Epsilon for this instance = 98
+
+Current Epsilon = 54
+
+
+Instance Epsilon Preprocessing Time: 0.004303455352783203 s
+
+
+Updated solution vectors:
+sol_E = [-0.611782,-0.9176730000000001,-1.061782,-1.061782,-1.061782,-1.061782]
+sol_C = [14.0,19.0,30.0,37.0,45.0,54.0]
+sol_eps = [9,18,27,36,45,54]
+sol_gap = [0.0,0.0,0.0,0.0,0.0,0.0]

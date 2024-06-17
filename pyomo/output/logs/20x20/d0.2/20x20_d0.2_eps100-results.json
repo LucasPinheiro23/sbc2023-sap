@@ -1,0 +1,28 @@
+{
+    "Problem": [
+        {
+            "Lower bound": -Infinity,
+            "Name": "SAP-inst_20x20_d0.2.dat",
+            "Number of constraints": 194886,
+            "Number of nonzeros": 464104,
+            "Number of objectives": 1,
+            "Number of variables": 116962,
+            "Sense": "minimize",
+            "Upper bound": Infinity
+        }
+    ],
+    "Solver": [
+        {
+            "Error rc": 0,
+            "Statistics": {
+                "Branch and bound": {
+                    "Number of bounded subproblems": 0,
+                    "Number of created subproblems": 0
+                }
+            },
+            "Status": "ok",
+            "Termination condition": "maxTimeLimit",
+            "Time": 28810.49257159233
+        }
+    ]
+}
